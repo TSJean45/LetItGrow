@@ -1,26 +1,11 @@
-import React from 'react';
-import { Header,
-          MainContainer } from './components';
+import React from "react";
+import { HeroSection } from "./components";
 
 const App = () => {
   return (
     <div>
-      <Header />
-      <MainContainer>
-        <div style={{ background: 'lightblue', padding: '20px', marginBottom: '20px' }}>
-          <h2>Section 1</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non feugiat lorem.</p>
-        </div>
-        <div style={{ background: 'lightgreen', padding: '20px', marginBottom: '20px' }}>
-          <h2>Section 2</h2>
-          <p>Phasellus non lacus sit amet metus viverra iaculis. Nulla facilisi.</p>
-        </div>
-        <div style={{ background: 'lightcoral', padding: '20px', marginBottom: '20px' }}>
-          <h2>Section 3</h2>
-          <p>Etiam ultrices, urna nec vehicula ultricies, massa felis hendrerit nunc, id placerat urna libero id odio.</p>
-        </div>
-        {/* Add more sections as needed */}
-      </MainContainer>
+      {/* <div className='absolute inset-0 blur-xl h-[580px]' style={{ background: "linear-gradient(143.6deg, rgba(192, 132, 252, 0) 20.79%, rgba(232, 121, 249, 0.26) 40.92%, rgba(204, 171, 238, 0) 70.35%)" }}></div> */}
+      <HeroSection />
     </div>
   );
 };
