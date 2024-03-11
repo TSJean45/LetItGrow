@@ -9,7 +9,7 @@ const HeroSection = () => {
         <Header />
         <section className="flex items-center justify-center">
           <div className="max-w-screen-xl mx-auto px-4 gap-12 text-gray-600 overflow-hidden md:px-8 md:flex h-full">
-            <div className="flex-1 flex flex-col justify-center space-y-5 max-w-xl">
+            <div className="flex-2 flex flex-col justify-center space-y-5 max-w-xl">
               <h1 className="font-title text-gray-800 font-extrabold text-6xl">
                 <RoughNotation type="highlight" show={true} color="#C7DBE8" animationDelay="10" animationDuration="2000" padding="0" strokeWidth="0">
                   Future of Farming
@@ -43,7 +43,7 @@ const HeroSection = () => {
               </div>
             </div>
             <div className="flex-1 hidden md:block">
-              <img width={500} src={heroImage} alt="A potted plant" />
+              <img width={450} src={heroImage} alt="A potted plant" />
             </div>
           </div>
         </section>
