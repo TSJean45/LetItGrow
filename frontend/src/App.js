@@ -5,7 +5,10 @@ import {
   SectionDescription,
   MainContainer,
   FeatureSection,
+  HomeCarousel,
+  Button
 } from "./components";
+import { items } from "./constants";
 
 const App = () => {
   return (
@@ -63,6 +66,11 @@ const App = () => {
           cardColor="bg-midDarkGreen"
           cardText="text-darkGreen"
         />
+      </MainContainer>
+      <MainContainer bgColor="bg-lightGreen">
+        <SectionTitle>Sun & Soil Market</SectionTitle>
+        <HomeCarousel items={items} />
+        <Button text="Check Out More ->" />
       </MainContainer>
     </div>
   );

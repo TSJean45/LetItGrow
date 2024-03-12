@@ -4,3 +4,6 @@ export { default as HeroSection } from './HeroSection';
 export { default as SectionTitle } from './SectionTitle';
 export { default as SectionDescription } from './SectionDescription';
 export { default as FeatureSection } from './FeatureSection';
+export { default as HomeCarousel } from './HomeCarousel';
+export { default as CardCarousel } from './CardCarousel';
+export { default as Button } from './Button';

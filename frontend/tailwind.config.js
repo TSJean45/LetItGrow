@@ -12,7 +12,8 @@ module.exports = {
         "mediumGreen": "#9ABD71",
         "midDarkGreen": "#C9D7C9",
         "darkGreen": "#476948",
-        "lightBlue": "#C7DBE8"
+        "lightBlue": "#C7DBE8",
+        "navyBlue": "#174978"
       }, 
       lineHeight: {
         'extra-loose': '25px',
