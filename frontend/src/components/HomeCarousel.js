@@ -3,13 +3,13 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import CardCarousel from './CardCarousel';
 
-const HomeCarousel = ({ items }) => {
+const HomeCarousel = ({ items, type }) => {
   return (
     <Carousel
       additionalTransfrom={0}
       arrows
       autoPlay
-      autoPlaySpeed={1000}
+      autoPlaySpeed={3000}
       centerMode={false}
       containerClass="container-with-dots"
       draggable
@@ -57,7 +57,7 @@ const HomeCarousel = ({ items }) => {
       itemClass="px-5"
     >
       {items.map((item, index) => (
-        <CardCarousel key={index} {...item} />
+        <CardCarousel type={type} key={index} {...item} />
       ))}
     </Carousel>
   );
