@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   HeroSection,
   SectionTitle,
@@ -27,16 +27,16 @@ const App = () => {
           cardText="text-dullGreen"
           features={[
             {
-              title: "Plant Condition Simulation",
-              image: "descImg-1.png",
+              title: 'Plant Condition Simulation',
+              image: 'descImg-1.png',
             },
             {
-              title: "Plant Disease Detection",
-              image: "descImg-2.png",
+              title: 'Plant Disease Detection',
+              image: 'descImg-2.png',
             },
             {
-              title: "Soil Monitoring Dashboard",
-              image: "descImg-3.png",
+              title: 'Soil Monitoring Dashboard',
+              image: 'descImg-3.png',
             },
           ]}
         />
@@ -51,16 +51,16 @@ const App = () => {
         <FeatureSection
           features={[
             {
-              title: "Space Mapping",
-              image: "descImg-4.png",
+              title: 'Space Mapping',
+              image: 'descImg-4.png',
             },
             {
-              title: "AI Yield Prediction",
-              image: "descImg-5.png",
+              title: 'AI Yield Prediction',
+              image: 'descImg-5.png',
             },
             {
-              title: "Project Management Dashboard",
-              image: "descImg-6.png",
+              title: 'Project Management Dashboard',
+              image: 'descImg-6.png',
             },
           ]}
           cardColor="bg-midDarkGreen"
@@ -78,7 +78,7 @@ const App = () => {
         <Button text="Check Out More ->" bgColor="bg-navyBlue" hoverBg="bg-lightBlue" textColor="text-white" hoverText="text-white"/>
       </MainContainer>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
