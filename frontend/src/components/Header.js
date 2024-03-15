@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import logo from '../assets/logo.png'
-// import Login from '../pages/Login'
 import { Link } from 'react-router-dom'; 
 
 const Header = () => {
@@ -80,12 +79,11 @@ const Header = () => {
             <span className="hidden w-px h-6 bg-gray-300 md:block"></span>
             <div className="space-y-3 items-center gap-x-6 md:flex md:space-y-0">
               <li>
-                <a
-                  href="/Login"
+              <Link to="/Login"
                   className="text-lg font-bold block py-3 text-center text-gray-700 hover:text-mediumGreen border rounded-lg md:border-none"
                 >
                   Log in
-                </a>
+                </Link>
               </li>
               <li>
                 <a
