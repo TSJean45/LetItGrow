@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   HeroSection,
   SectionTitle,
@@ -6,9 +6,9 @@ import {
   MainContainer,
   FeatureSection,
   HomeCarousel,
-  Button
-} from "./components";
-import { items } from "./constants";
+  Button,
+} from './components'
+import { items } from './constants'
 
 const App = () => {
   return (
@@ -27,16 +27,16 @@ const App = () => {
           cardText="text-dullGreen"
           features={[
             {
-              title: "Plant Condition Simulation",
-              image: "descImg-1.png",
+              title: 'Plant Condition Simulation',
+              image: 'descImg-1.png',
             },
             {
-              title: "Plant Disease Detection",
-              image: "descImg-2.png",
+              title: 'Plant Disease Detection',
+              image: 'descImg-2.png',
             },
             {
-              title: "Soil Monitoring Dashboard",
-              image: "descImg-3.png",
+              title: 'Soil Monitoring Dashboard',
+              image: 'descImg-3.png',
             },
           ]}
         />
@@ -51,16 +51,16 @@ const App = () => {
         <FeatureSection
           features={[
             {
-              title: "Space Mapping",
-              image: "descImg-4.png",
+              title: 'Space Mapping',
+              image: 'descImg-4.png',
             },
             {
-              title: "AI Yield Prediction",
-              image: "descImg-5.png",
+              title: 'AI Yield Prediction',
+              image: 'descImg-5.png',
             },
             {
-              title: "Project Management Dashboard",
-              image: "descImg-6.png",
+              title: 'Project Management Dashboard',
+              image: 'descImg-6.png',
             },
           ]}
           cardColor="bg-midDarkGreen"
@@ -73,7 +73,7 @@ const App = () => {
         <Button text="Check Out More ->" />
       </MainContainer>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

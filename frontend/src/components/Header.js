@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import logo from "../assets/logo.png";
+import React, { useState } from 'react'
+import logo from '../assets/logo.png'
+// import Login from '../pages/Login'
+import { Link } from 'react-router-dom'; 
 
 const Header = () => {
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(false)
 
   // Replace paths with your desired paths
   const navigation = [
-    { title: "Home", path: "/" },
-    { title: "Services", path: "/services" },
+    { title: 'Home', path: '/' },
+    { title: 'Services', path: '/services' },
+    // { title: 'Log in', path: '/Login' },
     // { title: "Pricing", path: "/pricing" },
     // { title: "Contact", path: "/contact" },
-  ];
+  ]
 
   return (
     <nav className="py-5 border-b w-full lg:static lg:text-sm lg:border-none">
@@ -58,7 +61,7 @@ const Header = () => {
         </div>
         <div
           className={`flex-1 pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-            state ? "block" : "hidden"
+            state ? 'block' : 'hidden'
           }`}
         >
           <ul className="justify-end items-center space-y-6 md:flex md:space-x-6 md:space-y-0">
@@ -72,13 +75,13 @@ const Header = () => {
                     {item.title}
                   </a>
                 </li>
-              );
+              )
             })}
             <span className="hidden w-px h-6 bg-gray-300 md:block"></span>
             <div className="space-y-3 items-center gap-x-6 md:flex md:space-y-0">
               <li>
                 <a
-                  href="/login"
+                  href="/Login"
                   className="text-lg font-bold block py-3 text-center text-gray-700 hover:text-mediumGreen border rounded-lg md:border-none"
                 >
                   Log in
@@ -97,7 +100,7 @@ const Header = () => {
         </div>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
