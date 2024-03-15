@@ -13,6 +13,7 @@ module.exports = {
         "midDarkGreen": "#C9D7C9",
         "darkGreen": "#476948",
         "lightBlue": "#C7DBE8",
+        "skyBlue": "#DAEEFB",
         "navyBlue": "#174978"
       }, 
       lineHeight: {
