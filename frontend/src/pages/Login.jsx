@@ -1,11 +1,46 @@
 import React from 'react'
-import { Header } from "../components";
+import { Header } from '../components'
+import './Login.scss'
+import { RoughNotation } from 'react-rough-notation'
 
 const Login = () => {
   return (
-    <div className='login'>
-        {/* <Header/> */}
-        <h1>Login</h1>
+    <div className="login">
+      <Header />
+
+      <div className="login-card">
+        <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+          <RoughNotation
+            type="highlight"
+            show={true}
+            color="#DFEFCD"
+            animationDelay="10"
+            animationDuration="2000"
+            padding="0"
+            strokeWidth="0"
+            style={{
+              fontSize: '64px',
+              fontFamily: 'baloo',
+            }} 
+          >
+            Login
+          </RoughNotation>
+        </div>
+
+        <h4>
+          Welcome back! <br /> Please login to your account.
+        </h4>
+
+        <input type="email" required placeholder="Email" />
+        <input type="password" required placeholder="Password" />
+        <button className="forgot-password">Forgot Password?</button>
+        <button className="login-button">Login</button>
+
+        <div className="register">
+          <p>Don't have an account yet?</p>
+          <button>Register here</button>
+        </div>
+      </div>
     </div>
   )
 }
