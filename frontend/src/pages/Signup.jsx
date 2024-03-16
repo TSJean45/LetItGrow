@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Header } from '../components'
 import './Signup.scss'
 import { RoughNotation } from 'react-rough-notation'
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+import farmer from '../assets/register-farmer.png'
+import plantppl from '../assets/register-plantppl.png'
+import success from '../assets/register-success.png'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 const steps = ['Step 1', 'Step 2', 'Step 3']
 
 const Signup = () => {
-
   //    Progress bar
   const [currentStep, setCurrentStep] = useState(0)
+  const [selection, setSelection] = useState('')
 
-  const handleNext = () => {
+  const handleNext = (selected) => {
+    setSelection(selected)
     setCurrentStep((prevStep) => Math.min(prevStep + 1, steps.length - 1))
   }
 
@@ -20,11 +26,11 @@ const Signup = () => {
   }
 
   //   Cancel Button
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleCancel = () => {
-    navigate('/');
-  };
+    navigate('/')
+  }
 
   return (
     <div className="signup">
@@ -49,6 +55,7 @@ const Signup = () => {
         </div>
 
         <div className="form">
+          {/* Progress Bar */}
           <div className="progress-bar">
             {steps.map((step, index) => (
               <div
@@ -62,27 +69,104 @@ const Signup = () => {
             ))}
           </div>
 
+          {/* Step 1 */}
           {currentStep === 0 && (
-            <div className="form-content">
-              <button>Farmer</button>
-              <button>Plant People</button>
+            <div className="form-content1">
+              <div className="identity">
+                <button onClick={() => handleNext('farmer')}>
+                  Farmer
+                  <img src={farmer} alt="farmer" />
+                </button>
+                <button onClick={() => handleNext('plantppl')}>
+                  Plant People
+                  <img src={plantppl} alt="plant-ppl" />
+                </button>
+              </div>
+
+              <button className="cancel-button" onClick={handleCancel}>
+                Cancel
+              </button>
             </div>
           )}
+
+          {/* Step 2 */}
           {currentStep === 1 && (
-            <div className="form-content">
-              <h3>Hello step 2</h3>
+            <div className="form-content2">
+              {selection === 'farmer' ? (
+                <form className="farmer-form">
+                  <input type="first name" required placeholder="First Name" />
+                  <input type="last name" required placeholder="Last Name" />
+                  <input type="username" required placeholder="Username" />
+                  <input type="email" required placeholder="Email" />
+                  <input type="password" required placeholder="Password" />
+                  <input
+                    type="password"
+                    required
+                    placeholder="Confirm Password"
+                  />
+                  <input type="text" required placeholder="Farm Name" />
+                  <input type="address" required placeholder="Farm Address" />
+
+                  <div className="button-container">
+                    <button
+                      className="next-button"
+                      onClick={() => handleNext()}
+                    >
+                      Next
+                    </button>
+                    <button
+                      className="previous-button"
+                      disabled={currentStep === 0}
+                      onClick={handlePrev}
+                    >
+                      previous
+                    </button>
+                  </div>
+                </form>
+              ) : selection === 'plantppl' ? (
+                <form className="plantppl-form">
+                  <input type="first name" required placeholder="First Name" />
+                  <input type="last name" required placeholder="Last Name" />
+                  <input type="username" required placeholder="Username" />
+                  <input type="email" required placeholder="Email" />
+                  <input type="password" required placeholder="Password" />
+                  <input
+                    type="password"
+                    required
+                    placeholder="Confirm Password"
+                  />
+
+                  <div className="button-container">
+                    <button
+                      className="next-button"
+                      onClick={() => handleNext()}
+                    >
+                      Next
+                    </button>
+
+                    <button
+                      className="previous-button"
+                      disabled={currentStep === 0}
+                      onClick={handlePrev}
+                    >
+                      previous
+                    </button>
+                  </div>
+                </form>
+              ) : null}
             </div>
           )}
+
+          {/* Step 3 */}
           {currentStep === 2 && (
-            <div className="form-content">
-              <h3>Hello step 3</h3>
+            <div className="form-content3">
+              <img src={success} alt="Register Success" />
+              <h4>Created Successfully!</h4>
+              <p>You can start to manage your crop with LetItGrow!</p>
+              <button>Get Started</button>
             </div>
           )}
         </div>
-
-        <div className="identity"></div>
-
-        <button onClick={handleCancel}>Cancel</button>
       </div>
     </div>
   )
