@@ -5,10 +5,13 @@ import {
   SectionDescription,
   MainContainer,
   FeatureSection,
-  HomeCarousel,
-  Button
+  ItemCarousel,
+  ImageCarousel,
+  Button,
+  Contact,
+  Footer
 } from "./components";
-import { items, forumContent } from "./constants";
+import { items, forumContent, classContent } from "./constants";
 
 const App = () => {
   return (
@@ -69,14 +72,22 @@ const App = () => {
       </MainContainer>
       <MainContainer bgColor="bg-lightGreen">
         <SectionTitle>Sun & Soil Market</SectionTitle>
-        <HomeCarousel items={items} type={"market"} />
+        <ItemCarousel items={items} type={"market"} />
         <Button text="Check Out More ->"  bgColor="bg-mediumGreen" hoverBg="bg-lightGreen" textColor="text-white" hoverText="text-white"/>
       </MainContainer>
       <MainContainer>
         <SectionTitle>From The Forum</SectionTitle>
-        <HomeCarousel items={forumContent} type={"forum"}/>
+        <ItemCarousel items={forumContent} type={"forum"}/>
         <Button text="Check Out More ->" bgColor="bg-navyBlue" hoverBg="bg-lightBlue" textColor="text-white" hoverText="text-white"/>
       </MainContainer>
+      <MainContainer bgColor="bg-lightGreen">
+        <SectionTitle>Upcoming Events & Gardening Classes</SectionTitle>
+        <ImageCarousel items={classContent} type={"classes"}/>
+      </MainContainer>
+      <MainContainer>
+        <Contact />
+      </MainContainer>
+      <Footer />
     </div>
   )
 }
