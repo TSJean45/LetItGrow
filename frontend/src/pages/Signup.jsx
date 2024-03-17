@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import farmer from '../assets/register-farmer.png'
 import plantppl from '../assets/register-plantppl.png'
 import success from '../assets/register-success.png'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
 
 const steps = ['Step 1', 'Step 2', 'Step 3']
 
