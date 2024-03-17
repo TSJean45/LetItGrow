@@ -43,7 +43,7 @@ const PlantSimulation = () => {
             garden adventure!
           </p>
 
-          <button>Start Now</button>
+          <button><a href="/MyGarden">Start Now</a></button>
         </div>
 
         <img src={plantsimulation1} alt="Plant Simulation 1" />

@@ -8,7 +8,7 @@ import {
   Login,
   Signup,
   PlantSimulation,
-  
+  MyGarden,
 } from './pages'
 
 const router = createBrowserRouter([
@@ -27,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: '/PlantSimulation',
     element: <PlantSimulation />,
+  },
+  {
+    path: '/MyGarden',
+    element: <MyGarden />,
   },
 ])
 
