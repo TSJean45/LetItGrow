@@ -9,6 +9,7 @@ import {
   Signup,
   PlantSimulation,
   MyGarden,
+  DiseaseDetect,
 } from './pages'
 
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: '/MyGarden',
     element: <MyGarden />,
+  },
+  {
+    path: '/DiseaseDetect',
+    element: <DiseaseDetect />,
   },
 ])
 
