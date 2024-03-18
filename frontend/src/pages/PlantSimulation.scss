@@ -1,0 +1,51 @@
+.plant-simulation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  font-family: 'open sans';
+
+  h4 {
+    
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  content {
+    display: flex;
+    align-items: center;
+    margin: 50px 100px 0 100px;
+
+    .text-container {
+      flex: 1; /* Allow the text container to grow and occupy available space */
+      padding-right: 20px; /* Add padding for spacing */
+
+      p{
+        font-size: 25px;
+        font-weight: 500;
+      }
+
+      button{
+        margin-top: 30px;
+        font-size: 30px;
+        font-weight: bold;
+        color: white;
+        background-color: #7f9f80;
+        border-radius: 20px;
+        width: 300px;
+        height: 60px;
+
+        &:hover{
+            background-color: #9abd71;
+          }
+      }
+    }
+
+    img {
+      width: 45%;
+      height: auto;
+      flex-shrink: 0; 
+    }
+  }
+}

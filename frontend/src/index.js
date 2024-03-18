@@ -6,7 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import {
   Login,
-  Signup
+  Signup,
+  PlantSimulation,
+  MyGarden,
 } from './pages'
 
 const router = createBrowserRouter([
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
   {
     path: '/Signup',
     element: <Signup />,
+  },
+  {
+    path: '/PlantSimulation',
+    element: <PlantSimulation />,
+  },
+  {
+    path: '/MyGarden',
+    element: <MyGarden />,
   },
 ])
 

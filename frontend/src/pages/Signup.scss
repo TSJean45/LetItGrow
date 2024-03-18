@@ -8,27 +8,153 @@
   background-image: url('../assets/loginImg-2.png'); /* Specify the background image */
   background-size: cover; /* Ensure the image covers the entire container */
   background-position: center;
+  background-attachment: fixed;
+  overflow: hidden;
 
   .container {
+    position: relative; /* Ensure relative positioning for absolute positioning */
     background-color: white;
     border-radius: 20px;
     width: 80%;
     padding: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
 
     .progress-bar {
       display: flex;
-      justify-content: space-between; /* Space out steps evenly */
+      justify-content: space-between;
       width: 100%;
       margin-bottom: 20px;
+      margin-top: 50px;
     }
 
     .progress-step {
       text-align: center;
-      padding: 10px 20px; /* Adjust padding as needed */
-      border-radius: 50px; /* Create circular steps */
+      padding: 10px 20px;
+      border-radius: 50px;
       background-color: #ddd;
       color: #333;
       cursor: default;
+    }
+
+    .progress-step.active {
+      background-color: #4caf50;
+      color: #fff;
+    }
+    .form-content1 {
+      .identity {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        align-items: center;
+
+        button {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          padding: 30px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-right: 30px;
+          width: 50%;
+          height: 300px;
+          background-color: #7f9f80;
+          color: white;
+          border: none;
+
+          font-family: 'open sans';
+          font-size: 32px;
+          font-weight: bold;
+
+          &:hover {
+            background-color: #9abd71;
+          }
+
+          img {
+            margin-top: 20px;
+            max-width: 80%;
+            max-height: 80%;
+          }
+        }
+      }
+
+      .cancel-button {
+        padding-top: 50px;
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-decoration: underline;
+      }
+    }
+
+    .form-content2 {
+      .farmer-form,
+      .plantppl-form {
+        margin-top: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .farmer-form input,
+      .plantppl-form input {
+        width: 48%;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 2px solid #7f9f80;
+        border-radius: 4px;
+      }
+
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        
+        justify-self: center;
+
+        .next-button{
+          background-color: #7f9f80;
+          width: 200px;
+          height: 40px;
+          border-radius: 20px;
+        }
+
+        .previous-button{
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .form-content3{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      img{
+        width: 30%;
+      }
+
+      h4{
+        color:#4caf50;
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      button{
+        margin-top: 10px;
+        background-color: #7f9f80;
+        border-radius: 20px;
+        width: 200px;
+        height: 40px;
+        color: white;
+
+        &:hover{
+          background-color: #9abd71;
+        }
+      }
     }
   }
 }

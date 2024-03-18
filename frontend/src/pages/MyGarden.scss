@@ -1,0 +1,83 @@
+.MyGarden {
+  .add-plant {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 30px;
+
+    p {
+      font-family: 'open sans';
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    button {
+      margin-top: 30px;
+      background-color: lightgrey;
+      width: 250px;
+      height: 250px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: #c9d7c9;
+      }
+    }
+  }
+
+  .plant-info {
+    font-family: 'open sans';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    searchbar {
+      width: 50%;
+    }
+
+    input {
+      border: 1px solid #c9d7c9;
+      width: 30%;
+      height: 30px;
+      margin: 20px;
+      text-align: center;
+    }
+
+    .stages {
+      h4 {
+        font-size: 25px;
+        font-weight: 700;
+        text-align: center;
+        margin: 30px;
+      }
+
+      selection {
+        display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap to the next line if necessary */
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+        button {
+          padding: 10px;
+          font-weight: 500;
+          background-color: #dfefcd;
+          margin: 20px;
+          width: 20%;
+          border-radius: 30px;
+
+          img{
+            width: 200px;
+            height: 200px;
+          }
+
+          &:hover{
+            background-color: #C9D7C9;
+          }
+        }
+      }
+    }
+  }
+}
