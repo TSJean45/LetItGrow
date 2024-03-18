@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../assets/logo.png";
+
 const Footer = () => {
   const footerNavs = [
     {
@@ -11,11 +12,11 @@ const Footer = () => {
       name: "Services",
     },
     {
-      href: "/",
+      href: "/Login",
       name: "Login",
     },
     {
-      href: "/",
+      href: "/signup",
       name: "Sign Up",
     },
   ];
