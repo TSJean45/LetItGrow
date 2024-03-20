@@ -21,6 +21,7 @@ module.exports = withMT({
         lightBlue: "#C7DBE8",
         skyBlue: "#DAEEFB",
         navyBlue: "#174978",
+        darkNavy: "#2F5F8A"
       },
       lineHeight: {
         "extra-loose": "25px",

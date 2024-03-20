@@ -13,3 +13,5 @@ export { default as Footer } from './Footer';
 export { default as DashboardNavbar } from './DashboardNavbar';
 export { default as DashboardSidebar } from './DashboardSidebar';
 export { default as NavbarSelect } from './NavbarSelect';
+export { default as DashboardTitle } from './DashboardTitle';
+export { default as WeatherComponent } from './WeatherComponent';
