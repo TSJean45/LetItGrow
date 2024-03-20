@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Login, Signup, PlantSimulation, MyGarden, Dashboard, DiseaseDetect } from "./pages";
+import { Login, Signup, PlantSimulation, MyGarden, PersonalDashboard, DiseaseDetect } from "./pages";
 import { ThemeProvider } from "@material-tailwind/react";
 
 const router = createBrowserRouter([
@@ -33,8 +33,8 @@ const router = createBrowserRouter([
     element: <DiseaseDetect />,
   },
   {
-    path: "/Dashboard",
-    element: <Dashboard />,
+    path: "/PersonalDashboard",
+    element: <PersonalDashboard />,
   },
 ]);
 

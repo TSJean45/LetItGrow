@@ -1,6 +1,6 @@
 import { DashboardSidebar, DashboardNavbar } from "../components";
 
-const Dashboard = () => {
+const PersonalDashboard = () => {
   return (
     <div>
       <DashboardSidebar />
@@ -9,4 +9,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default PersonalDashboard;
