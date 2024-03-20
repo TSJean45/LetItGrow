@@ -1,10 +1,16 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Login, Signup, PlantSimulation, MyGarden, Dashboard } from "./pages";
+import { Login, Signup, PlantSimulation, MyGarden, Dashboard, DiseaseDetect } from "./pages";
 import { ThemeProvider } from "@material-tailwind/react";
 
 const router = createBrowserRouter([
@@ -28,6 +34,11 @@ const router = createBrowserRouter([
     path: "/MyGarden",
     element: <MyGarden />,
   },
+  {
+    path: '/DiseaseDetect',
+    element: <DiseaseDetect />,
+  },
+])
   {
     path: "/Dashboard",
     element: <Dashboard />,
