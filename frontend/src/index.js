@@ -32,7 +32,6 @@ const router = createBrowserRouter([
     path: '/DiseaseDetect',
     element: <DiseaseDetect />,
   },
-])
   {
     path: "/Dashboard",
     element: <Dashboard />,
