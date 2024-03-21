@@ -1,18 +1,12 @@
+import React from "react";
 import {
   DashboardSidebar,
   DashboardNavbar,
   DashboardTitle,
-  WeatherComponent,
   WeatherCard,
 } from "../components";
 import { format } from "date-fns";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Button,
-} from "@material-tailwind/react";
+import { Card, CardBody, Typography } from "@material-tailwind/react";
 import weather_logo from "../assets/weather-sun.png";
 import { ReactComponent as WeatherRect } from "../assets/weather_rectangle.svg";
 
@@ -20,9 +14,9 @@ const currentDate = new Date();
 
 const PersonalDashboard = () => {
   return (
-    <div>
-      <DashboardSidebar/>
-      <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8">
+    <div className="overflow-hidden">
+      <DashboardSidebar />
+      <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8 max-h-full">
         <DashboardNavbar />
         <div className="flex justify-between items-center">
           <DashboardTitle>Dashboard</DashboardTitle>
@@ -37,12 +31,12 @@ const PersonalDashboard = () => {
           </div>
         </div>
         <div className="grid grid-cols-4 gap-4 mt-4 sm:mt-6">
-          {" "}
-          {/* Adjusted margin */}
-          <div className="col-span-3">
-            <WeatherComponent />
+          <div className="col-span-3 rounded border p-5 border-grayBorder">
+            <Typography variant="h4" color="blue-gray" className="mb-2">
+              Geofenced Area
+            </Typography>
           </div>
-          <Card className="col-span-1 bg-skyBlue max-h-screen rounded p-5">
+          <Card className="col-span-1 bg-skyBlue rounded p-5">
             <Typography variant="h4" color="blue-gray" className="mb-2">
               Weather
             </Typography>
@@ -64,10 +58,10 @@ const PersonalDashboard = () => {
                   />
                 </div>
                 <div className="grid grid-cols-3">
-                  <p className="text-lg px-5 col-span-2 text-white z-20">
+                  <p className="text-md px-5 col-span-2 text-white z-20">
                     Ayer Keroh, Melaka
                   </p>
-                  <p className="text-lg text-right font-semibold col-span-1 px-5 text-white z-20">
+                  <p className="text-md text-right font-semibold col-span-1 px-5 text-white z-20">
                     Sunny
                   </p>
                 </div>
@@ -99,10 +93,6 @@ const PersonalDashboard = () => {
                 />
               </div>
             </CardBody>
-
-            <CardFooter className="pt-0">
-              <Button>Read More</Button>
-            </CardFooter>
           </Card>
         </div>
       </div>
