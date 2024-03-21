@@ -3,11 +3,11 @@ import {
   DashboardNavbar,
   DashboardTitle,
   WeatherComponent,
+  WeatherCard,
 } from "../components";
 import { format } from "date-fns";
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   Typography,
@@ -21,8 +21,8 @@ const currentDate = new Date();
 const PersonalDashboard = () => {
   return (
     <div>
-      <DashboardSidebar />
-      <div className="max-w-screen-2xl mx-auto px-2 sm:px-4 py-4 sm:py-8">
+      <DashboardSidebar/>
+      <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8">
         <DashboardNavbar />
         <div className="flex justify-between items-center">
           <DashboardTitle>Dashboard</DashboardTitle>
@@ -36,25 +36,25 @@ const PersonalDashboard = () => {
             <div>{format(currentDate, "EEEE, d MMMM, yyyy")}</div>
           </div>
         </div>
-        <div className="grid grid-cols-6 gap-4 mt-4 sm:mt-6">
+        <div className="grid grid-cols-4 gap-4 mt-4 sm:mt-6">
           {" "}
           {/* Adjusted margin */}
-          <div className="col-span-4">
+          <div className="col-span-3">
             <WeatherComponent />
           </div>
-          <Card className="col-span-2 bg-skyBlue max-h-screen rounded p-5">
+          <Card className="col-span-1 bg-skyBlue max-h-screen rounded p-5">
             <Typography variant="h4" color="blue-gray" className="mb-2">
               Weather
             </Typography>
-            <CardBody>
+            <CardBody className="p-0">
               <div className="relative py-10">
-                <WeatherRect className="absolute top-0 right-0" />
+                <WeatherRect className="absolute" />
                 <div className="grid grid-cols-2">
                   <div className="z-10">
-                    <h1 className="text-6xl font-bold p-2 z-10 text-white">
+                    <h1 className="text-5xl font-bold p-5 z-10 text-white">
                       30°C
                     </h1>
-                    <p className="text-sm px-2 text-white">H: 31°C L: 28°C</p>
+                    <p className="text-sm px-5 text-white">H: 31°C L: 28°C</p>
                   </div>
                   <img
                     className="object-cover object-top z-10 mt-[-50px]"
@@ -64,15 +64,40 @@ const PersonalDashboard = () => {
                   />
                 </div>
                 <div className="grid grid-cols-3">
-                  <p className="text-lg px-2 col-span-2 text-white z-20">
+                  <p className="text-lg px-5 col-span-2 text-white z-20">
                     Ayer Keroh, Melaka
                   </p>
-                  <p className="text-lg text-right col-span-1 px-2 text-white z-20">
-                    Summer
+                  <p className="text-lg text-right font-semibold col-span-1 px-5 text-white z-20">
+                    Sunny
                   </p>
                 </div>
               </div>
-              
+              <div className="grid grid-cols-2 gap-2">
+                <WeatherCard
+                  icon="weatherIcon-1.svg"
+                  title="Wind"
+                  value={12}
+                  constant="km/h"
+                />
+                <WeatherCard
+                  icon="weatherIcon-2.svg"
+                  title="Humidity"
+                  value={50}
+                  constant="%"
+                />
+                <WeatherCard
+                  icon="weatherIcon-3.svg"
+                  title="Precipitation"
+                  value={10}
+                  constant="%"
+                />
+                <WeatherCard
+                  icon="weatherIcon-4.svg"
+                  title="UV Index"
+                  value={8}
+                  constant="UVI"
+                />
+              </div>
             </CardBody>
 
             <CardFooter className="pt-0">
