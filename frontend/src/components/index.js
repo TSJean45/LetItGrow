@@ -15,3 +15,4 @@ export { default as DashboardSidebar } from './DashboardSidebar';
 export { default as NavbarSelect } from './NavbarSelect';
 export { default as DashboardTitle } from './DashboardTitle';
 export { default as WeatherComponent } from './WeatherComponent';
+export { default as WeatherCard } from './WeatherCard';
