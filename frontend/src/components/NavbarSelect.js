@@ -121,7 +121,7 @@ function Routing({ identity }) {
   return routers[identity] || null;
 }
 
-const NavbarSelect = ({ type, identity, farmName }) => {
+const NavbarSelect = ({ type, identity, name }) => {
   const [value, setValue] = React.useState("melaka");
 
   const handleValueChange = (val) => {
@@ -185,7 +185,7 @@ const NavbarSelect = ({ type, identity, farmName }) => {
                     color="gray"
                     className="font-normal"
                   >
-                    {farmName}
+                    {name}
                   </Typography>
                 </div>
               </div>
