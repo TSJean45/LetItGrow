@@ -1,0 +1,36 @@
+.chat {
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  width: 60%;
+  min-height: 400px;
+  min-width: 800px;
+  margin: auto;
+  margin-top: 20px;
+
+  .chatcontainer {
+    padding: 20px;
+    font-family: 'open sans';
+    font-size: 20px;
+  }
+
+  .contain {
+    font-size: 20px;
+  }
+
+  .sender-message {
+    .you-sender {
+      font-family: 'open sans';
+      font-size: 20px;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+  }
+
+  .receiver-message {
+    .bot-sender {
+      font-weight: bold; // Adjust the font weight as needed
+      margin-right: 5px; // Adjust the spacing between sender's name and message text
+    }
+  }
+}
