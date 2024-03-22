@@ -16,3 +16,5 @@ export { default as NavbarSelect } from './NavbarSelect';
 export { default as DashboardTitle } from './DashboardTitle';
 export { default as WeatherCard } from './WeatherCard';
 export { default as WeatherList } from './WeatherList';
+export { default as DashboardMap } from './DashboardMap';
+export { default as MapDetails } from './MapDetails';

@@ -45,7 +45,7 @@ const DashboardSidebar = () => {
   const closeDrawer = () => setIsDrawerOpen(false);
  
   return (
-    <div className="bg-ultLightGreen h-screen w-15 fixed top-0 left-0">
+    <div className="bg-ultLightGreen h-screen w-15 z-100 fixed top-0 left-0">
       <IconButton variant="text" size="lg" onClick={openDrawer}>
         {isDrawerOpen ? (
           <XMarkIcon className="h-8 w-8 stroke-2" />
@@ -57,7 +57,7 @@ const DashboardSidebar = () => {
         <Card
           color="transparent"
           shadow={false}
-          className="h-[calc(100vh-2rem)] w-full p-4"
+          className="h-[calc(100vh-2rem)] w-full p-4 z-100"
         >
           <div className="mb-2 flex items-center gap-4 p-4">
             <img
@@ -199,40 +199,7 @@ const DashboardSidebar = () => {
               Log Out
             </ListItem>
           </List>
-          <Alert
-            open={openAlert}
-            className="mt-auto"
-            onClose={() => setOpenAlert(false)}
-          >
-            <CubeTransparentIcon className="mb-4 h-12 w-12" />
-            <Typography variant="h6" className="mb-1">
-              Upgrade to PRO
-            </Typography>
-            <Typography variant="small" className="font-normal opacity-80">
-              Upgrade to Material Tailwind PRO and get even more components,
-              plugins, advanced features and premium.
-            </Typography>
-            <div className="mt-4 flex gap-3">
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                className="font-medium opacity-80"
-                onClick={() => setOpenAlert(false)}
-              >
-                Dismiss
-              </Typography>
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                className="font-medium"
-              >
-                Upgrade Now
-              </Typography>
-            </div>
-          </Alert>
-        </Card>
+                  </Card>
       </Drawer>
     </div>
   );

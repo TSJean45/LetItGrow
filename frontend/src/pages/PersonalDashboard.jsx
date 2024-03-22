@@ -4,6 +4,8 @@ import {
   DashboardNavbar,
   DashboardTitle,
   WeatherCard,
+  WeatherList,
+  DashboardMap,
 } from "../components";
 import { format } from "date-fns";
 import { Card, CardBody, Typography } from "@material-tailwind/react";
@@ -14,7 +16,7 @@ const currentDate = new Date();
 
 const PersonalDashboard = () => {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-white">
       <DashboardSidebar />
       <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8 max-h-full">
         <DashboardNavbar />
@@ -30,11 +32,12 @@ const PersonalDashboard = () => {
             <div>{format(currentDate, "EEEE, d MMMM, yyyy")}</div>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-4 mt-4 sm:mt-6">
+        <div className="grid grid-cols-4 gap-4">
           <div className="col-span-3 rounded border p-5 border-grayBorder">
             <Typography variant="h4" color="blue-gray" className="mb-2">
               Geofenced Area
             </Typography>
+            <DashboardMap className="z-0"/>
           </div>
           <Card className="col-span-1 bg-skyBlue rounded p-5">
             <Typography variant="h4" color="blue-gray" className="mb-2">
@@ -91,6 +94,12 @@ const PersonalDashboard = () => {
                   value={8}
                   constant="UVI"
                 />
+              </div>
+              <div className="mt-2">
+                <Typography variant="h5" color="blue-gray" className="mt-5">
+                  7-Day Forecast
+                </Typography>
+                <WeatherList />
               </div>
             </CardBody>
           </Card>
