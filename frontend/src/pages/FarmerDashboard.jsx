@@ -14,7 +14,7 @@ import { ReactComponent as WeatherRect } from "../assets/weather_rectangle.svg";
 
 const currentDate = new Date();
 
-const PersonalDashboard = () => {
+const FarmerDashboard = () => {
   return (
     <div className="overflow-hidden bg-white">
       <DashboardSidebar />
@@ -109,4 +109,4 @@ const PersonalDashboard = () => {
   );
 };
 
-export default PersonalDashboard;
+export default FarmerDashboard;

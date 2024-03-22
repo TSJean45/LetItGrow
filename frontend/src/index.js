@@ -9,7 +9,7 @@ import {
   Signup,
   PlantSimulation,
   MyGarden,
-  PersonalDashboard,
+  FarmerDashboard,
   DiseaseDetect,
   GrowBot,
   CropForecast,
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
     element: <DiseaseDetect />,
   },
   {
-    path: '/PersonalDashboard',
-    element: <PersonalDashboard />,
+    path: '/FarmerDashboard',
+    element: <FarmerDashboard />,
   },
   {
     path: '/GrowBot',
