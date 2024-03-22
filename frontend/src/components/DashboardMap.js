@@ -60,7 +60,7 @@ const DashboardMap = () => {
         center={[2.5059717325438218, 102.37588405609131]}
         zoom={16}
         scrollWheelZoom={true}
-        style={{ flex: 1 }}
+        style={{ flex: 1, zIndex: 0 }}
         className="min-h-80 max-h-80 relative"
       >
         <TileLayer

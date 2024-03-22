@@ -11,6 +11,8 @@ const mapContents = [
     image: 'mapImage-1.png',
     pMessage: "Nearly all of the field has been watered",
     status: "You haven't watered this field!",
+    icon: "bell",
+    button: true,
   },
   {
     id: 'durianB',
@@ -24,6 +26,8 @@ const mapContents = [
     image: 'mapImage-1.png',
     pMessage: "Nearly all of the field has been watered",
     status: "You haven't watered this field!",
+    icon: "bell",
+    button: true,
   },
   {
     id: 'pineapple',
@@ -36,7 +40,9 @@ const mapContents = [
     percentage: 46,
     image: 'mapImage-1.png',
     pMessage: "Nearly all of the field has been watered",
-    status: "You haven't watered this field!",
+    status: "You have watered this field!",
+    icon: "tick",
+    button: false,
   },
   {
     id: 'banana',
@@ -50,6 +56,8 @@ const mapContents = [
     image: 'mapImage-1.png',
     pMessage: "Nearly all of the field has been watered",
     status: "You haven't watered this field!",
+    icon: "bell",
+    button: true,
   },
 ];
 
