@@ -1,6 +1,6 @@
 import { NavbarSelect, NotificationBell } from "../components";
 
-const DashboardNavbar = () => {
+const DashboardNavbar = ({identity, farmName}) => {
   return (
       <div className="max-w-screen-2xl mx-auto flex justify-end"> {/* Container for Navbar content */}
         <div className="flex items-center justify-between">
@@ -9,7 +9,7 @@ const DashboardNavbar = () => {
             <div className="flex items-center"> {/* Center the SVG */}
               <NotificationBell />
             </div>
-            <NavbarSelect type="profile" />
+            <NavbarSelect type="profile" identity={identity} farmName={farmName}/>
           </div>
         </div>
       </div>
