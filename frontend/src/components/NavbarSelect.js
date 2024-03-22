@@ -11,7 +11,7 @@ import {
 import React from "react";
 
 const NavbarSelect = ({ type }) => {
-  const [value, setValue] = React.useState("react");
+  const [value, setValue] = React.useState("melaka");
 
   const handleValueChange = (val) => {
     setValue(val);
