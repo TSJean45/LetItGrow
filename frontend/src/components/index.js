@@ -18,3 +18,4 @@ export { default as WeatherCard } from './WeatherCard';
 export { default as WeatherList } from './WeatherList';
 export { default as DashboardMap } from './DashboardMap';
 export { default as MapDetails } from './MapDetails';
+export { default as NotificationBell } from './NotificationBell';

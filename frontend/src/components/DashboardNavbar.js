@@ -1,4 +1,4 @@
-import { NavbarSelect } from "../components";
+import { NavbarSelect, NotificationBell } from "../components";
 
 const DashboardNavbar = () => {
   return (
@@ -7,14 +7,7 @@ const DashboardNavbar = () => {
           <div className="flex gap-4">
             <NavbarSelect type="location" />
             <div className="flex items-center"> {/* Center the SVG */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="navy"
-                className="w-6 h-6"
-              >
-                {/* SVG paths */}
-              </svg>
+              <NotificationBell />
             </div>
             <NavbarSelect type="profile" />
           </div>
