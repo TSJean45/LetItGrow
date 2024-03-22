@@ -1,31 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.css'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Login, Signup, PlantSimulation, MyGarden, PersonalDashboard, DiseaseDetect } from "./pages";
-import { ThemeProvider } from "@material-tailwind/react";
+import {
+  Login,
+  Signup,
+  PlantSimulation,
+  MyGarden,
+  PersonalDashboard,
+  DiseaseDetect,
+  GrowBot,
+  CropForecast,
+} from './pages'
+import { ThemeProvider } from '@material-tailwind/react'
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
   },
   {
-    path: "/Login",
+    path: '/Login',
     element: <Login />,
   },
   {
-    path: "/Signup",
+    path: '/Signup',
     element: <Signup />,
   },
   {
-    path: "/PlantSimulation",
+    path: '/PlantSimulation',
     element: <PlantSimulation />,
   },
   {
-    path: "/MyGarden",
+    path: '/MyGarden',
     element: <MyGarden />,
   },
   {
@@ -33,21 +42,29 @@ const router = createBrowserRouter([
     element: <DiseaseDetect />,
   },
   {
-    path: "/PersonalDashboard",
+    path: '/PersonalDashboard',
     element: <PersonalDashboard />,
   },
-]);
+  {
+    path: '/GrowBot',
+    element: <GrowBot />,
+  },
+  {
+    path: '/CropForecast',
+    element: <CropForecast />,
+  },
+])
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <ThemeProvider>
       <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>
-);
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals()
