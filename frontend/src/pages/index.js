@@ -6,3 +6,4 @@ export { default as FarmerDashboard } from './FarmerDashboard';
 export { default as DiseaseDetect } from './DiseaseDetect';
 export { default as GrowBot } from './GrowBot';
 export { default as CropForecast } from './CropForecast';
+export { default as PersonalDashboard } from './PersonalDashboard';
