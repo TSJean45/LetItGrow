@@ -31,21 +31,20 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
- 
+
 const DashboardSidebar = () => {
   const [open, setOpen] = React.useState(0);
-  const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
- 
+
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
- 
+
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
- 
+
   return (
-    <div className="bg-ultLightGreen h-screen w-15 z-100 fixed top-0 left-0">
+    <div className="z-50 fixed top-0 left-0 h-screen w-15 bg-ultLightGreen">
       <IconButton variant="text" size="lg" onClick={openDrawer}>
         {isDrawerOpen ? (
           <XMarkIcon className="h-8 w-8 stroke-2" />
@@ -57,7 +56,7 @@ const DashboardSidebar = () => {
         <Card
           color="transparent"
           shadow={false}
-          className="h-[calc(100vh-2rem)] w-full p-4 z-100"
+          className="h-[calc(100vh-2rem)] w-full p-4 z-50"
         >
           <div className="mb-2 flex items-center gap-4 p-4">
             <img
@@ -199,10 +198,10 @@ const DashboardSidebar = () => {
               Log Out
             </ListItem>
           </List>
-                  </Card>
+        </Card>
       </Drawer>
     </div>
   );
-}
+};
 
 export default DashboardSidebar;
