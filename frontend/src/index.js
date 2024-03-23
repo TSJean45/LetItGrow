@@ -14,7 +14,8 @@ import {
   GrowBot,
   CropForecast,
   PersonalDashboard,
-  Forum
+  Forum,
+  Market
 } from './pages'
 import { ThemeProvider } from '@material-tailwind/react'
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
   {
     path: '/PersonalDashboard',
     element: <PersonalDashboard />,
+  },
+  {
+    path: '/Market',
+    element: <Market />,
   },
 ])
 

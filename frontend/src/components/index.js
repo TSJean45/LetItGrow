@@ -20,3 +20,4 @@ export { default as DashboardMap } from './DashboardMap';
 export { default as MapDetails } from './MapDetails';
 export { default as NotificationBell } from './NotificationBell';
 export { default as ForumNavBar } from './ForumNavBar';
+export { default as MarketNavBar } from './MarketNavBar';
