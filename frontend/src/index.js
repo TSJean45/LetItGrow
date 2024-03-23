@@ -9,11 +9,11 @@ import {
   Signup,
   PlantSimulation,
   MyGarden,
-  PersonalDashboard,
+  FarmerDashboard,
   DiseaseDetect,
   GrowBot,
   CropForecast,
-  Forum
+  PersonalDashboard
 } from './pages'
 import { ThemeProvider } from '@material-tailwind/react'
 
@@ -43,8 +43,8 @@ const router = createBrowserRouter([
     element: <DiseaseDetect />,
   },
   {
-    path: '/PersonalDashboard',
-    element: <PersonalDashboard />,
+    path: '/FarmerDashboard',
+    element: <FarmerDashboard />,
   },
   {
     path: '/GrowBot',
@@ -53,10 +53,6 @@ const router = createBrowserRouter([
   {
     path: '/CropForecast',
     element: <CropForecast />,
-  },
-  {
-    path: '/Forum',
-    element: <Forum />,
   },
 ])
 

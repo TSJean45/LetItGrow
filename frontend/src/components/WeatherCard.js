@@ -10,10 +10,10 @@ const WeatherCard = ({ icon, title, value, constant }) => {
             {icon && <img src={require(`../assets/${icon}`)} alt="Icon" className="h-8 w-8" />}
           </div>
           <div className='col-span-2'>
-            <Typography variant="small" className="font-bold" color="gray">
+            <Typography variant="small" className="font-bold text-left" color="gray">
               {title}
             </Typography>
-            <div className="flex items-center">
+            <div className="flex items-center justify-items-start">
               <Typography variant="h3" className="font-bold" color="black" style={{ marginRight: '4px' }}>
                 {value}
               </Typography>
