@@ -8,3 +8,4 @@ export { default as GrowBot } from './GrowBot';
 export { default as CropForecast } from './CropForecast';
 export { default as PersonalDashboard } from './PersonalDashboard';
 export { default as Forum } from './Forum';
+export { default as SpaceMapping } from './SpaceMapping';
