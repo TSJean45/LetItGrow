@@ -10,6 +10,7 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
 
 function Routing({ identity }) {
   const [openMenu, setOpenMenu] = React.useState(false);
@@ -69,52 +70,58 @@ function Routing({ identity }) {
             </MenuItem>
           </MenuHandler>
           <MenuList>
-            <MenuItem>Farm A</MenuItem>
-            <MenuItem>Farm B</MenuItem>
-            <MenuItem>Farm C</MenuItem>
+            <MenuItem component={Link} to="/FarmerDashboard">
+              Farm A
+            </MenuItem>
+            <MenuItem component={Link} to="/FarmerDashboard">
+              Farm B
+            </MenuItem>
+            <MenuItem component={Link} to="/FarmerDashboard">
+              Farm C
+            </MenuItem>
           </MenuList>
         </Menu>
       </>
     ),
     personal: (
       <Menu
-          placement="right-start"
-          open={openMenu}
-          handler={setOpenMenu}
-          allowHover
-          offset={15}
-        >
-          <MenuHandler className="flex items-center justify-between">
-            <MenuItem>
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M2 0C1.46957 0 0.960859 0.210714 0.585786 0.585786C0.210714 0.960859 0 1.46957 0 2V12C0 12.5304 0.210714 13.0391 0.585786 13.4142C0.960859 13.7893 1.46957 14 2 14H12C12.5304 14 13.0391 13.7893 13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12V2C14 1.46957 13.7893 0.960859 13.4142 0.585786C13.0391 0.210714 12.5304 0 12 0H2ZM2 2H12V9H10L9 11H5L4 9H2V2Z"
-                  fill="#90A4AE"
-                />
-              </svg>
-              Farmer Mode
-              <ChevronRightIcon
-                strokeWidth={2.5}
-                className={`h-3.5 w-3.5 transition-transform ${
-                  openMenu ? "rotate-90" : ""
-                }`}
+        placement="right-start"
+        open={openMenu}
+        handler={setOpenMenu}
+        allowHover
+        offset={15}
+      >
+        <MenuHandler className="flex items-center justify-between">
+          <MenuItem>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M2 0C1.46957 0 0.960859 0.210714 0.585786 0.585786C0.210714 0.960859 0 1.46957 0 2V12C0 12.5304 0.210714 13.0391 0.585786 13.4142C0.960859 13.7893 1.46957 14 2 14H12C12.5304 14 13.0391 13.7893 13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12V2C14 1.46957 13.7893 0.960859 13.4142 0.585786C13.0391 0.210714 12.5304 0 12 0H2ZM2 2H12V9H10L9 11H5L4 9H2V2Z"
+                fill="#90A4AE"
               />
-            </MenuItem>
-          </MenuHandler>
-          <MenuList>
-            <MenuItem>Farm A</MenuItem>
-            <MenuItem>Farm B</MenuItem>
-            <MenuItem>Farm C</MenuItem>
-          </MenuList>
-        </Menu>
+            </svg>
+            Farmer Mode
+            <ChevronRightIcon
+              strokeWidth={2.5}
+              className={`h-3.5 w-3.5 transition-transform ${
+                openMenu ? "rotate-90" : ""
+              }`}
+            />
+          </MenuItem>
+        </MenuHandler>
+        <MenuList>
+          <MenuItem>Farm A</MenuItem>
+          <MenuItem>Farm B</MenuItem>
+          <MenuItem>Farm C</MenuItem>
+        </MenuList>
+      </Menu>
     ),
   };
 
