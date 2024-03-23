@@ -15,7 +15,8 @@ import {
   CropForecast,
   PersonalDashboard,
   Forum,
-  SpaceMapping
+  SpaceMapping,
+  ClassesEvents
 } from './pages'
 import { ThemeProvider } from '@material-tailwind/react'
 
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
   {
     path: '/SpaceMapping',
     element: <SpaceMapping />,
+  },
+  {
+    path: '/ClassesEvents',
+    element: <ClassesEvents />,
   },
 ])
 
