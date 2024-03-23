@@ -23,3 +23,4 @@ export { default as PersonalCarousel } from './PersonalCarousel';
 export { default as PersonalCarouselCard } from './PersonalCarouselCard';
 export { default as ActivePlant } from './ActivePlant';
 export { default as ForumNavBar } from './ForumNavBar';
+export { default as SpaceForm } from './SpaceForm';
