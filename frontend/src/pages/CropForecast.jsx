@@ -33,7 +33,7 @@ const CropForecast = () => {
           padding="0"
           strokeWidth="0"
           style={{
-            fontSize: "64px",
+            fontSize: "50px",
             fontFamily: "baloo",
           }}
         >
