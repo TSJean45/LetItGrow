@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { mapContents } from "../constants";
 import {
   Alert,
@@ -10,6 +10,10 @@ import {
   TimelineBody,
   Typography,
   Button,
+  Dialog,
+  DialogBody,
+  DialogHeader,
+  DialogFooter,
 } from "@material-tailwind/react";
 import { WeatherCard } from "../components";
 import CircularProgress from "@mui/joy/CircularProgress";
@@ -52,7 +56,8 @@ function Icon({ type }) {
 }
 
 const MapDetails = ({ sectionId }) => {
-  // Find the section with the matching ID
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
   const section = mapContents.find((s) => s.id === sectionId);
 
   if (!section) {
@@ -128,6 +133,7 @@ const MapDetails = ({ sectionId }) => {
                 <div>{section.status}</div>
                 {section.button && (
                   <Button
+                    onClick={handleOpen}
                     size="md"
                     color="green"
                     className="ml-40 py-0 text-sm"
@@ -137,6 +143,25 @@ const MapDetails = ({ sectionId }) => {
                 )}
               </div>
             </Alert>
+            <Dialog open={open} handler={handleOpen}>
+              <DialogHeader>Are you done watering this area?</DialogHeader>
+              <DialogBody>
+                Update your water tracking activity to done.
+              </DialogBody>
+              <DialogFooter>
+                <Button
+                  variant="text"
+                  color="red"
+                  onClick={handleOpen}
+                  className="mr-1"
+                >
+                  <span>Cancel</span>
+                </Button>
+                <Button variant="gradient" color="green" onClick={handleOpen}>
+                  <span>Confirm</span>
+                </Button>
+              </DialogFooter>
+            </Dialog>
 
             <Timeline className="mt-5">
               <TimelineItem>

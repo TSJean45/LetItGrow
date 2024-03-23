@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Typography,
   Timeline,
@@ -11,6 +11,10 @@ import {
   Button,
   Card,
   CardBody,
+  Dialog,
+  DialogBody,
+  DialogHeader,
+  DialogFooter,
 } from "@material-tailwind/react";
 import { WeatherCard } from "../components";
 import {
@@ -57,6 +61,8 @@ function Icon({ type }) {
 }
 
 const ActivePlant = ({ activeCard }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
   return (
     <div className="mt-5">
       <div className="grid grid-cols-3 gap-4">
@@ -73,7 +79,7 @@ const ActivePlant = ({ activeCard }) => {
                 <CircularProgressbarWithChildren
                   value={16.67}
                   styles={buildStyles({
-                    backgroundColor:"#7F9F80",
+                    backgroundColor: "#7F9F80",
                     pathColor: `rgba(127, 159, 128, 1), ${16.67 / 100})`,
                   })}
                   strokeWidth={12}
@@ -99,12 +105,33 @@ const ActivePlant = ({ activeCard }) => {
                     size="md"
                     color="green"
                     className="ml-40 py-0 text-sm"
+                    onClick={handleOpen}
                   >
                     Done
                   </Button>
                 )}
               </div>
             </Alert>
+
+            <Dialog open={open} handler={handleOpen}>
+              <DialogHeader>Are you done watering this area?</DialogHeader>
+              <DialogBody>
+                Update your water tracking activity to done.
+              </DialogBody>
+              <DialogFooter>
+                <Button
+                  variant="text"
+                  color="red"
+                  onClick={handleOpen}
+                  className="mr-1"
+                >
+                  <span>Cancel</span>
+                </Button>
+                <Button variant="gradient" color="green" onClick={handleOpen}>
+                  <span>Confirm</span>
+                </Button>
+              </DialogFooter>
+            </Dialog>
 
             <Timeline className="mt-5">
               <TimelineItem>
