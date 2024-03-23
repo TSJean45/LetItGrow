@@ -15,6 +15,7 @@ import {
   Option,
 } from "@material-tailwind/react";
 import { classes, events } from "../constants";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 const ClassesEvents = () => {
   return (
@@ -25,10 +26,10 @@ const ClassesEvents = () => {
         <div className="flex justify-between items-center">
           <DashboardTitle>Classes & Events</DashboardTitle>
           <div className="flex items-center space-x-4">
-            <Input label="Search" size="lg" />
-            <Button variant="solid" ripple={false}>
-              Search
-            </Button>
+            <Input
+              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              label="Search"
+            />
           </div>
         </div>
         <div className="grid grid-cols-3 mt-2 gap-10">
