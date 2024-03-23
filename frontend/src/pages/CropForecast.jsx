@@ -1,6 +1,6 @@
 import React from 'react'
 import './CropForecast.scss'
-import { DashboardSidebar, Header } from '../components'
+import { DashboardSidebar } from '../components'
 import { plants } from '../constants/plants'
 import { RoughNotation } from 'react-rough-notation'
 import Select from 'react-select'
@@ -36,29 +36,28 @@ const CropForecast = () => {
         >
           Crop Yield Forecast
         </RoughNotation>
-
-        <selection>
-          <searchbar>
-            <Select options={plants} placeholder="Select Plants" />
-          </searchbar>
-          <searchbar>
-            <Select options={area} placeholder="Select Area" />
-          </searchbar>
-        </selection>
-
-        <result>
-          <div className="forecast">
-            <h4>2024 Tomato Yield Forecast</h4>
-            <img src={forecast} alt="" />
-            <p>Real Time Crop Yield Projection</p>
-          </div>
-
-          <div className="heatmap">
-            <h4>2024 Tomato Yield Heatmap</h4>
-            <img src={heatmap} alt="" />
-          </div>
-        </result>
       </div>
+      <selection>
+        <searchbar>
+          <Select options={plants} placeholder="Select Plants" />
+        </searchbar>
+        <searchbar>
+          <Select options={area} placeholder="Select Area" />
+        </searchbar>
+      </selection>
+
+      <result>
+        <div className="forecast">
+          <h4>2024 Tomato Yield Forecast</h4>
+          <img src={forecast} alt="" />
+          <p>Real Time Crop Yield Projection</p>
+        </div>
+
+        <div className="heatmap">
+          <h4>2024 Tomato Yield Heatmap</h4>
+          <img src={heatmap} alt="" />
+        </div>
+      </result>
     </div>
   )
 }
