@@ -54,7 +54,7 @@ const PersonalDashboard = () => {
     <div className="overflow-hidden bg-white">
       <DashboardSidebar />
       <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8 max-h-full">
-        <DashboardNavbar identity="farmer" name="Farm A" />
+        <DashboardNavbar identity="personal" name="Personal" />
         <div className="flex justify-between items-center">
           <DashboardTitle>Dashboard</DashboardTitle>
           <div className="text-right">
