@@ -41,7 +41,7 @@ const iconMap = {
   sim:CommandLineIcon,
   forum:BookOpenIcon,
   class:AcademicCapIcon,
-  marketplace:BuildingStorefrontIcon,
+  market:BuildingStorefrontIcon,
   // Add more icon mappings as needed
 };
 

@@ -25,7 +25,7 @@ const farmerSidebar = [
         name:"Classes and Events",
     },
     {
-        link: "/Marketplace",
+        link: "/Market",
         icon: "market",
         name:"Marketplace",
     }

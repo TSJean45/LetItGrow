@@ -70,6 +70,14 @@ const router = createBrowserRouter([
     path: '/Market',
     element: <Market />,
   },
+  {
+    path: '/SpaceMapping',
+    element: <SpaceMapping />,
+  },
+  {
+    path: '/ClassesEvents',
+    element: <ClassesEvents />,
+  },
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
