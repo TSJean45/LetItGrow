@@ -95,19 +95,19 @@ const DashboardSidebar = ({ type }) => {
               <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Link to="/profile">Profile</Link>
+              <Link to="/">Profile</Link>
             </ListItem>
             <ListItem>
               <ListItemPrefix>
                 <Cog6ToothIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Link to="/settings">Settings</Link>
+              <Link to="/">Settings</Link>
             </ListItem>
             <ListItem>
               <ListItemPrefix>
                 <PowerIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Link to="/logout">Log Out</Link>
+              <Link to="/">Log Out</Link>
             </ListItem>
           </List>
         </Card>
