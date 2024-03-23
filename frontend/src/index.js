@@ -13,7 +13,8 @@ import {
   DiseaseDetect,
   GrowBot,
   CropForecast,
-  PersonalDashboard
+  PersonalDashboard,
+  Forum
 } from './pages'
 import { ThemeProvider } from '@material-tailwind/react'
 
@@ -53,6 +54,14 @@ const router = createBrowserRouter([
   {
     path: '/CropForecast',
     element: <CropForecast />,
+  },
+  {
+    path: '/Forum',
+    element: <Forum />,
+  },
+  {
+    path: '/PersonalDashboard',
+    element: <PersonalDashboard />,
   },
 ])
 
