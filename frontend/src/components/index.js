@@ -19,3 +19,6 @@ export { default as WeatherList } from './WeatherList';
 export { default as DashboardMap } from './DashboardMap';
 export { default as MapDetails } from './MapDetails';
 export { default as NotificationBell } from './NotificationBell';
+export { default as PersonalCarousel } from './PersonalCarousel';
+export { default as PersonalCarouselCard } from './PersonalCarouselCard';
+export { default as ActivePlant } from './ActivePlant';
