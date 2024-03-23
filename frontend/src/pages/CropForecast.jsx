@@ -1,26 +1,29 @@
-import React from 'react'
-import './CropForecast.scss'
-import { DashboardSidebar } from '../components'
-import { plants } from '../constants/plants'
-import { RoughNotation } from 'react-rough-notation'
-import Select from 'react-select'
+import React from "react";
+import "./CropForecast.scss";
+import { DashboardSidebar, DashboardNavbar } from "../components";
+import { plants } from "../constants/plants";
+import { RoughNotation } from "react-rough-notation";
+import Select from "react-select";
 
-import forecast from '../assets/forecast.png'
-import heatmap from '../assets/heatmap.png'
+import forecast from "../assets/forecast.png";
+import heatmap from "../assets/heatmap.png";
 
 const area = [
-  { label: 'MY-Melaka', value: 'MY-Melaka' },
-  { label: 'MY-Kedah', value: 'MY-Kedah' },
-  { label: 'MY-Kelantan', value: 'MY-Kelantan' },
-  { label: 'MY-Terengganu', value: 'MY-Terengganu' },
-  { label: 'MY-Perlis', value: 'MY-Perlis' },
-]
+  { label: "MY-Melaka", value: "MY-Melaka" },
+  { label: "MY-Kedah", value: "MY-Kedah" },
+  { label: "MY-Kelantan", value: "MY-Kelantan" },
+  { label: "MY-Terengganu", value: "MY-Terengganu" },
+  { label: "MY-Perlis", value: "MY-Perlis" },
+];
 
 const CropForecast = () => {
   return (
     <div className="CropForecast">
-      <DashboardSidebar type="farmer"/>
-      <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+      <DashboardSidebar type="farmer" />
+      <div className="ml-20 w-full px-2 py-2 sm:px-4 max-h-full">
+        <DashboardNavbar identity="farmer" name="Farm A" />
+      </div>
+      <div style={{ textAlign: "center", marginBottom: "10px" }}>
         <RoughNotation
           type="highlight"
           show={true}
@@ -30,8 +33,8 @@ const CropForecast = () => {
           padding="0"
           strokeWidth="0"
           style={{
-            fontSize: '64px',
-            fontFamily: 'baloo',
+            fontSize: "64px",
+            fontFamily: "baloo",
           }}
         >
           Crop Yield Forecast
@@ -59,7 +62,7 @@ const CropForecast = () => {
         </div>
       </result>
     </div>
-  )
-}
+  );
+};
 
-export default CropForecast
+export default CropForecast;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header } from '../components'
+import { DashboardSidebar, DashboardNavbar } from '../components'
 import { RoughNotation } from 'react-rough-notation'
 import plantsimulation1 from '../assets/plant-simulation1.png'
 import './PlantSimulation.scss'
@@ -7,7 +7,10 @@ import './PlantSimulation.scss'
 const PlantSimulation = () => {
   return (
     <div className="plant-simulation">
-      <Header />
+      <DashboardSidebar type="personal" />
+      <div className="ml-20 w-full px-2 py-2 sm:px-4 max-h-full">
+        <DashboardNavbar identity="personal" name="Personal" />
+      </div>
 
       <div style={{ textAlign: 'center', marginBottom: '10px' }}>
         <RoughNotation

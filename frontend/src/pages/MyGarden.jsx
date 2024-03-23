@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Header } from '../components'
+import { DashboardSidebar, DashboardNavbar } from '../components'
 import { RoughNotation } from 'react-rough-notation'
 import './MyGarden.scss'
 import { FaPlus } from 'react-icons/fa'
@@ -102,7 +102,10 @@ const MyGarden = () => {
 
   return (
     <div className="MyGarden">
-      <Header />
+      <DashboardSidebar type="personal" />
+      <div className="ml-20 w-full px-2 py-5 sm:px-4 max-h-full">
+        <DashboardNavbar identity="personal" name="Personal" />
+      </div>
 
       {currentStep === 0 && (
         <div className="add-plant">

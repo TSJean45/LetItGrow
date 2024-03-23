@@ -8,7 +8,7 @@ import {
   Message,
   MessageInput,
 } from '@chatscope/chat-ui-kit-react'
-import { NavbarSelect, Header } from '../components'
+import { DashboardSidebar, DashboardNavbar } from '../components'
 import { RoughNotation } from 'react-rough-notation'
 import { BiSolidLeaf } from 'react-icons/bi'
 import { IconContext } from 'react-icons/lib'
@@ -36,8 +36,10 @@ const GrowBot = () => {
 
   return (
     <div className="growbot">
-      {/* <NavbarSelect /> */}
-      <Header />
+      <DashboardSidebar type="farmer" />
+      <div className="ml-20 w-full px-2 py-5 sm:px-4 max-h-full">
+        <DashboardNavbar identity="farmer" name="Farm A" />
+      </div>
       <div style={{ textAlign: 'center', marginBottom: '10px' }}>
         <RoughNotation
           type="highlight"
