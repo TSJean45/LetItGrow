@@ -145,7 +145,6 @@ const PersonalDashboard = () => {
             {activeCard && <ActivePlant activeCard={activeCard} />}
           </div>
           <Card className="col-span-1 bg-skyBlue rounded p-5">
-            https://www.material-tailwind.com/docs/react/dialog
             <Typography variant="h4" color="blue-gray" className="mb-2">
               Weather
             </Typography>
