@@ -16,9 +16,8 @@ import {
   PersonalDashboard,
   Forum,
   SpaceMapping,
-  ClassesEvents
-  Forum,
-  Market
+  ClassesEvents,
+  Market,
 } from './pages'
 import { ThemeProvider } from '@material-tailwind/react'
 
@@ -66,6 +65,10 @@ const router = createBrowserRouter([
   {
     path: '/PersonalDashboard',
     element: <PersonalDashboard />,
+  },
+  {
+    path: '/Market',
+    element: <Market />,
   },
 ])
 
