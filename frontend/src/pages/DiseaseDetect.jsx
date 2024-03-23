@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Header } from '../components'
+import { DashboardSidebar, DashboardNavbar } from '../components'
 import './DiseaseDetect.scss'
 import { RoughNotation } from 'react-rough-notation'
 import { FaPlus } from 'react-icons/fa'
@@ -14,7 +14,10 @@ const DiseaseDetect = () => {
 
   return (
     <div className="DiseaseDetect">
-      <Header />
+      <DashboardSidebar type="farmer" />
+      <div className="ml-20 w-full px-2 py-5 sm:px-4 max-h-full">
+        <DashboardNavbar identity="farmer" name="Farm A" />
+      </div>
 
       <div style={{ textAlign: 'center', marginBottom: '10px' }}>
         <RoughNotation
@@ -26,7 +29,7 @@ const DiseaseDetect = () => {
           padding="0"
           strokeWidth="0"
           style={{
-            fontSize: '64px',
+            fontSize: '50px',
             fontFamily: 'baloo',
           }}
         >

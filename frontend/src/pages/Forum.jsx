@@ -74,7 +74,7 @@ const Forum = () => {
 
   return (
     <div className="Forum">
-      <DashboardSidebar />
+      <DashboardSidebar type="personal"/>
       <DashboardNavbar />
       <ForumNavBar />
 
