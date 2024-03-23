@@ -24,3 +24,5 @@ export { default as PersonalCarouselCard } from './PersonalCarouselCard';
 export { default as ActivePlant } from './ActivePlant';
 export { default as ForumNavBar } from './ForumNavBar';
 export { default as SpaceForm } from './SpaceForm';
+export { default as ClassesCard } from './ClassesCard';
+export { default as EventCard } from './EventCard';

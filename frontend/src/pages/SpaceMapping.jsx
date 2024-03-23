@@ -27,7 +27,6 @@ const SpaceMapping = () => {
           <div className="col-span-1 flex">
             <SpaceForm />
           </div>
-
           <div className="col-span-2 flex">
             <MapContainer
               center={[2.5312673261085106, 102.35790252685548]}
