@@ -6,3 +6,5 @@ export { default as mapContents } from './mapContents';
 export { default as personalPlants } from './personalPlants';
 export { default as classes } from './classes';
 export { default as events } from './events';
+export { default as personalSidebar } from './personalSidebar';
+export { default as farmerSidebar } from './farmerSidebar';

@@ -52,7 +52,7 @@ const PersonalDashboard = () => {
 
   return (
     <div className="overflow-hidden bg-white">
-      <DashboardSidebar />
+      <DashboardSidebar type="personal"/>
       <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8 max-h-full">
         <DashboardNavbar identity="personal" name="Personal" />
         <div className="flex justify-between items-center">

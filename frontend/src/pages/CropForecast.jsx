@@ -19,7 +19,7 @@ const area = [
 const CropForecast = () => {
   return (
     <div className="CropForecast">
-      <DashboardSidebar />
+      <DashboardSidebar type="farmer"/>
       <div style={{ textAlign: 'center', marginBottom: '10px' }}>
         <RoughNotation
           type="highlight"
