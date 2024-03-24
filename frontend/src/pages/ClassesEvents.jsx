@@ -8,7 +8,6 @@ import {
   EventCard,
 } from "../components";
 import {
-  Button,
   Input,
   Typography,
   Select,
