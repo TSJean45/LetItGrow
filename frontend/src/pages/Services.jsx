@@ -79,7 +79,9 @@ const Services = () => {
                 empowering growers to cultivate fields of abundance year after
                 year.
               </p>
-              <button className="try">Try Now</button>
+              <button className="try">
+                <a href="./CropForecast">Try Now</a>
+              </button>
             </content>
             <demo>
               <searchbar>
@@ -124,13 +126,13 @@ const Services = () => {
                 Utilizing geographic information systems (GIS) and remote
                 sensing technologies, it delineates field boundaries, soil
                 types, and topographic features.{' '}
-              </p><button className="try">Try Now</button>
+              </p>
+              <button className="try">
+                <a href="/SpaceMapping">Try Now</a></button>
             </content>
 
             <img src={spacemap} alt="" />
           </div>
-
-          
         </div>
 
         <div
@@ -164,12 +166,11 @@ const Services = () => {
                 fertility, light exposure, and weather forecasts, empowering
                 farmers with actionable intelligence for optimal yield and
                 resource management.
-              </p><button className="try">Try Now</button>
+              </p>
+              <button className="try"><a href="/FarmerDashboard">Try Now</a></button>
             </content>
             <img src={farmdashboard} alt="" />
           </div>
-
-          
         </div>
       </div>
 
@@ -220,7 +221,7 @@ const Services = () => {
                 researchers in optimizing cultivation practices and predicting
                 crop behavior under various environmental scenarios.
               </p>
-              <button className="try">Try Now</button>
+              <button className="try"><a href="/PlantSimulation">Try Now</a></button>
             </content>
 
             <demo>
@@ -255,8 +256,6 @@ const Services = () => {
               </div>
             </demo>
           </div>
-
-          
         </div>
 
         <div
@@ -290,12 +289,12 @@ const Services = () => {
                 precision. <br />
                 It's like a green-fingered symphony, conducted from your
                 fingertips.
-              </p><button className="try">Try Now</button>
+              </p>
+              <button className="try"><a href="/PersonalDashboard">Try Now</a></button>
             </content>
 
             <img src={personaldashboard} alt="" />
           </div>
-          
         </div>
       </div>
     </div>
