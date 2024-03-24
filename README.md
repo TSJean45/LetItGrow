@@ -56,8 +56,8 @@ Compile and start server
 <p align="left"> 
   <img src="https://www.vectorlogo.zone/logos/pytorch/pytorch-icon.svg" alt="pytorch" width="40" height="40"/> 
   <img src="https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg" alt="tensorflow" width="40" height="40"/> 
-  <img src="https://opencv.org/wp-content/uploads/2019/07/OpenCV_Logo_with_text_svg_file.svg" alt="opencv" width="40" height="40"/> 
-  <img src="https://www.vectorlogo.zone/logos/pandas/pandas-icon.svg" alt="pandas" width="40" height="40"/> 
+  <img src="https://opencv.org/wp-content/uploads/2020/07/OpenCV_logo_no_text-1.svg" alt="opencv" width="40" height="40"/> 
+  <img src="https://pandas.pydata.org/static/img/pandas_white.svg" alt="pandas" width="40" height="40"/> 
 </p>
 
 ### Programming Languages
