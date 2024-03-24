@@ -9,11 +9,11 @@ import forecast from "../assets/forecast.png";
 import heatmap from "../assets/heatmap.png";
 
 const area = [
-  { label: "Farm A", value: "Farm A" },
-  { label: "Farm B", value: "Farm B" },
-  { label: "Farm C", value: "Farm C" },
-  { label: "Farm D", value: "Farm D" },
-  { label: "Farm E", value: "Farm E" },
+  { label: "MY-Melaka", value: "MY-Melaka" },
+  { label: "MY-Kedah", value: "MY-Kedah" },
+  { label: "MY-Kelantan", value: "MY-Kelantan" },
+  { label: "MY-Terengganu", value: "MY-Terengganu" },
+  { label: "MY-Perlis", value: "MY-Perlis" },
 ];
 
 const CropForecast = () => {
@@ -45,7 +45,7 @@ const CropForecast = () => {
           <Select options={plants} placeholder="Select Plants" />
         </searchbar>
         <searchbar>
-          <Select options={area} placeholder="Select Farm" />
+          <Select options={area} placeholder="Select Area" />
         </searchbar>
       </selection>
 

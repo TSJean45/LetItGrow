@@ -38,7 +38,7 @@ const App = () => {
               image: 'descImg-2.png',
             },
             {
-              title: 'Soil Monitoring Dashboard',
+              title: 'Activity Tracking Dashboard',
               image: 'descImg-3.png',
             },
           ]}
@@ -62,7 +62,7 @@ const App = () => {
               image: 'descImg-5.png',
             },
             {
-              title: 'Project Management Dashboard',
+              title: 'Farming Dashboard',
               image: 'descImg-6.png',
             },
           ]}
