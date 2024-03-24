@@ -86,7 +86,7 @@ const DashboardSidebar = ({ type }) => {
                   <ListItemPrefix>
                     <IconComponent className="h-5 w-5"/>
                   </ListItemPrefix>
-                  <Link to={item.link}>{item.name}</Link>
+                  <a href={item.link}>{item.name}</a>
                 </ListItem>
               );
             })}
@@ -95,19 +95,19 @@ const DashboardSidebar = ({ type }) => {
               <ListItemPrefix>
                 <UserCircleIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Link to="/">Profile</Link>
+              <a href="/">Profile</a>
             </ListItem>
             <ListItem>
               <ListItemPrefix>
                 <Cog6ToothIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Link to="/">Settings</Link>
+              <a href="/">Settings</a>
             </ListItem>
             <ListItem>
               <ListItemPrefix>
                 <PowerIcon className="h-5 w-5" />
               </ListItemPrefix>
-              <Link to="/">Log Out</Link>
+              <a href="/">Log Out</a>
             </ListItem>
           </List>
         </Card>
