@@ -9,6 +9,7 @@ import forecast from '../assets/services-forecast.jpg'
 import spacemap from '../assets/services-spacemap.png'
 import farmdashboard from '../assets/services-dashboard.png'
 import personaldashboard from '../assets/services-dashboard2.png'
+import septoria from '../assets/septoria.png'
 
 const plants = [
   { label: 'Tomato', value: 'Tomato' },
@@ -128,7 +129,8 @@ const Services = () => {
                 types, and topographic features.{' '}
               </p>
               <button className="try">
-                <a href="/SpaceMapping">Try Now</a></button>
+                <a href="/SpaceMapping">Try Now</a>
+              </button>
             </content>
 
             <img src={spacemap} alt="" />
@@ -167,7 +169,9 @@ const Services = () => {
                 farmers with actionable intelligence for optimal yield and
                 resource management.
               </p>
-              <button className="try"><a href="/FarmerDashboard">Try Now</a></button>
+              <button className="try">
+                <a href="/FarmerDashboard">Try Now</a>
+              </button>
             </content>
             <img src={farmdashboard} alt="" />
           </div>
@@ -182,6 +186,9 @@ const Services = () => {
           </button>
           <button onClick={() => handlePersonalClick('dashboard')}>
             Dedicated Dashboard
+          </button>
+          <button onClick={() => handlePersonalClick('diseasedetect')}>
+            Disease Detector
           </button>
         </div>
 
@@ -221,7 +228,9 @@ const Services = () => {
                 researchers in optimizing cultivation practices and predicting
                 crop behavior under various environmental scenarios.
               </p>
-              <button className="try"><a href="/PlantSimulation">Try Now</a></button>
+              <button className="try">
+                <a href="/PlantSimulation">Try Now</a>
+              </button>
             </content>
 
             <demo>
@@ -290,10 +299,57 @@ const Services = () => {
                 It's like a green-fingered symphony, conducted from your
                 fingertips.
               </p>
-              <button className="try"><a href="/PersonalDashboard">Try Now</a></button>
+              <button className="try">
+                <a href="/PersonalDashboard">Try Now</a>
+              </button>
             </content>
 
             <img src={personaldashboard} alt="" />
+          </div>
+        </div>
+
+        <div
+          className={
+            PersonalButton === 'diseasedetect'
+              ? 'diseasedetect-content'
+              : 'hidden'
+          }
+        >
+          <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+            <RoughNotation
+              type="highlight"
+              show={true}
+              color="#DFEFCD"
+              animationDelay="10"
+              animationDuration="2000"
+              padding="0"
+              strokeWidth="0"
+              style={{
+                fontSize: '50px',
+                fontFamily: 'baloo',
+              }}
+            >
+              Disease Detector
+            </RoughNotation>
+          </div>
+
+          <div className="container">
+            <content>
+              <p>
+                <b>AI botany detective!</b>
+                <br />
+                It scrutinizes plants like a hawk, detecting signs of illness
+                quicker than a blink.
+                <br />
+                Armed with algorithms, it deciphers leafy mysteries, saving
+                crops from peril with a digital green thumb.
+              </p>
+              <button className="try">
+                <a href="/DiseaseDetect">Try Now</a>
+              </button>
+            </content>
+
+            <img src={septoria} alt="" />
           </div>
         </div>
       </div>
