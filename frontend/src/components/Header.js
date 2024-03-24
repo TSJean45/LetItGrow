@@ -8,7 +8,7 @@ const Header = () => {
   // Replace paths with your desired paths
   const navigation = [
     { title: 'Home', path: '/' },
-    { title: 'Services', path: '/' },
+    { title: 'Services', path: '/Services' },
     // { title: 'Log in', path: '/Login' },
     // { title: "Pricing", path: "/pricing" },
     // { title: "Contact", path: "/contact" },
