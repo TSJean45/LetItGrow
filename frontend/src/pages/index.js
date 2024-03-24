@@ -11,3 +11,4 @@ export { default as Forum } from './Forum';
 export { default as SpaceMapping } from './SpaceMapping';
 export { default as ClassesEvents } from './ClassesEvents';
 export { default as Market } from './Market';
+export { default as Services } from './Services';
