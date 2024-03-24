@@ -71,14 +71,14 @@ const App = () => {
         />
       </MainContainer>
       <MainContainer bgColor="bg-lightGreen">
-        <SectionTitle>Sun & Soil Market</SectionTitle>
+        <SectionTitle>Farmer's Market</SectionTitle>
         <ItemCarousel items={items} type={"market"} />
-        <Button text="Check Out More ->"  bgColor="bg-mediumGreen" hoverBg="bg-lightGreen" textColor="text-white" hoverText="text-white"/>
+        <Button href="/Market" text="Check Out More ->"  bgColor="bg-mediumGreen" hoverBg="bg-lightGreen" textColor="text-white" hoverText="text-white"/>
       </MainContainer>
       <MainContainer>
         <SectionTitle>From The Forum</SectionTitle>
         <ItemCarousel items={forumContent} type={"forum"}/>
-        <Button text="Check Out More ->" bgColor="bg-navyBlue" hoverBg="bg-lightBlue" textColor="text-white" hoverText="text-white"/>
+        <Button href="/Forum" text="Check Out More ->" bgColor="bg-navyBlue" hoverBg="bg-lightBlue" textColor="text-white" hoverText="text-white"/>
       </MainContainer>
       <MainContainer bgColor="bg-lightGreen">
         <SectionTitle>Upcoming Events & Gardening Classes</SectionTitle>
