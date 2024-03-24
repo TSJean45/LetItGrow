@@ -24,9 +24,10 @@ const GrowBot = () => {
       sender: 'sender',
     },
     {
-      text: 'OK.',
+      text: "Make sure it's getting enough sunlight, water, and proper drainage. Check for pests and diseases as well. If the plant is severely damaged, you might need to trim the dead parts and give it some extra care.",
       sender: 'receiver',
     },
+    
   ])
 
   const handleSendMessage = (message) => {
