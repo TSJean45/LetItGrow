@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import {
   HeroSection,
   SectionTitle,
@@ -9,7 +9,7 @@ import {
   ImageCarousel,
   Button,
   Contact,
-  Footer
+  Footer,
 } from "./components";
 import { items, forumContent, classContent } from "./constants";
 
@@ -30,16 +30,16 @@ const App = () => {
           cardText="text-dullGreen"
           features={[
             {
-              title: 'Plant Condition Simulation',
-              image: 'descImg-1.png',
+              title: "Plant Condition Simulation",
+              image: "descImg-1.png",
             },
             {
-              title: 'Plant Disease Detection',
-              image: 'descImg-2.png',
+              title: "Plant Disease Detection",
+              image: "descImg-2.png",
             },
             {
-              title: 'Activity Tracking Dashboard',
-              image: 'descImg-3.png',
+              title: "Activity Tracking Dashboard",
+              image: "descImg-3.png",
             },
           ]}
         />
@@ -54,16 +54,16 @@ const App = () => {
         <FeatureSection
           features={[
             {
-              title: 'Space Mapping',
-              image: 'descImg-4.png',
+              title: "Space Mapping",
+              image: "descImg-4.png",
             },
             {
-              title: 'AI Yield Prediction',
-              image: 'descImg-5.png',
+              title: "AI Yield Prediction",
+              image: "descImg-5.png",
             },
             {
-              title: 'Farming Dashboard',
-              image: 'descImg-6.png',
+              title: "Farming Dashboard",
+              image: "descImg-6.png",
             },
           ]}
           cardColor="bg-midDarkGreen"
@@ -73,23 +73,37 @@ const App = () => {
       <MainContainer bgColor="bg-lightGreen">
         <SectionTitle>Farmer's Market</SectionTitle>
         <ItemCarousel items={items} type={"market"} />
-        <Button href="/Market" text="Check Out More ->"  bgColor="bg-mediumGreen" hoverBg="bg-lightGreen" textColor="text-white" hoverText="text-white"/>
+        <Button
+          href="/Market"
+          text="Check Out More ->"
+          bgColor="bg-mediumGreen"
+          hoverBg="bg-lightGreen"
+          textColor="text-white"
+          hoverText="text-white"
+        />
       </MainContainer>
       <MainContainer>
         <SectionTitle>From The Forum</SectionTitle>
-        <ItemCarousel items={forumContent} type={"forum"}/>
-        <Button href="/Forum" text="Check Out More ->" bgColor="bg-navyBlue" hoverBg="bg-lightBlue" textColor="text-white" hoverText="text-white"/>
+        <ItemCarousel items={forumContent} type={"forum"} />
+        <Button
+          href="/Forum"
+          text="Check Out More ->"
+          bgColor="bg-navyBlue"
+          hoverBg="bg-lightBlue"
+          textColor="text-white"
+          hoverText="text-white"
+        />
       </MainContainer>
       <MainContainer bgColor="bg-lightGreen">
         <SectionTitle>Upcoming Events & Gardening Classes</SectionTitle>
-        <ImageCarousel items={classContent} type={"classes"}/>
+        <ImageCarousel items={classContent} type={"classes"} />
       </MainContainer>
       <MainContainer>
         <Contact />
       </MainContainer>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
