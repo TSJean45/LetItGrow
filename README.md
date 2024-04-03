@@ -21,10 +21,25 @@ Clone project with ssh
   git clone git@github.com:TSJean45/LetItGrow.git
 ```
 
-Navigate to directory and install dependency
+Create an environemnt in the backend folder and activate it before installing requirements
 
 ```bash
-  cd frontend LetItGrow/frontend
+  cd backend
+  py -m venv venv
+  venv\scripts\activate
+  pip install -r requirements.txt
+```
+
+Run the backend server
+
+```bash
+  py server.py
+```
+
+Open a new terminal and navigate to the frontend folder to install the dependency
+
+```bash
+  cd ../frontend
   npm install
 ```
 
