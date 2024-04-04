@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DashboardSidebar, DashboardNavbar } from '../components'
 import { RoughNotation } from 'react-rough-notation'
 import './MyGarden.scss'
@@ -18,15 +18,9 @@ import fruit from '../assets/fruit-formation.png'
 import ripening from '../assets/ripening.png'
 import tomato from '../assets/tomato.png'
 
-const PlantButton = ({ label, imageSrc }) => {
-  const [isClicked, setIsClicked] = useState(false)
-
-  const handleClick = () => {
-    setIsClicked(!isClicked)
-  }
-
+const PlantButton = ({ label, imageSrc, onClick, selected }) => {
   return (
-    <button className={isClicked ? 'clicked' : ''} onClick={handleClick}>
+    <button className={selected ? 'clicked' : ''} onClick={onClick}>
       {label} <img src={imageSrc} alt="" />
     </button>
   )
@@ -90,7 +84,85 @@ const MyGarden = () => {
   const [currentStep, setCurrentStep] = useState(0)
   const [selection, setSelection] = useState('')
   const navigate = useNavigate()
+  const [isClicked, setIsClicked] = useState(false)
 
+  // get the selected value/adjustments of the plants
+  const [selectedPlant, setSelectedPlant] = useState(null)
+  const [selectedStage, setSelectedStage] = useState(null)
+  const [temperature, setTemperature] = useState(50)
+  const [watering, setWatering] = useState(50)
+  const [selectedSoil, setSelectedSoil] = useState(null)
+  const [selectedFertilizer, setSelectedFertilizer] = useState(null)
+  const [selectedLight, setSelectedLight] = useState(null)
+
+  // species of plant
+  const handlePlantChange = (selectedOption) => {
+    setSelectedPlant(selectedOption)
+  }
+
+  // growing stage
+  const handleStageChange = (selectedStage) => {
+    setSelectedStage(selectedStage)
+  }
+
+  // temperature
+  const handleTemperatureChange = (event, newValue) => {
+    setTemperature(newValue)
+  }
+
+  // watering
+  const handleWateringChange = (event, newValue) => {
+    setWatering(newValue)
+  }
+
+  // soil
+  const handleSoilChange = (selectedOption) => {
+    setSelectedSoil(selectedOption)
+  }
+
+  // fertilizer
+  const handleFertilizerChange = (selectedOption) => {
+    setSelectedFertilizer(selectedOption)
+  }
+
+  // light
+  const handleLightChange = (selectedOption) => {
+    setSelectedLight(selectedOption)
+  }
+
+  // send selected adjustment to backend and retrieve the result from there
+  const result = () => {
+    const data = {
+      plant: selectedPlant,
+      stage: selectedStage,
+      temperature: temperature,
+      watering: watering,
+      soil: selectedSoil,
+      fertilizer: selectedFertilizer,
+      light: selectedLight,
+    }
+
+    console.log('Data to be sent to backend:', data)
+
+    fetch('http://localhost:5000/plant_simulation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Response from backend:', data)
+        // Handle response from backend if needed
+      })
+      .catch((error) => {
+        console.error('Error sending data to backend:', error)
+        // Handle error if needed
+      })
+  }
+
+  // change to next step
   const handleNext = (selected) => {
     setSelection(selected)
     setCurrentStep((prevStep) => Math.min(prevStep + 1, 2)) // Max step 2
@@ -107,6 +179,7 @@ const MyGarden = () => {
         <DashboardNavbar identity="personal" name="Personal" />
       </div>
 
+      {/* select or add new plant in my garden */}
       {currentStep === 0 && (
         <div className="add-plant">
           <div style={{ textAlign: 'center', marginBottom: '10px' }}>
@@ -140,10 +213,11 @@ const MyGarden = () => {
         </div>
       )}
 
+      {/* add new plant */}
       {currentStep === 1 && (
         <div className="plant-info">
           <searchbar>
-            <Select options={plants} />
+            <Select options={plants} onChange={handlePlantChange} />
           </searchbar>
 
           <input type="name" required placeholder="Give a Name to Your Plant" />
@@ -151,17 +225,54 @@ const MyGarden = () => {
             <h4>Current Stages of Plants/Tree Growth</h4>
 
             <selection>
-              <PlantButton label="Germination" imageSrc={germination} />
-              <PlantButton label="Seedling" imageSrc={seedling} />
-              <PlantButton label="Vegetative Growth" imageSrc={vegetative} />
-              <PlantButton label="Bud Development" imageSrc={buddev} />
-              <PlantButton label="Flowering" imageSrc={flowering} />
-              <PlantButton label="Fruit Formation" imageSrc={fruit} />
-              <PlantButton label="Ripening" imageSrc={ripening} />
+              <PlantButton
+                label="Germination"
+                imageSrc={germination}
+                onClick={() => handleStageChange('Germination')}
+                selected={selectedStage === 'Germination'}
+              />
+              <PlantButton
+                label="Seedling"
+                imageSrc={seedling}
+                onClick={() => handleStageChange('Seedling')}
+                selected={selectedStage === 'Seedling'}
+              />
+              <PlantButton
+                label="Vegetative Growth"
+                imageSrc={vegetative}
+                onClick={() => handleStageChange('Vegetative Growth')}
+                selected={selectedStage === 'Vegetative Growth'}
+              />
+              <PlantButton
+                label="Bud Development"
+                imageSrc={buddev}
+                onClick={() => handleStageChange('Bud Development')}
+                selected={selectedStage === 'Bud Development'}
+              />
+              <PlantButton
+                label="Flowering"
+                imageSrc={flowering}
+                onClick={() => handleStageChange('Flowering')}
+                selected={selectedStage === 'Flowering'}
+              />
+              <PlantButton
+                label="Fruit Formation"
+                imageSrc={fruit}
+                onClick={() => handleStageChange('Fruit Formation')}
+                selected={selectedStage === 'Fruit Formation'}
+              />
+              <PlantButton
+                label="Ripening"
+                imageSrc={ripening}
+                onClick={() => handleStageChange('Ripening')}
+                selected={selectedStage === 'Ripening'}
+              />
             </selection>
           </div>
 
-          <button className='proceed' onClick={() => handleNext('plus')}>proceed</button>
+          <button className="proceed" onClick={() => handleNext('plus')}>
+            proceed
+          </button>
         </div>
       )}
 
@@ -207,6 +318,7 @@ const MyGarden = () => {
                   max={50}
                   aria-label="Default"
                   valueLabelDisplay="auto"
+                  onChange={handleTemperatureChange}
                 />
               </Box>
             </temperature>
@@ -220,6 +332,7 @@ const MyGarden = () => {
                   aria-label="Default"
                   valueLabelDisplay="auto"
                   color="secondary"
+                  onChange={handleWateringChange}
                 />
               </Box>
             </watering>
@@ -227,21 +340,28 @@ const MyGarden = () => {
             <soil>
               <p>Soil Condition</p>
               <searchbar>
-                <Select options={soil} />
+                <Select options={soil} onChange={handleSoilChange} />
               </searchbar>
             </soil>
             <fertilizer>
               <p>Fertilizer</p>
               <searchbar>
-                <Select options={fertilizer} />
+                <Select
+                  options={fertilizer}
+                  onChange={handleFertilizerChange}
+                />
               </searchbar>
             </fertilizer>
             <light>
               <p>Light</p>
               <searchbar>
-                <Select options={light} />
+                <Select options={light} onChange={handleLightChange} />
               </searchbar>
             </light>
+
+            <button className="confirm" onClick={result}>
+              Confirm
+            </button>
           </adjustment>
         </div>
       )}
