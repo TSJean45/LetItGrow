@@ -85,6 +85,7 @@ const MyGarden = () => {
   const [selection, setSelection] = useState('')
   const navigate = useNavigate()
   const [isClicked, setIsClicked] = useState(false)
+  const [resultData, setResultData] = useState(null)
 
   // get the selected value/adjustments of the plants
   const [selectedPlant, setSelectedPlant] = useState(null)
@@ -154,6 +155,8 @@ const MyGarden = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log('Response from backend:', data)
+        setResultData(data.result)
+
         // Handle response from backend if needed
       })
       .catch((error) => {
@@ -297,15 +300,14 @@ const MyGarden = () => {
                 Results
               </RoughNotation>
             </div>
-            <p>
-              Your tomato plants is overwatering. Stems will turn yellow and the
-              leaves wilting. The best amount of water is around 100 ml. If this
-              condition continue for 5 days, your plant will start to wilt.{' '}
-              <br />
-              <br />
-              <b>Your plant expected to bud in 24th March 2024</b>
-            </p>
-            <img src={vegetative} alt="" />
+            {resultData ? ( 
+              <content>
+                <p>{resultData}</p> 
+                <img src={vegetative} alt="" />
+              </content>
+            ) : (
+              <content>Adjust the parameter here to simulate the condition of your plant</content>
+            )}
           </results>
 
           <adjustment>

@@ -166,6 +166,20 @@
           margin: 5px;
         }
       }
+
+      button{
+        padding: 10px;
+        font-weight: 500;
+        background-color: #dfefcd;
+        margin: 20px;
+        width: 20%;
+        border-radius: 30px;
+
+        &:hover{
+          background-color: #9abd71;
+          color: white;
+        }
+      }
     }
   }
 }
