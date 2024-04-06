@@ -14,26 +14,41 @@ import { BiSolidLeaf } from 'react-icons/bi'
 import { IconContext } from 'react-icons/lib'
 
 const GrowBot = () => {
+  const [loading, setLoading] = useState(false)
+  const [resultData, setResultData] = useState(null)
+
   const [messages, setMessages] = useState([
     {
       text: 'Hi how may I help you today?',
       sender: 'receiver',
     },
-    {
-      text: 'My sunflower is dying',
-      sender: 'sender',
-    },
-    {
-      text: "Make sure it's getting enough sunlight, water, and proper drainage. Check for pests and diseases as well. If the plant is severely damaged, you might need to trim the dead parts and give it some extra care.",
-      sender: 'receiver',
-    },
-    
+
   ])
 
   const handleSendMessage = (message) => {
     setMessages([...messages, { text: message, sender: 'sender' }])
-    // Here you can add logic to handle the bot's response
+    console.log('Message sent', message)
+  
+    fetch('http://localhost:5000/growbot', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Response from backend:', data)
+        // Concatenate new messages with existing ones
+        setMessages(prevMessages => [...prevMessages,  { text: data.result, sender: 'receiver' }])
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error('Error sending data to backend:', error)
+        setLoading(false)
+      })
   }
+  
 
   return (
     <div className="growbot">
@@ -57,13 +72,14 @@ const GrowBot = () => {
         >
           <span style={{ display: 'inline-flex', alignItems: 'center' }}>
             GrowBot
-            <IconContext.Provider value={{color: '#66A614'}}><BiSolidLeaf style={{ marginLeft: '10px' }} /></IconContext.Provider>
-            
+            <IconContext.Provider value={{ color: '#66A614' }}>
+              <BiSolidLeaf style={{ marginLeft: '10px' }} />
+            </IconContext.Provider>
           </span>
         </RoughNotation>
       </div>
       <div className="chat">
-        <MainContainer >
+        <MainContainer>
           <ChatContainer className="chatcontainer">
             <MessageList>
               {messages.map((msg, index) => (

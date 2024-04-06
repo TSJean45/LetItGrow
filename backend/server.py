@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -27,6 +26,18 @@ def plant_simulation():
     result = plantsimulation(plant, stage, temperature, watering, soil, fertilizer, light)
 
     return jsonify({"result": str(result)})
+
+@app.route("/growbot", methods=["POST"])
+def growbot():
+    question = request.json
+    
+    print(question)
+    
+    from huggingchat import growbot
+    
+    response = growbot(question)
+    
+    return jsonify({"result": str(response)})
 
 
 if __name__ == "__main__":

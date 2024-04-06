@@ -8,6 +8,7 @@ import { plants } from '../constants/plants'
 import Select from 'react-select'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
+import { Bars } from 'react-loading-icons'
 
 import germination from '../assets/germination.png'
 import seedling from '../assets/seedling.png'
@@ -17,6 +18,7 @@ import flowering from '../assets/flowering.png'
 import fruit from '../assets/fruit-formation.png'
 import ripening from '../assets/ripening.png'
 import tomato from '../assets/tomato.png'
+
 
 const PlantButton = ({ label, imageSrc, onClick, selected }) => {
   return (
@@ -86,6 +88,7 @@ const MyGarden = () => {
   const navigate = useNavigate()
   const [isClicked, setIsClicked] = useState(false)
   const [resultData, setResultData] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   // get the selected value/adjustments of the plants
   const [selectedPlant, setSelectedPlant] = useState(null)
@@ -143,7 +146,9 @@ const MyGarden = () => {
       light: selectedLight,
     }
 
-    console.log('Data to be sent to backend:', data)
+    // console.log('Data to be sent to backend:', data)
+
+    setLoading(true)
 
     fetch('http://localhost:5000/plant_simulation', {
       method: 'POST',
@@ -156,12 +161,11 @@ const MyGarden = () => {
       .then((data) => {
         console.log('Response from backend:', data)
         setResultData(data.result)
-
-        // Handle response from backend if needed
+        setLoading(false)
       })
       .catch((error) => {
         console.error('Error sending data to backend:', error)
-        // Handle error if needed
+        setLoading(false)
       })
   }
 
@@ -300,13 +304,18 @@ const MyGarden = () => {
                 Results
               </RoughNotation>
             </div>
-            {resultData ? ( 
+            {loading ? ( 
+              <div><Bars/></div>
+            ) : resultData ? ( 
               <content>
-                <p>{resultData}</p> 
+                <p>{resultData}</p>
                 <img src={vegetative} alt="" />
               </content>
             ) : (
-              <content>Adjust the parameter here to simulate the condition of your plant</content>
+              <content>
+                Adjust the parameter here to simulate the condition of your
+                plant
+              </content>
             )}
           </results>
 

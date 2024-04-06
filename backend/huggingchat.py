@@ -14,8 +14,10 @@ def generate_response(prompt_input, email, passwd):
     # Hugging Face Login
     sign = Login(email, passwd)
     cookies = sign.login()
+
     # Create ChatBot
     chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
+
     return chatbot.chat(prompt_input)
 
 
@@ -25,8 +27,11 @@ def plantsimulation(plant, stage, temperature, watering, soil, fertilizer, light
     response = generate_response(prompt, hf_email, hf_pass)
 
     return response
+
+
+def growbot(question):
+    response = generate_response(question, hf_email, hf_pass)
     
-def chatbot():
-    pass
-
-
+    print(response)
+    
+    return response
