@@ -19,7 +19,6 @@ import fruit from '../assets/fruit-formation.png'
 import ripening from '../assets/ripening.png'
 import tomato from '../assets/tomato.png'
 
-
 const PlantButton = ({ label, imageSrc, onClick, selected }) => {
   return (
     <button className={selected ? 'clicked' : ''} onClick={onClick}>
@@ -98,40 +97,49 @@ const MyGarden = () => {
   const [selectedSoil, setSelectedSoil] = useState(null)
   const [selectedFertilizer, setSelectedFertilizer] = useState(null)
   const [selectedLight, setSelectedLight] = useState(null)
+  const [page1Complete, setPage1Complete] = useState(false)
+  const [page2Complete, setPage2Complete] = useState(false)
 
   // species of plant
   const handlePlantChange = (selectedOption) => {
     setSelectedPlant(selectedOption)
+    setPage1Complete(true)
   }
 
   // growing stage
   const handleStageChange = (selectedStage) => {
     setSelectedStage(selectedStage)
+    setPage1Complete(true)
   }
 
   // temperature
   const handleTemperatureChange = (event, newValue) => {
     setTemperature(newValue)
+    setPage2Complete(true)
   }
 
   // watering
   const handleWateringChange = (event, newValue) => {
     setWatering(newValue)
+    setPage2Complete(true)
   }
 
   // soil
   const handleSoilChange = (selectedOption) => {
     setSelectedSoil(selectedOption)
+    setPage2Complete(true)
   }
 
   // fertilizer
   const handleFertilizerChange = (selectedOption) => {
     setSelectedFertilizer(selectedOption)
+    setPage2Complete(true)
   }
 
   // light
   const handleLightChange = (selectedOption) => {
     setSelectedLight(selectedOption)
+    setPage2Complete(true)
   }
 
   // send selected adjustment to backend and retrieve the result from there
@@ -224,14 +232,14 @@ const MyGarden = () => {
       {currentStep === 1 && (
         <div className="plant-info">
           <searchbar>
-            <Select options={plants} onChange={handlePlantChange} />
+            <Select options={plants} onChange={handlePlantChange} required />
           </searchbar>
 
           <input type="name" required placeholder="Give a Name to Your Plant" />
           <div className="stages">
             <h4>Current Stages of Plants/Tree Growth</h4>
 
-            <selection>
+            <selection required>
               <PlantButton
                 label="Germination"
                 imageSrc={germination}
@@ -277,7 +285,11 @@ const MyGarden = () => {
             </selection>
           </div>
 
-          <button className="proceed" onClick={() => handleNext('plus')}>
+          <button
+            className="proceed"
+            onClick={() => handleNext('plus')}
+            disabled={!page1Complete}
+          >
             proceed
           </button>
         </div>
@@ -304,9 +316,11 @@ const MyGarden = () => {
                 Results
               </RoughNotation>
             </div>
-            {loading ? ( 
-              <div><Bars/></div>
-            ) : resultData ? ( 
+            {loading ? (
+              <div>
+                <Bars />
+              </div>
+            ) : resultData ? (
               <content>
                 <p>{resultData}</p>
                 <img src={vegetative} alt="" />
@@ -370,7 +384,7 @@ const MyGarden = () => {
               </searchbar>
             </light>
 
-            <button className="confirm" onClick={result}>
+            <button className="confirm" onClick={result} disabled={!page2Complete}>
               Confirm
             </button>
           </adjustment>
