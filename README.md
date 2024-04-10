@@ -36,6 +36,11 @@ Run the backend server
   py server.py
 ```
 
+When pip install in the backend folder, remember to freeze the requirements.txt to update your installation. Do open a new terminal with venv turned on before running this command.
+```bash
+  pip freeze > requirements.txt
+```
+
 Open a new terminal and navigate to the frontend folder to install the dependency
 
 ```bash
@@ -61,9 +66,9 @@ Compile and start server
 ### Backend
 
 <p align="left"> 
-  <img src="https://cdn.worldvectorlogo.com/logos/django.svg" alt="django" width="40" height="40"/> 
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Flask_logo.svg/690px-Flask_logo.svg.png" alt="flask" width="40" height="40"/> 
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> 
-  <img src="https://www.gstatic.com/devrel-devsite/prod/v3c0543fd6f8d5c1b2f007d4210dd17d0997f2b977af4457cdf21a3898c7e4caf/firebase/images/lockup.svg" alt="firebase" width="40" height="40"/> 
+  <img src="https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/_static/flask-sqlalchemy-logo.png)" alt="flask-sqlalchemy" width="40" height="40"/> 
 </p>
 
 ### AI and Machine Learning
