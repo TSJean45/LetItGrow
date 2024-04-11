@@ -86,7 +86,12 @@ def registerUser():
     db.session.add(newUser)
     db.session.commit()
     
-    return jsonify({"message": "User registered successfully"})
+    try:
+        db.session.commit()
+        return jsonify({"message": "User registered successfully"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, threaded=True, use_reloader=False, debug=True)
