@@ -33,7 +33,7 @@ Create an environemnt in the backend folder and activate it before installing re
 Run the backend server
 
 ```bash
-  py server.py
+  py app.py
 ```
 
 When pip install in the backend folder, remember to freeze the requirements.txt to update your installation. Do open a new terminal with venv turned on before running this command.

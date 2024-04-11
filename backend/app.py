@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
 from flask_marshmallow import Marshmallow
+from flask_migrate import Migrate
 
 #import database bodels from models.py
 from models import db, Users, Accounts, Farms
@@ -20,6 +21,8 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ECHO=True
 
+
+migrate = Migrate(app,db)
 db.init_app(app)
         
 with app.app_context():
