@@ -44,10 +44,11 @@
     .forgot-password {
       float: right;
       font-size: 13px;
+      font-weight: 600;
       margin-bottom: 10px;
+      color: #7f9f80;
 
       &:hover {
-        color: #9abd71;
         text-decoration: underline;
       }
     }
@@ -73,11 +74,13 @@
       flex-direction: row;
       gap: 10px;
 
-      button {
-        text-decoration: underline;
+      a {
+
+        color: #7f9f80;
+        font-weight: 600;
 
         &:hover{
-            color: #dfefcd;
+            text-decoration: underline;
         }
       }
     }
