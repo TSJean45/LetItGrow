@@ -1,5 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import joblib 
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 # from flask_sqlalchemy import SQLAlchemy
 # from dotenv import load_dotenv
 # import os
@@ -34,7 +38,36 @@ CORS(app)
 #         fields = ("id", "firstName", "lastName", "userName", "email", "password")
         
 # users_schema = UserSchema(many=True)
-    
+
+@app.route("/yield_prediction", methods=['POST'])
+def yield_prediction():
+    try:
+        model = joblib.load('../backend/AI models/Banana_random_forest_model.pkl')
+        # Parse the form data
+        data = request.json
+        print(data)
+        
+        area = data.get('area')  # Use 'area' instead of 'Area' to match the key in JSON data
+        annual_rainfall = data.get('rain')  # Assuming 'rain' is the key for Annual_Rainfall
+        fertilizer = data.get('fertilizer')  # Assuming 'fertilizer' is the key for Fertilizer
+        pesticide = data.get('pesticide')  # Ass
+
+        feature_names = ['Area', 'Annual_Rainfall', 'Fertilizer', 'Pesticide']
+        features = [[area, annual_rainfall, fertilizer, pesticide]]
+        features_2d = np.array(features)
+        df = pd.DataFrame(features_2d, columns=feature_names)
+        print("Input features:", df)  # Debugging: Print input features
+
+        # Make predictions using the model
+        prediction = model.predict(df)
+        print("Prediction:", prediction)  # Debugging: Print prediction
+        prediction_list = prediction.tolist()
+
+        return jsonify({"prediction": prediction_list})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+
 @app.route("/plant_simulation", methods=["POST"])
 def plant_simulation():
     data = request.json

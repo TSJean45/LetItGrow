@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DashboardSidebar,
   DashboardNavbar,
@@ -16,7 +16,6 @@ import {
   MenuItem,
   Button,
 } from "@material-tailwind/react";
-import axios from "axios";
 
 const CropForecast = () => {
   const [pred, setPred] = useState("");
@@ -46,26 +45,71 @@ const CropForecast = () => {
     { label: "Rubber", value: "rubber", pred: "second" },
   ];
 
-  const handlePrediction = async () => {
-    // Get the values directly from the input elements
-    const areaValue = document.getElementById("areaInput").value;
-    const fertilizerValue = document.getElementById("fertilizerInput").value;
-    const rainfallValue = document.getElementById("rainfallInput").value;
-    const pesticideValue = document.getElementById("pesticideInput").value;
+  const [selectedCrop, setSelectedCrop] = useState("");
+  const [growingArea, setGrowingArea] = useState();
+  const [fertilizerAmount, setFertilizerAmount] = useState();
+  const [annualRainfall, setAnnualRainfall] = useState();
+  const [pesticideAmount, setPesticideAmount] = useState();
+  const [resultData, setResultData] = useState(null);
 
+  const handleCrop = (selectedOption) => {
+    setGrowingArea(selectedOption);
+    console.log(selectedOption)
+  };
+
+  const handleArea = (selectedOption) => {
+    setGrowingArea(selectedOption);
+    console.log(selectedOption)
+  };
+
+  const handleFertilizer = (selectedOption) => {
+    setFertilizerAmount(selectedOption);
+  };
+
+  const handleRain = (selectedOption) => {
+    setAnnualRainfall(selectedOption);
+  };
+
+  const handlePesticide = (selectedOption) => {
+    setPesticideAmount(selectedOption);
+  };
+
+  useEffect(() => {
+    console.log(resultData);
+  }, [resultData]);
+
+  const handlePrediction = () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/yield_prediction",
-        {
-          areaValue,
-          fertilizerValue,
-          rainfallValue,
-          pesticideValue,
-        }
-      );
-      console.log(response.data); // Log the response from the server
+      const data = {
+        area: parseFloat(growingArea),
+        rain: parseFloat(annualRainfall),
+        fertilizer: parseFloat(fertilizerAmount),
+        pesticide: parseFloat(pesticideAmount),
+      };
+
+      console.log(data)
+
+      fetch("http://localhost:5000/yield_prediction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Response from backend:", data);
+          if (data.prediction) {
+            setResultData(data.prediction);
+          } else {
+            console.error("No prediction data received");
+          }
+        })
+        .catch((error) => {
+          console.error("Error sending data to backend:", error);
+        });
     } catch (error) {
-      console.error("Error sending prediction data:", error);
+      console.error("Error in handlePrediction:", error);
     }
   };
 
@@ -87,7 +131,10 @@ const CropForecast = () => {
       return (
         <>
           <div className="relative flex w-full max-w-[24rem]">
-            <Input label="Growing Area" id="areaInput" name="area" />
+            <Input
+              label="Growing Area"
+              onChange={e => handleArea(e.target.value)}
+            />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
               <Menu placement="bottom-start">
                 <MenuHandler>
@@ -112,8 +159,7 @@ const CropForecast = () => {
           <div className="relative flex w-full max-w-[24rem]">
             <Input
               label="Fertilizer Used Amount"
-              id="fertilizerInput"
-              name="fertilizer"
+              onChange={e =>  handleFertilizer(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
               <Menu placement="bottom-start">
@@ -137,7 +183,10 @@ const CropForecast = () => {
             </div>
           </div>
           <div className="relative flex w-full max-w-[24rem]">
-            <Input label="Annual Rainfall" id="rainfallInput" name="rainfall" />
+            <Input
+              label="Annual Rainfall"
+              onChange={e =>  handleRain(e.target.value)}
+            />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
               <Menu placement="bottom-start">
                 <MenuHandler>
@@ -162,8 +211,7 @@ const CropForecast = () => {
           <div className="relative flex w-full max-w-[24rem]">
             <Input
               label="Pesticide Used Amount"
-              id="pesticideInput"
-              name="pesticide"
+              onChange={e =>  handlePesticide(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
               <Menu placement="bottom-start">
@@ -219,6 +267,7 @@ const CropForecast = () => {
             ))}
           </Select>
           <div>{getContent()}</div>
+          <div>{resultData}</div>
         </div>
       </div>
     </div>
