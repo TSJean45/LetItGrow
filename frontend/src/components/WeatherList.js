@@ -20,7 +20,7 @@ const WeatherList = () => {
 
   const fetchWeatherData = useCallback(async () => {
     try {
-      const response = await fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/melaka?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Ctempmax%2Ctempmin%2Ctemp%2Cprecip%2Cprecipprob%2Cwindspeed%2Cuvindex%2Cconditions%2Cdescription&include=days%2Ccurrent&key=CW6UA3S2S4WSWTBWBBZ7V6MCP&contentType=json");
+      const response = await fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/melaka?unitGroup=metric&elements=datetime%2CdatetimeEpoch%2Ctempmax%2Ctempmin%2Ctemp%2Chumidity%2Cprecip%2Cprecipprob%2Cwindspeed%2Cuvindex%2Cconditions%2Cdescription&include=days%2Ccurrent&key=CW6UA3S2S4WSWTBWBBZ7V6MCP&contentType=json");
       const data = await response.json();
       const days = data?.days || [];
       const formattedData = days.slice(0, 7).map((day, index) => ({
