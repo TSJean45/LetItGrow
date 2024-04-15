@@ -5,31 +5,26 @@ import {
   DashboardTitle,
 } from "../components";
 import img from "../assets/cropYield-1.png";
+import img2 from "../assets/cropYield-2.png";
 import {
   Option,
   Select,
   Typography,
   Input,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
   Button,
 } from "@material-tailwind/react";
+import GaugeComponent from "react-gauge-component";
+import { cropConstants } from "../constants";
 
 const CropForecast = () => {
   const [pred, setPred] = useState("");
-  const units = ["acre", "in", "cm"];
-  const [selectedUnit, setSelectedUnit] = useState(units[0]);
-
-  const handleUnitChange = (unit) => {
-    setSelectedUnit(unit);
-  };
-
-  const handleValueChange = (val) => {
-    setPred(val);
-    console.log(val);
-  };
+  const [selectedCrop, setSelectedCrop] = useState("");
+  const [growingArea, setGrowingArea] = useState();
+  const [fertilizerAmount, setFertilizerAmount] = useState();
+  const [annualRainfall, setAnnualRainfall] = useState();
+  const [pesticideAmount, setPesticideAmount] = useState();
+  const [resultData, setResultData] = useState(null);
+  const [disableButton, setDisableButton] = useState(true);
 
   const cropOptions = [
     { label: "Banana", value: "banana", pred: "first" },
@@ -42,41 +37,77 @@ const CropForecast = () => {
     { label: "Sweet Potato", value: "sweetpotato", pred: "first" },
     { label: "Tapioca", value: "tapioca", pred: "first" },
     { label: "Wheat", value: "wheat", pred: "first" },
-    { label: "Rubber", value: "rubber", pred: "second" },
   ];
 
-  const [selectedCrop, setSelectedCrop] = useState("");
-  const [growingArea, setGrowingArea] = useState();
-  const [fertilizerAmount, setFertilizerAmount] = useState();
-  const [annualRainfall, setAnnualRainfall] = useState();
-  const [pesticideAmount, setPesticideAmount] = useState();
-  const [resultData, setResultData] = useState(null);
-
-  const handleCrop = (selectedOption) => {
-    setGrowingArea(selectedOption);
-    console.log(selectedOption)
+  const handleValueChange = (val) => {
+    setSelectedCrop(val);
+    const type = cropOptions.find((option) => option.value === val);
+    if (type) {
+      setPred(type.pred);
+    }
+    console.log(selectedCrop);
   };
 
   const handleArea = (selectedOption) => {
     setGrowingArea(selectedOption);
-    console.log(selectedOption)
+    validateInputs(
+      selectedOption,
+      fertilizerAmount,
+      annualRainfall,
+      pesticideAmount
+    );
   };
 
   const handleFertilizer = (selectedOption) => {
     setFertilizerAmount(selectedOption);
+    validateInputs(
+      growingArea,
+      selectedOption,
+      annualRainfall,
+      pesticideAmount
+    );
   };
 
   const handleRain = (selectedOption) => {
     setAnnualRainfall(selectedOption);
+    validateInputs(
+      growingArea,
+      fertilizerAmount,
+      selectedOption,
+      pesticideAmount
+    );
   };
 
   const handlePesticide = (selectedOption) => {
     setPesticideAmount(selectedOption);
+    validateInputs(
+      growingArea,
+      fertilizerAmount,
+      annualRainfall,
+      selectedOption
+    );
   };
 
   useEffect(() => {
     console.log(resultData);
   }, [resultData]);
+
+  const validateInputs = (area, fertilizer, rainfall, pesticide) => {
+    if (
+      area === undefined ||
+      fertilizer === undefined ||
+      rainfall === undefined ||
+      pesticide === undefined ||
+      area.trim() === "" ||
+      fertilizer.trim() === "" ||
+      rainfall.trim() === "" ||
+      pesticide.trim() === ""
+    ) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  };
 
   const handlePrediction = () => {
     try {
@@ -85,9 +116,10 @@ const CropForecast = () => {
         rain: parseFloat(annualRainfall),
         fertilizer: parseFloat(fertilizerAmount),
         pesticide: parseFloat(pesticideAmount),
+        cropLabel: selectedCrop,
       };
 
-      console.log(data)
+      console.log(data);
 
       fetch("http://localhost:5000/yield_prediction", {
         method: "POST",
@@ -118,7 +150,7 @@ const CropForecast = () => {
       return (
         <div className="flex flex-col items-center justify-center h-full">
           <img
-            className="h-96 object-cover object-center"
+            className="h-80 object-cover object-center"
             src={img}
             alt="loading img"
           />
@@ -130,120 +162,135 @@ const CropForecast = () => {
     } else if (pred === "first") {
       return (
         <>
-          <div className="relative flex w-full max-w-[24rem]">
+          <div className="relative flex w-full my-5">
             <Input
-              label="Growing Area"
-              onChange={e => handleArea(e.target.value)}
+              label="Total Land Area"
+              onChange={(e) => handleArea(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
-              <Menu placement="bottom-start">
-                <MenuHandler>
-                  <Button
-                    ripple={false}
-                    variant="text"
-                    className="flex h-10 items-center gap-2 rounded-l-none border border-l-0 border-blue-gray-200 bg-blue-gray-500/10"
-                  >
-                    {selectedUnit}
-                  </Button>
-                </MenuHandler>
-                <MenuList className="max-h-[20rem] max-w-[18rem]">
-                  {units.map((unit) => (
-                    <MenuItem key={unit} onClick={() => handleUnitChange(unit)}>
-                      {unit}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
+              <Button
+                ripple={false}
+                variant="text"
+                className="flex h-10 items-center gap-2 rounded-l-none border border-l-0 border-blue-gray-200 bg-blue-gray-500/10"
+              >
+                Hectare
+              </Button>
             </div>
           </div>
-          <div className="relative flex w-full max-w-[24rem]">
+          <div className="relative flex w-full my-5">
             <Input
-              label="Fertilizer Used Amount"
-              onChange={e =>  handleFertilizer(e.target.value)}
+              label="Total Amount of Fertilizer Used"
+              onChange={(e) => handleFertilizer(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
-              <Menu placement="bottom-start">
-                <MenuHandler>
-                  <Button
-                    ripple={false}
-                    variant="text"
-                    className="flex h-10 items-center gap-2 rounded-l-none border border-l-0 border-blue-gray-200 bg-blue-gray-500/10"
-                  >
-                    {selectedUnit}
-                  </Button>
-                </MenuHandler>
-                <MenuList className="max-h-[20rem] max-w-[18rem]">
-                  {units.map((unit) => (
-                    <MenuItem key={unit} onClick={() => handleUnitChange(unit)}>
-                      {unit}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
+              <Button
+                ripple={false}
+                variant="text"
+                className="flex h-10 items-center gap-2 rounded-l-none border border-l-0 border-blue-gray-200 bg-blue-gray-500/10"
+              >
+                KG
+              </Button>
             </div>
           </div>
-          <div className="relative flex w-full max-w-[24rem]">
+          <div className="relative flex w-full my-5">
             <Input
-              label="Annual Rainfall"
-              onChange={e =>  handleRain(e.target.value)}
+              label="Annual Rainfall Received in The Region"
+              onChange={(e) => handleRain(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
-              <Menu placement="bottom-start">
-                <MenuHandler>
-                  <Button
-                    ripple={false}
-                    variant="text"
-                    className="flex h-10 items-center gap-2 rounded-l-none border border-l-0 border-blue-gray-200 bg-blue-gray-500/10"
-                  >
-                    {selectedUnit}
-                  </Button>
-                </MenuHandler>
-                <MenuList className="max-h-[20rem] max-w-[18rem]">
-                  {units.map((unit) => (
-                    <MenuItem key={unit} onClick={() => handleUnitChange(unit)}>
-                      {unit}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
+              <Button
+                ripple={false}
+                variant="text"
+                className="flex h-10 items-center gap-2 rounded-l-none border border-l-0 border-blue-gray-200 bg-blue-gray-500/10"
+              >
+                MM
+              </Button>
             </div>
           </div>
-          <div className="relative flex w-full max-w-[24rem]">
+          <div className="relative flex w-full my-5">
             <Input
-              label="Pesticide Used Amount"
-              onChange={e =>  handlePesticide(e.target.value)}
+              label="Total Amount of Pesticide Used"
+              onChange={(e) => handlePesticide(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
-              <Menu placement="bottom-start">
-                <MenuHandler>
-                  <Button
-                    ripple={false}
-                    variant="text"
-                    className="flex h-10 items-center gap-2 rounded-l-none border border-l-0 border-blue-gray-200 bg-blue-gray-500/10"
-                  >
-                    {selectedUnit}
-                  </Button>
-                </MenuHandler>
-                <MenuList className="max-h-[20rem] max-w-[18rem]">
-                  {units.map((unit) => (
-                    <MenuItem key={unit} onClick={() => handleUnitChange(unit)}>
-                      {unit}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
+              <Button
+                ripple={false}
+                variant="text"
+                className="flex h-10 items-center gap-2 rounded-l-none border border-l-0 border-blue-gray-200 bg-blue-gray-500/10"
+              >
+                KG
+              </Button>
             </div>
           </div>
-          <Button onClick={handlePrediction}>Predict Yield</Button>
+          <div className="flex justify-center">
+            <Button
+              onClick={handlePrediction}
+              className="bg-mediumGreen"
+              disabled={disableButton}
+            >
+              Predict Yield
+            </Button>
+          </div>
         </>
       );
-    } else if (pred === "second") {
+    }
+  };
+
+  const getRightContent = () => {
+    if (!pred) {
+      return null; // Hide the right container when !pred
+    } else if (!resultData) {
       return (
+        <>
+        <Typography className="font-bold text-2xl">Waiting For Input</Typography>
         <div className="flex flex-col items-center justify-center h-full">
-          <Typography className="font-bold text-2xl">
-            Content for Second Option
-          </Typography>
+          <img
+            className="h-80 object-cover object-center"
+            src={img2}
+            alt="loading img"
+          />
         </div>
+        </>
+      );
+    } else {
+      return (
+        <GaugeComponent
+          type="semicircle"
+          arc={{
+            width: 0.2,
+            padding: 0.005,
+            cornerRadius: 1,
+            subArcs: cropConstants[selectedCrop]?.subArcLimits.map((limit, index) => ({
+              limit,
+              color: index === 0 ? "#EA4228" : index === 1 ? "#F5CD19" : "#5BE12C",
+              tooltip: { text: index === 0 ? "Below Average" : index === 1 ? "Average" : "Above Average" },
+            })) || [],
+          }}
+          pointer={{
+            color: "#345243",
+            type: "arrow",
+            length: 0.2,
+            width: 5,
+          }}
+          labels={{
+            valueLabel: {
+              formatTextValue: (value) =>
+                value.toFixed(0) + " Production/Unit Area",
+              style: {
+                fontSize: "50px",
+                fontWeight: "bold",
+                fill: "#000000",
+                textShadow: "none",
+              },
+            },
+            tickLabels: {
+              hideMinMax: true, // Hide min and max labels
+            },
+          }}
+          value={resultData}
+          minValue={cropConstants[selectedCrop]?.min || 0} 
+          maxValue={cropConstants[selectedCrop]?.max || 0} 
+        />
       );
     }
   };
@@ -256,18 +303,25 @@ const CropForecast = () => {
         <div className="flex justify-between items-center">
           <DashboardTitle>Crop Yield Prediction</DashboardTitle>
         </div>
-        <div className="mt-10">
-          <Select label="Select Crop" value={pred} onChange={handleValueChange}>
-            {cropOptions.map(({ label, value, pred }) => (
-              <Option key={value} value={pred}>
-                <div className="flex items-center">
-                  <span>{label}</span>
-                </div>
-              </Option>
-            ))}
-          </Select>
-          <div>{getContent()}</div>
-          <div>{resultData}</div>
+        <div className="mt-5 grid grid-cols-2 gap-5">
+          <div className="col-span-1 border-solid border-2 rounded p-5 h-100">
+            <Typography className="font-bold text-2xl mb-5">
+              Input Predicton Details
+            </Typography>
+            <Select label="Select Crop" onChange={handleValueChange}>
+              {cropOptions.map(({ label, value, pred }) => (
+                <Option key={value} value={value}>
+                  <div className="flex items-center">
+                    <span>{label}</span>
+                  </div>
+                </Option>
+              ))}
+            </Select>
+            <div>{getContent()}</div>
+          </div>
+          <div className="col-span-1 border-solid border-2 rounded p-5">
+            {getRightContent()}
+          </div>
         </div>
       </div>
     </div>
