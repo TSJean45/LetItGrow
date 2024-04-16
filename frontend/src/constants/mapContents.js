@@ -7,7 +7,7 @@ const mapContents = [
     ph: undefined,
     fertility: '',
     light: '',
-    percentage: '',
+    percentage: '50',
     image: 'mapImage-1.png',
     pMessage: "Nearly all of the field has been watered",
     status: "You haven't watered this field!",
