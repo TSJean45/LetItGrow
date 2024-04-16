@@ -1,0 +1,63 @@
+[
+    {
+      "id": "1",
+      "name": "Durian A",
+      "temp": null,
+      "moisture": null,
+      "ph": null,
+      "fertility": "",
+      "light": "",
+      "percentage": "50",
+      "image": "mapImage-1.png",
+      "pMessage": "Nearly all of the field has been watered",
+      "status": "You haven't watered this field!",
+      "icon": "bell",
+      "button": true
+    },
+    {
+      "id": "2",
+      "name": "Durian B",
+      "temp": 24,
+      "moisture": 29,
+      "ph": 7.59,
+      "fertility": "Fertility",
+      "light": "Low",
+      "percentage": 46,
+      "image": "mapImage-1.png",
+      "pMessage": "Nearly all of the field has been watered",
+      "status": "You haven't watered this field!",
+      "icon": "bell",
+      "button": true
+    },
+    {
+      "id": "3",
+      "name": "Pineapple Field",
+      "temp": 5,
+      "moisture": 45,
+      "ph": 7.59,
+      "fertility": "Fertility",
+      "light": "High",
+      "percentage": 46,
+      "image": "mapImage-1.png",
+      "pMessage": "Nearly all of the field has been watered",
+      "status": "You have watered this field!",
+      "icon": "tick",
+      "button": false
+    },
+    {
+      "id": "4",
+      "name": "Banana Field",
+      "temp": 22,
+      "moisture": 10,
+      "ph": 7.59,
+      "fertility": "Fertility",
+      "light": "Medium",
+      "percentage": 46,
+      "image": "mapImage-1.png",
+      "pMessage": "Nearly all of the field has been watered",
+      "status": "You haven't watered this field!",
+      "icon": "bell",
+      "button": true
+    }
+  ]
+  

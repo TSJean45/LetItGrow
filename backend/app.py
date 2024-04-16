@@ -4,6 +4,7 @@ import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from crud import soil_monitoring_bp
 # from flask_sqlalchemy import SQLAlchemy
 # from dotenv import load_dotenv
 # import os
@@ -38,6 +39,8 @@ CORS(app)
 #         fields = ("id", "firstName", "lastName", "userName", "email", "password")
         
 # users_schema = UserSchema(many=True)
+
+app.register_blueprint(soil_monitoring_bp)
 
 crop_models = {
     'banana': '../backend/AI models/Banana_random_forest_model.pkl',

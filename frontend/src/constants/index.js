@@ -9,3 +9,4 @@ export { default as events } from './events';
 export { default as personalSidebar } from './personalSidebar';
 export { default as farmerSidebar } from './farmerSidebar';
 export { default as cropConstants } from './cropConstants';
+export { default as iotTemp } from './iotTemp';
