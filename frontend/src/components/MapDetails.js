@@ -135,10 +135,10 @@ const MapDetails = ({ sectionId }) => {
                     </svg>
                   </div>
                   <Typography className="text-lg text-center text-gray-500 font-bold mt-2">
-                    Haven’t paired with the soil monitoring device.{" "}
+                    Haven’t paired with the soil monitoring device.{" "} <br/>
                     <a
                       href="/SoilMonitoring"
-                      className="underline"
+                      className="underline text-light-green-700"
                     >
                       Click Here
                     </a>{" "}
