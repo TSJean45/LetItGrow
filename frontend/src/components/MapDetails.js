@@ -17,6 +17,7 @@ import {
 } from "@material-tailwind/react";
 import { WeatherCard } from "../components";
 import CircularProgress from "@mui/joy/CircularProgress";
+import { Link } from "react-router-dom";
 
 function Icon({ type }) {
   const iconPaths = {
@@ -60,7 +61,8 @@ const MapDetails = ({ sectionId }) => {
   const handleOpen = () => setOpen(!open);
   const section = mapContents.find((s) => s.id === sectionId);
 
-  const isIOTConnected = section.moisture !== undefined && section.ph !== undefined;
+  const isIOTConnected =
+    section.moisture !== undefined && section.ph !== undefined;
 
   if (!section) {
     return <div>No section found with ID: {sectionId}</div>;
@@ -136,12 +138,12 @@ const MapDetails = ({ sectionId }) => {
                   </div>
                   <Typography className="text-lg text-center text-gray-500 font-bold mt-2">
                     Haven’t paired with the soil monitoring device.{" "}
-                    <a
-                      href="/SoilMonitoring"
+                    <Link
+                      to={`/SoilMonitoring/${section.id}`}
                       className="underline"
                     >
-                      Click Here
-                    </a>{" "}
+                      Click Here{" "}
+                    </Link>
                     to start pairing.
                   </Typography>
                 </div>

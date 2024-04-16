@@ -85,7 +85,7 @@ const router = createBrowserRouter([
     element: <Services />,
   },
   {
-    path: '/SoilMonitoring',
+    path: '/SoilMonitoring/:id',
     element: <SoilMonitoring />,
   },
 ])

@@ -27,3 +27,4 @@ export { default as SpaceForm } from './SpaceForm';
 export { default as ClassesCard } from './ClassesCard';
 export { default as EventCard } from './EventCard';
 export { default as MarketNavBar } from './MarketNavBar';
+export { default as SoilCard } from './SoilCard';
