@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { mapContents } from "../constants";
 import {
   Alert,
@@ -59,14 +59,36 @@ function Icon({ type }) {
 const MapDetails = ({ sectionId }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const [mapData, setMapData] = useState(null);
+  const [isIOTConnected, setIsIOTConnected] = useState(false);
   const section = mapContents.find((s) => s.id === sectionId);
 
-  const isIOTConnected =
-    section.moisture !== undefined && section.ph !== undefined;
+  useEffect(() => {
+    const fetchMapData = async () => {
+      try {
+        const response = await fetch(`/soil-monitoring/${section.id}`);
+        const data = await response.json();
+        console.log("Map data:", data);
 
-  if (!section) {
-    return <div>No section found with ID: {sectionId}</div>;
-  }
+        const iotConnected = data.moisture && data.ph;
+
+        console.log(iotConnected);
+
+        setIsIOTConnected(iotConnected);
+
+        if (!iotConnected) {
+          console.log("IOT is not connected");
+          return;
+        }
+
+        setMapData(data);
+      } catch (error) {
+        console.error("Error fetching map data:", error);
+      }
+    };
+
+    fetchMapData();
+  }, [sectionId, section.id]);
 
   return (
     <div>
@@ -89,30 +111,30 @@ const MapDetails = ({ sectionId }) => {
                 <WeatherCard
                   icon="weatherIcon-5.svg"
                   title="Soil Temperature"
-                  value={section.temp}
+                  value={(mapData && mapData.temp) ?? "N/A"}
                   constant="°C"
                 />
                 <WeatherCard
                   icon="weatherIcon-6.svg"
                   title="Soil Moisture"
-                  value={section.moisture}
+                  value={(mapData && mapData.moisture) ?? "N/A"}
                   constant="%"
                 />
                 <WeatherCard
                   icon="weatherIcon-7.svg"
                   title="PH Value"
-                  value={section.ph}
+                  value={(mapData && mapData.ph) ?? "N/A"}
                   constant="pH"
                 />
                 <WeatherCard
                   icon="weatherIcon-8.svg"
                   title="Land Fertility"
-                  value={section.fertility}
+                  value={(mapData && mapData.fertility) ?? "N/A"}
                 />
                 <WeatherCard
                   icon="weatherIcon-9.svg"
                   title="Light Intensity"
-                  value={section.light}
+                  value={(mapData && mapData.light) ?? "N/A"}
                 />
               </>
             ) : (

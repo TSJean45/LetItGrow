@@ -26,5 +26,47 @@
         "ph": 6.9,
         "fertility": "Medium",
         "light": "High"
+    },
+    {
+        "temp": 24.0,
+        "moisture": 38.0,
+        "ph": 7.2,
+        "fertility": "High",
+        "light": "Medium"
+    },
+    {
+        "temp": 21.5,
+        "moisture": 34.0,
+        "ph": 6.7,
+        "fertility": "Low",
+        "light": "Low"
+    },
+    {
+        "temp": 23.5,
+        "moisture": 37.0,
+        "ph": 7.1,
+        "fertility": "Medium",
+        "light": "High"
+    },
+    {
+        "temp": 22.8,
+        "moisture": 36.0,
+        "ph": 7.0,
+        "fertility": "High",
+        "light": "Medium"
+    },
+    {
+        "temp": 21.2,
+        "moisture": 33.5,
+        "ph": 6.6,
+        "fertility": "Low",
+        "light": "Low"
+    },
+    {
+        "temp": 23.8,
+        "moisture": 37.5,
+        "ph": 7.3,
+        "fertility": "Medium",
+        "light": "High"
     }
-  ]
+]

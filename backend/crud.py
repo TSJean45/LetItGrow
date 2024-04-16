@@ -25,24 +25,20 @@ import logging
 
 @soil_monitoring_bp.route('/soil-monitoring/<int:data_id>', methods=['PUT'])
 def update_soil_monitoring_data(data_id):
-    logging.basicConfig(level=logging.DEBUG)  # Set logging level to DEBUG
+    logging.basicConfig(level=logging.DEBUG) 
     
-    # Load and log data from iotTemp.json
     with open('data/iotTemp.json', 'r') as file:
         iot_temp_data = json.load(file)
         logging.debug(f'iot_temp_data: {iot_temp_data}')
     
-    # Generate and log temp_object
     random_index = random.randint(0, len(iot_temp_data) - 1)
     temp_object = iot_temp_data[random_index]
     logging.debug(f'temp_object: {temp_object}')
 
-    # Load and log map_data from map.json
     with open('data/map.json', 'r') as map_file:
         map_data = json.load(map_file)
         logging.debug(f'map_data before update: {map_data}')
 
-    # Update map_data and log it
     for item in map_data:
         if item['id'] == data_id:
             item['temp'] = temp_object['temp']
