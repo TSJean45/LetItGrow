@@ -1,13 +1,13 @@
 const mapContents = [
   {
-    id: 'durianA',
+    id: '1',
     name: "Durian A",
-    temp: 20,
-    moisture: 15,
-    ph: 7.59,
-    fertility: 'Fertility',
-    light: 'Medium',
-    percentage: 46,
+    temp: undefined,
+    moisture: undefined,
+    ph: undefined,
+    fertility: '',
+    light: '',
+    percentage: '',
     image: 'mapImage-1.png',
     pMessage: "Nearly all of the field has been watered",
     status: "You haven't watered this field!",
@@ -15,7 +15,7 @@ const mapContents = [
     button: true,
   },
   {
-    id: 'durianB',
+    id: '2',
     name: "Durian B",
     temp: 24,
     moisture: 29,
@@ -30,7 +30,7 @@ const mapContents = [
     button: true,
   },
   {
-    id: 'pineapple',
+    id: '3',
     name: "Pineapple Field",
     temp: 5,
     moisture: 45,
@@ -45,7 +45,7 @@ const mapContents = [
     button: false,
   },
   {
-    id: 'banana',
+    id: '4',
     name: "Banana Field",
     temp: 22,
     moisture: 10,

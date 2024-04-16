@@ -60,7 +60,7 @@ const MapDetails = ({ sectionId }) => {
   const handleOpen = () => setOpen(!open);
   const section = mapContents.find((s) => s.id === sectionId);
 
-  const isIOTConnected = false;
+  const isIOTConnected = section.moisture !== undefined && section.ph !== undefined;
 
   if (!section) {
     return <div>No section found with ID: {sectionId}</div>;
