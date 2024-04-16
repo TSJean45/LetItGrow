@@ -60,6 +60,8 @@ const MapDetails = ({ sectionId }) => {
   const handleOpen = () => setOpen(!open);
   const section = mapContents.find((s) => s.id === sectionId);
 
+  const isIOTConnected = false;
+
   if (!section) {
     return <div>No section found with ID: {sectionId}</div>;
   }
@@ -80,34 +82,71 @@ const MapDetails = ({ sectionId }) => {
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-1 flex justify-center">
           <div className="w-3/4 space-y-2">
-            <WeatherCard
-              icon="weatherIcon-5.svg"
-              title="Soil Temperature"
-              value={section.temp}
-              constant="°C"
-            />
-            <WeatherCard
-              icon="weatherIcon-6.svg"
-              title="Soil Moisture"
-              value={section.moisture}
-              constant="%"
-            />
-            <WeatherCard
-              icon="weatherIcon-7.svg"
-              title="PH Value"
-              value={section.ph}
-              constant="pH"
-            />
-            <WeatherCard
-              icon="weatherIcon-8.svg"
-              title="Land Fertility"
-              value={section.fertility}
-            />
-            <WeatherCard
-              icon="weatherIcon-9.svg"
-              title="Light Intensity"
-              value={section.light}
-            />
+            {isIOTConnected ? (
+              <>
+                <WeatherCard
+                  icon="weatherIcon-5.svg"
+                  title="Soil Temperature"
+                  value={section.temp}
+                  constant="°C"
+                />
+                <WeatherCard
+                  icon="weatherIcon-6.svg"
+                  title="Soil Moisture"
+                  value={section.moisture}
+                  constant="%"
+                />
+                <WeatherCard
+                  icon="weatherIcon-7.svg"
+                  title="PH Value"
+                  value={section.ph}
+                  constant="pH"
+                />
+                <WeatherCard
+                  icon="weatherIcon-8.svg"
+                  title="Land Fertility"
+                  value={section.fertility}
+                />
+                <WeatherCard
+                  icon="weatherIcon-9.svg"
+                  title="Light Intensity"
+                  value={section.light}
+                />
+              </>
+            ) : (
+              <div className="h-full overflow-hidden flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center h-ful">
+                  {/* ! icon */}
+                  <div className="flex items-center justify-center h-20 w-20 bg-white rounded-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="h-20 w-20 text-gray-500"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 9v2m0 4v.01"
+                      />
+                    </svg>
+                  </div>
+                  <Typography className="text-lg text-center text-gray-500 font-bold mt-2">
+                    Haven’t paired with the soil monitoring device.{" "}
+                    <a
+                      href="/SoilMonitoring"
+                      className="underline"
+                    >
+                      Click Here
+                    </a>{" "}
+                    to start pairing.
+                  </Typography>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="col-span-2 flex items-start flex-col mt-5">
