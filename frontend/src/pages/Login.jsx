@@ -9,7 +9,7 @@ const Login = () => {
       <Header />
 
       <div className="login-card">
-        <div style={{ textAlign: 'center', marginBottom: '10px', position: 'relative'}}>
+        <div style={{ textAlign: 'center', marginBottom: '10px', position: 'relative' }}>
           <RoughNotation
             type="highlight"
             show={true}

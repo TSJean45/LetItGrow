@@ -10,12 +10,12 @@ const HeroSection = () => {
         <section className="flex items-center justify-center">
           <div className="max-w-screen-xl mx-auto px-4 gap-12 text-gray-600 overflow-hidden md:px-8 md:flex h-full">
             <div className="flex-2 flex flex-col justify-center space-y-5 max-w-xl">
-              <h1 className="font-title text-gray-800 font-extrabold text-6xl sm:text-4xl mt-10 sm:mt-10 relative">
+              <h1 className="font-title text-gray-800 font-extrabold text-6xl sm:mt-10 pt-10 relative">
                 <RoughNotation type="highlight" show={true} color="#C7DBE8" animationDelay="10" animationDuration="2000" padding="0" strokeWidth="0">
                   Future of Farming
                 </RoughNotation>
               </h1>
-              <h1 className="font-title text-gray-800 font-extrabold text-6xl sm:text-4xl mt-10 sm:mt-0">
+              <h1 className="font-title text-gray-800 font-extrabold text-6xl sm:mt-10">
                 Begins Here
               </h1>
               <p className="text-lg font-medium">
