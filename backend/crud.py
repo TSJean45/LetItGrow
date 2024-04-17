@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, abort
 import json
 import random
+import logging
 
 soil_monitoring_bp = Blueprint('soil_monitoring', __name__)
 space_mapping_bp = Blueprint('space_mapping', __name__)
@@ -21,8 +22,6 @@ def get_soil_monitoring_data(data_id):
 
     # In case of any other unexpected error
     abort(500, description="Failed to fetch soil monitoring data")
-
-import logging
 
 @soil_monitoring_bp.route('/soil-monitoring/<int:data_id>', methods=['PUT'])
 def update_soil_monitoring_data(data_id):
@@ -108,3 +107,35 @@ def add_space_mapping_data():
         abort(500, description="Invalid data format: 'id' field not found in map_data")
     except Exception as e:
         abort(500, description=str(e))
+
+
+@space_mapping_bp.route('/space-mapping/<int:data_id>', methods=['GET'])
+def get_space(data_id):
+    try:
+        with open("data/map.json", 'r') as map_file:
+            map_data = json.load(map_file)
+            for item in map_data:
+                if item['id'] == data_id:
+                    return jsonify(item)
+            abort(404, description="Data not found for the provided ID")
+    except FileNotFoundError:
+        abort(500, description="Map data file not found")
+    except Exception as e:
+        abort(500, description=str(e))
+
+    # In case of any other unexpected error
+    abort(500, description="Failed to fetch soil monitoring data")
+
+@space_mapping_bp.route('/space-mapping/all', methods=['GET'])
+def get_all_space_mapping():
+    try:
+        with open("data/map.json", 'r') as map_file:
+            map_data = json.load(map_file)
+            return jsonify(map_data)
+    except FileNotFoundError:
+        abort(500, description="Map data file not found")
+    except Exception as e:
+        abort(500, description=str(e))
+
+    # In case of any other unexpected error
+    abort(500, description="Failed to fetch space mapping data")

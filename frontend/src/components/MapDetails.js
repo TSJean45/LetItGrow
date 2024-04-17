@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { mapContents } from "../constants";
 import {
   Alert,
   Timeline,
@@ -61,46 +60,59 @@ const MapDetails = ({ sectionId }) => {
   const handleOpen = () => setOpen(!open);
   const [mapData, setMapData] = useState(null);
   const [isIOTConnected, setIsIOTConnected] = useState(false);
-  const section = mapContents.find((s) => s.id === sectionId);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMapData = async () => {
       try {
-        const response = await fetch(`/soil-monitoring/${section.id}`);
+        setLoading(true); // Set loading state before fetching data
+
+        const response = await fetch(`/soil-monitoring/${sectionId}`);
         const data = await response.json();
         console.log("Map data:", data);
 
-        const iotConnected = data.moisture && data.ph;
+        const iotConnected = data && data.moisture !== null && data.ph !== null;
 
         console.log(iotConnected);
-
         setIsIOTConnected(iotConnected);
 
         if (!iotConnected) {
           console.log("IOT is not connected");
-          return;
         }
 
         setMapData(data);
+        setLoading(false); // Set loading state to false after data is fetched
       } catch (error) {
         console.error("Error fetching map data:", error);
+        setLoading(false); // Set loading state to false in case of error
       }
     };
 
     fetchMapData();
-  }, [sectionId, section.id]);
+  }, [sectionId]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Render loading state while data is being fetched
+  }
+
+  if (!mapData) {
+    return <div>No data available for this section.</div>; // Handle case where mapData is null
+  }
 
   return (
     <div>
       <div className="grid grid-cols-4 gap-4">
         <div className="col-span-3 ">
           <Alert className="text-3xl flex items-center justify-center bg-ultLightGreen text-black font-bold">
-            {section.name}
+            {mapData && mapData.name}
           </Alert>
           <hr className="border-t-4 border-dullGreen mt-2"></hr>
         </div>
         <div className="col-span-1 flex justify-end">
-          <img src={require(`../assets/${section.image}`)} alt="map" />
+          <img
+            src={mapData && require(`../assets/${mapData.image}`)}
+            alt="map"
+          />
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4">
@@ -161,7 +173,7 @@ const MapDetails = ({ sectionId }) => {
                   <Typography className="text-lg text-center text-gray-500 font-bold mt-2">
                     Haven’t paired with the soil monitoring device.{" "}
                     <Link
-                      to={`/SoilMonitoring/${section.id}`}
+                      to={`/SoilMonitoring/${sectionId}`}
                       className="underline"
                     >
                       Click Here{" "}
@@ -182,19 +194,19 @@ const MapDetails = ({ sectionId }) => {
                   size="lg"
                   color="success"
                   determinate
-                  value={section.percentage}
+                  value={mapData && mapData.percentage}
                 >
-                  {section.percentage}%
+                  {mapData.percentage}%
                 </CircularProgress>
               </div>
-              <div className="ml-2">{section.pMessage}</div>
+              <div className="ml-2">{mapData && mapData.pMessage}</div>
             </div>
           </Alert>
           <div className="mt-6 border w-full border-gray-300 h-96 overflow-y-auto p-5">
-            <Alert variant="outlined" icon={<Icon type={section.icon} />}>
+            <Alert variant="outlined" icon={<Icon type={mapData.icon} />}>
               <div className="flex items-center justify-between">
-                <div>{section.status}</div>
-                {section.button && (
+                <div>{mapData.status}</div>
+                {mapData.button && (
                   <Button
                     onClick={handleOpen}
                     size="md"

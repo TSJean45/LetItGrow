@@ -112,10 +112,6 @@ const SpaceMapping = () => {
     }
   };
 
-  const handleCloseAlert = () => {
-    setShowAlert(false);
-  };
-
   return (
     <div className="overflow-hidden bg-white">
       <DashboardSidebar type="farmer" />
