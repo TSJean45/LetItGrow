@@ -17,7 +17,6 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import L from "leaflet";
-import "leaflet-geometryutil";
 
 function Icon() {
   return (
