@@ -66,7 +66,10 @@ const SpaceMapping = () => {
       const polygon = e.layer;
       const latLngs = polygon.getLatLngs()[0];
       console.log("Polygons coords: ", latLngs);
-      setCoordinates(coordinates);
+      let convertedPolygons = latLngs.map(point => [point.lat, point.lng]);
+      console.log(convertedPolygons);
+      setCoordinates(convertedPolygons);
+
       const areaInSqMeters = L.GeometryUtil.geodesicArea(latLngs);
       console.log("Area in square meters:", areaInSqMeters);
       setArea(areaInSqMeters);
@@ -77,8 +80,8 @@ const SpaceMapping = () => {
     e.preventDefault();
     const dataToSend = {
       ...formData,
-      coordinates: coordinates,
-      area: area,
+      polygons: coordinates,
+      growingArea: area,
     };
 
     try {
@@ -123,7 +126,7 @@ const SpaceMapping = () => {
               >
                 <div className="mb-1 flex flex-col gap-6">
                   <Input
-                    name="fieldName"
+                    name="name"
                     label="Field Name"
                     size="lg"
                     onChange={handleFormChange}
@@ -134,36 +137,6 @@ const SpaceMapping = () => {
                     size="lg"
                     onChange={handleFormChange}
                   />
-                  {/* <div className="relative flex w-full max-w-[24rem]">
-                    <Input
-                      label="Growing Area"
-                      name="growingArea"
-                      onChange={handleFormChange}
-                    />
-                    <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
-                      <Menu placement="bottom-start">
-                        <MenuHandler>
-                          <Button
-                            ripple={false}
-                            variant="text"
-                            className="flex h-10 items-center gap-2 rounded-l-none border border-l-0 border-blue-gray-200 bg-blue-gray-500/10"
-                          >
-                            {selectedUnit}
-                          </Button>
-                        </MenuHandler>
-                        <MenuList className="max-h-[20rem] max-w-[18rem]">
-                          {units.map((unit) => (
-                            <MenuItem
-                              key={unit}
-                              onClick={() => handleUnitChange(unit)}
-                            >
-                              {unit}
-                            </MenuItem>
-                          ))}
-                        </MenuList>
-                      </Menu>
-                    </div>
-                  </div> */}
                   <Input
                     label="Planting Date"
                     name="plantingDate"
@@ -190,7 +163,7 @@ const SpaceMapping = () => {
                   <Input
                     label="Notes"
                     onChange={handleFormChange}
-                    name="notes"
+                    name="note"
                     size="lg"
                   />
                   <Alert icon={<Icon />}>

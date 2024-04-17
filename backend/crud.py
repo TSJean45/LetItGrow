@@ -68,6 +68,7 @@ def delete_soil_monitoring_data(data_id):
 def add_space_mapping_data():
     try:
         data = request.get_json()
+        print(data)
 
         required_fields = ['name', 'plantVariety', 'plantingDate', 'plantCounts', 'note', 'growingArea', 'polygons']
 
@@ -88,10 +89,14 @@ def add_space_mapping_data():
         data.setdefault('icon', "bell")     # Default to "bell" if not provided
         data.setdefault('button', True)     # Default to True if not provided
 
+
+
+        print(data)
         # Write the data to map.json
         with open('data/map.json', 'r+') as map_file:
             map_data = json.load(map_file)
             new_id = max(map_data, key=lambda x: x['id'])['id'] + 1
+            print(new_id)
             data['id'] = new_id
             map_data.append(data)
             map_file.seek(0)
@@ -99,5 +104,7 @@ def add_space_mapping_data():
             map_file.truncate()
 
         return jsonify({'message': 'Data added successfully', 'new_data': data}), 201
+    except KeyError:
+        abort(500, description="Invalid data format: 'id' field not found in map_data")
     except Exception as e:
         abort(500, description=str(e))
