@@ -9,7 +9,12 @@ import {
 } from "../components";
 import { format } from "date-fns";
 import { Card, CardBody, Typography } from "@material-tailwind/react";
-import weather_logo from "../assets/weather-sun.png";
+import weather_sun from "../assets/weather-sun.png";
+import weather_night from "../assets/Weather-Night.png";
+import weather_rain from "../assets/Weather-Rain.png";
+import weather_cloudy from "../assets/Weather-Sun-Cloud.png";
+import weather_sun_rain from "../assets/Weather-Sun-Rain.png";
+import weather_thunder from "../assets/Weather-Thunder.png";
 import { ReactComponent as WeatherRect } from "../assets/weather_rectangle.svg";
 
 const currentDate = new Date();
@@ -114,9 +119,41 @@ const FarmerDashboard = () => {
       return "Partly Cloudy";
     }
   };
+  const isNightTime = () => {
+    const currentHour = new Date().getHours();
+    return currentHour >= 19 || currentHour < 6;
+  };
   
+  const getWeatherLogo = (weatherCondition) => {
+    if (isNightTime() && weatherCondition !== "Rainy" && weatherCondition !== "Thunderstorm") {
+      return weather_night;
+    }
+  
+    switch (weatherCondition) {
+      case "Sunny":
+        return weather_sun;
+      case "Cloudy":
+        return weather_cloudy;
+      case "Rainy":
+        return weather_rain;
+      case "Thunderstorm":
+        return weather_thunder;
+      default:
+        return weather_sun;
+    }
+  };
+  useEffect(() => {
+
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
   
 
+    return () => clearInterval(interval);
+  }, []);
+  
+
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   return (
     <div className="overflow-hidden bg-white">
@@ -128,8 +165,9 @@ const FarmerDashboard = () => {
           <div className="text-right">
             <div>
               <span className="text-4xl">
-                {format(currentDate, "h:mm:ss ")}
+                {format(currentTime, "h:mm:ss ")}
               </span>
+
               <span>{format(currentDate, "a")}</span>
             </div>
             <div>{format(currentDate, "EEEE, d MMMM, yyyy")}</div>
@@ -158,9 +196,10 @@ const FarmerDashboard = () => {
                   <img
                     className="object-cover object-top z-10 mt-[-50px]"
                     width={400}
-                    src={weather_logo}
+                    src={getWeatherLogo(weatherData.weatherCondition)}
                     alt="weather"
                   />
+
                 </div>
                 <div className="grid grid-cols-3">
                   <p className="text-md px-5 col-span-2 text-white z-20">
