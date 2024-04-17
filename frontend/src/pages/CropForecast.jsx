@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import {
   DashboardSidebar,
   DashboardNavbar,
@@ -13,20 +13,18 @@ import {
   Input,
   Button,
 } from "@material-tailwind/react";
+import GaugeComponent from "react-gauge-component";
+import { cropConstants } from "../constants";
 
 const CropForecast = () => {
   const [pred, setPred] = useState("");
-  const units = ["acre", "in", "cm"];
-  const [selectedUnit, setSelectedUnit] = useState(units[0]);
-
-  const handleUnitChange = (unit) => {
-    setSelectedUnit(unit);
-  };
-
-  const handleValueChange = (val) => {
-    setPred(val);
-    console.log(val);
-  };
+  const [selectedCrop, setSelectedCrop] = useState("");
+  const [growingArea, setGrowingArea] = useState();
+  const [fertilizerAmount, setFertilizerAmount] = useState();
+  const [annualRainfall, setAnnualRainfall] = useState();
+  const [pesticideAmount, setPesticideAmount] = useState();
+  const [resultData, setResultData] = useState(null);
+  const [disableButton, setDisableButton] = useState(true);
 
   const cropOptions = [
     { label: "Banana", value: "banana", pred: "first" },
@@ -39,41 +37,77 @@ const CropForecast = () => {
     { label: "Sweet Potato", value: "sweetpotato", pred: "first" },
     { label: "Tapioca", value: "tapioca", pred: "first" },
     { label: "Wheat", value: "wheat", pred: "first" },
-    { label: "Rubber", value: "rubber", pred: "second" },
   ];
 
-  const [selectedCrop, setSelectedCrop] = useState("");
-  const [growingArea, setGrowingArea] = useState();
-  const [fertilizerAmount, setFertilizerAmount] = useState();
-  const [annualRainfall, setAnnualRainfall] = useState();
-  const [pesticideAmount, setPesticideAmount] = useState();
-  const [resultData, setResultData] = useState(null);
-
-  const handleCrop = (selectedOption) => {
-    setGrowingArea(selectedOption);
-    console.log(selectedOption)
+  const handleValueChange = (val) => {
+    setSelectedCrop(val);
+    const type = cropOptions.find((option) => option.value === val);
+    if (type) {
+      setPred(type.pred);
+    }
+    console.log(selectedCrop);
   };
 
   const handleArea = (selectedOption) => {
     setGrowingArea(selectedOption);
-    console.log(selectedOption)
+    validateInputs(
+      selectedOption,
+      fertilizerAmount,
+      annualRainfall,
+      pesticideAmount
+    );
   };
 
   const handleFertilizer = (selectedOption) => {
     setFertilizerAmount(selectedOption);
+    validateInputs(
+      growingArea,
+      selectedOption,
+      annualRainfall,
+      pesticideAmount
+    );
   };
 
   const handleRain = (selectedOption) => {
     setAnnualRainfall(selectedOption);
+    validateInputs(
+      growingArea,
+      fertilizerAmount,
+      selectedOption,
+      pesticideAmount
+    );
   };
 
   const handlePesticide = (selectedOption) => {
     setPesticideAmount(selectedOption);
+    validateInputs(
+      growingArea,
+      fertilizerAmount,
+      annualRainfall,
+      selectedOption
+    );
   };
 
   useEffect(() => {
     console.log(resultData);
   }, [resultData]);
+
+  const validateInputs = (area, fertilizer, rainfall, pesticide) => {
+    if (
+      area === undefined ||
+      fertilizer === undefined ||
+      rainfall === undefined ||
+      pesticide === undefined ||
+      area.trim() === "" ||
+      fertilizer.trim() === "" ||
+      rainfall.trim() === "" ||
+      pesticide.trim() === ""
+    ) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  };
 
   const handlePrediction = () => {
     try {
@@ -82,33 +116,34 @@ const CropForecast = () => {
         rain: parseFloat(annualRainfall),
         fertilizer: parseFloat(fertilizerAmount),
         pesticide: parseFloat(pesticideAmount),
+        cropLabel: selectedCrop,
       };
 
       console.log(data);
 
-      fetch('http://localhost:5000/yield_prediction', {
-        method: 'POST',
+      fetch("http://localhost:5000/yield_prediction", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('Response from backend:', data)
+          console.log("Response from backend:", data);
           if (data.prediction) {
-            setResultData(data.prediction)
+            setResultData(data.prediction);
           } else {
-            console.error('No prediction data received')
+            console.error("No prediction data received");
           }
         })
         .catch((error) => {
-          console.error('Error sending data to backend:', error)
-        })
+          console.error("Error sending data to backend:", error);
+        });
     } catch (error) {
-      console.error('Error in handlePrediction:', error)
+      console.error("Error in handlePrediction:", error);
     }
-  }
+  };
 
   const getContent = () => {
     if (!pred) {
@@ -123,14 +158,14 @@ const CropForecast = () => {
             Choose a Crop To Estimate Its Potential Yield
           </Typography>
         </div>
-      )
-    } else if (pred === 'first') {
+      );
+    } else if (pred === "first") {
       return (
         <>
           <div className="relative flex w-full my-5">
             <Input
-              label="Growing Area"
-              onChange={e => handleArea(e.target.value)}
+              label="Total Land Area"
+              onChange={(e) => handleArea(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
               <Button
@@ -144,8 +179,8 @@ const CropForecast = () => {
           </div>
           <div className="relative flex w-full my-5">
             <Input
-              label="Fertilizer Used Amount"
-              onChange={e =>  handleFertilizer(e.target.value)}
+              label="Total Amount of Fertilizer Used"
+              onChange={(e) => handleFertilizer(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
               <Button
@@ -159,8 +194,8 @@ const CropForecast = () => {
           </div>
           <div className="relative flex w-full my-5">
             <Input
-              label="Annual Rainfall"
-              onChange={e =>  handleRain(e.target.value)}
+              label="Annual Rainfall Received in The Region"
+              onChange={(e) => handleRain(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
               <Button
@@ -174,8 +209,8 @@ const CropForecast = () => {
           </div>
           <div className="relative flex w-full my-5">
             <Input
-              label="Pesticide Used Amount"
-              onChange={e =>  handlePesticide(e.target.value)}
+              label="Total Amount of Pesticide Used"
+              onChange={(e) => handlePesticide(e.target.value)}
             />
             <div className="absolute right-0 inset-y-0 flex items-center pointer-events-auto">
               <Button
@@ -198,7 +233,13 @@ const CropForecast = () => {
           </div>
         </>
       );
-    } else if (pred === "second") {
+    }
+  };
+
+  const getRightContent = () => {
+    if (!pred) {
+      return null; // Hide the right container when !pred
+    } else if (!resultData) {
       return (
         <>
         <Typography className="font-bold text-2xl">Waiting For Input</Typography>
@@ -209,9 +250,50 @@ const CropForecast = () => {
             alt="loading img"
           />
         </div>
+        </>
+      );
+    } else {
+      return (
+        <GaugeComponent
+          type="semicircle"
+          arc={{
+            width: 0.2,
+            padding: 0.005,
+            cornerRadius: 1,
+            subArcs: cropConstants[selectedCrop]?.subArcLimits.map((limit, index) => ({
+              limit,
+              color: index === 0 ? "#EA4228" : index === 1 ? "#F5CD19" : "#5BE12C",
+              tooltip: { text: index === 0 ? "Below Average" : index === 1 ? "Average" : "Above Average" },
+            })) || [],
+          }}
+          pointer={{
+            color: "#345243",
+            type: "arrow",
+            length: 0.2,
+            width: 5,
+          }}
+          labels={{
+            valueLabel: {
+              formatTextValue: (value) =>
+                value.toFixed(0) + " Production/Unit Area",
+              style: {
+                fontSize: "50px",
+                fontWeight: "bold",
+                fill: "#000000",
+                textShadow: "none",
+              },
+            },
+            tickLabels: {
+              hideMinMax: true, // Hide min and max labels
+            },
+          }}
+          value={resultData}
+          minValue={cropConstants[selectedCrop]?.min || 0} 
+          maxValue={cropConstants[selectedCrop]?.max || 0} 
+        />
       );
     }
-  }
+  };
 
   return (
     <div className="overflow-hidden bg-white">
@@ -243,7 +325,7 @@ const CropForecast = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CropForecast
+export default CropForecast;
