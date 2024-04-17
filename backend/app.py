@@ -23,7 +23,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-model = YOLO("backend/AI models/disease-detection-yolov8n.pt")
+model = YOLO("../backend/AI models/disease-detection-yolov8n.pt")
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/letitgrow'
 # app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
