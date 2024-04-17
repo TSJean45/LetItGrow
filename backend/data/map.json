@@ -32,6 +32,10 @@
     {
         "id": 2,
         "name": "Durian B",
+        "growingArea": "",
+        "plantingDate": "4/12/2023",
+        "plantCounts": "20",
+        "note": "",
         "temp": null,
         "moisture": null,
         "ph": null,
@@ -54,6 +58,10 @@
     {
         "id": 3,
         "name": "Pineapple Field",
+        "growingArea": "",
+        "plantingDate": "4/12/2023",
+        "plantCounts": "20",
+        "note": "",
         "temp": 5,
         "moisture": 45,
         "ph": 7.59,
@@ -78,6 +86,10 @@
     {
         "id": 4,
         "name": "Banana Field",
+        "growingArea": "",
+        "plantingDate": "4/12/2023",
+        "plantCounts": "20",
+        "note": "",
         "temp": 22,
         "moisture": 10,
         "ph": 7.59,
