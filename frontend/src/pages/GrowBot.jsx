@@ -1,61 +1,75 @@
-import React, { useState } from 'react'
-import './GrowBot.scss'
-import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
+import React, { useState } from 'react';
+import './GrowBot.scss';
+import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import {
   MainContainer,
   ChatContainer,
   MessageList,
   Message,
   MessageInput,
-} from '@chatscope/chat-ui-kit-react'
-import { DashboardSidebar, DashboardNavbar } from '../components'
-import { RoughNotation } from 'react-rough-notation'
-import { BiSolidLeaf } from 'react-icons/bi'
-import { IconContext } from 'react-icons/lib'
+} from '@chatscope/chat-ui-kit-react';
+import { DashboardSidebar, DashboardNavbar } from '../components';
+import { RoughNotation } from 'react-rough-notation';
+import { BiSolidLeaf } from 'react-icons/bi';
+import { IconContext } from 'react-icons/lib';
+// Import Groq and set up environment variables
+const Groq = require("groq-sdk");
+const groq = new Groq({
+  dangerouslyAllowBrowser: true,
+  apiKey: "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"
+});
 
 const GrowBot = () => {
-  const [loading, setLoading] = useState(false)
-  const [resultData, setResultData] = useState(null)
-
+  // State initialization
+  const [loading, setLoading] = useState(false);
+  const [resultData, setResultData] = useState(null);
   const [messages, setMessages] = useState([
     {
       text: 'Hi how may I help you today?',
       sender: 'receiver',
     },
+  ]);
 
-  ])
+  // Function to send message to Groq backend
+  const handleSendMessage = async (message) => {
+    // Add user message to state
+    setMessages([...messages, { text: message, sender: 'sender' }]);
 
-  const handleSendMessage = (message) => {
-    setMessages([...messages, { text: message, sender: 'sender' }])
-    console.log('Message sent', message)
-  
-    fetch('http://localhost:5000/growbot', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Response from backend:', data)
-        // Concatenate new messages with existing ones
-        setMessages(prevMessages => [...prevMessages,  { text: data.result, sender: 'receiver' }])
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.error('Error sending data to backend:', error)
-        setLoading(false)
-      })
-  }
-  
+    try {
+      setLoading(true);
+      // Call Groq function to get chat completion
+      const chatCompletion = await getGroqChatCompletion(message);
+      // Add bot's response to state
+      setMessages(prevMessages => [...prevMessages, { text: chatCompletion.choices[0]?.message?.content || "", sender: 'receiver' }]);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error sending data to Groq:', error);
+      setLoading(false);
+    }
+  };
+
+  // Function to interact with Groq backend
+  const getGroqChatCompletion = async (message) => {
+    // Call Groq SDK to get chat completion
+    return groq.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: message
+        }
+      ],
+      model: "mixtral-8x7b-32768"
+    });
+  };
 
   return (
     <div className="growbot">
+      {/* Sidebar and Navbar components */}
       <DashboardSidebar type="farmer" />
       <div className="ml-20 w-full px-2 py-5 sm:px-4 max-h-full">
         <DashboardNavbar identity="farmer" name="Farm A" />
       </div>
+      {/* Title with annotation */}
       <div style={{ textAlign: 'center', marginBottom: '10px' }}>
         <RoughNotation
           type="highlight"
@@ -78,10 +92,12 @@ const GrowBot = () => {
           </span>
         </RoughNotation>
       </div>
+      {/* Chat interface */}
       <div className="chat">
         <MainContainer>
           <ChatContainer className="chatcontainer">
             <MessageList>
+              {/* Mapping over messages to render */}
               {messages.map((msg, index) => (
                 <Message
                   key={index}
@@ -98,6 +114,7 @@ const GrowBot = () => {
                       : 'receiver-message'
                   }
                 >
+                  {/* Render sender name */}
                   <span
                     className={
                       msg.sender === 'sender' ? 'you-sender' : 'bot-sender'
@@ -108,6 +125,7 @@ const GrowBot = () => {
                 </Message>
               ))}
             </MessageList>
+            {/* Input for sending messages */}
             <MessageInput
               onSend={handleSendMessage}
               placeholder="Type message here"
@@ -116,7 +134,7 @@ const GrowBot = () => {
         </MainContainer>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GrowBot
+export default GrowBot;
