@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   DashboardSidebar,
   DashboardNavbar,
   DashboardTitle,
-  SpaceForm,
 } from "../components";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, FeatureGroup } from "react-leaflet";
@@ -41,16 +40,24 @@ const SpaceMapping = () => {
   const [area, setArea] = useState("");
   const [coordinates, setCoordinates] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const formRef = useRef(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const [formData, setFormData] = useState({
-    fieldName: "",
+    name: "",
     plantVariety: "",
-    growingArea: "",
     plantingDate: "",
     plantCounts: "",
-    notes: "",
+    note: "",
     // Add more form fields as needed
   });
+
+  const handleReset = () => {
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+  };
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -66,7 +73,7 @@ const SpaceMapping = () => {
       const polygon = e.layer;
       const latLngs = polygon.getLatLngs()[0];
       console.log("Polygons coords: ", latLngs);
-      let convertedPolygons = latLngs.map(point => [point.lat, point.lng]);
+      let convertedPolygons = latLngs.map((point) => [point.lat, point.lng]);
       console.log(convertedPolygons);
       setCoordinates(convertedPolygons);
 
@@ -93,13 +100,20 @@ const SpaceMapping = () => {
         body: JSON.stringify(dataToSend),
       });
       if (response.ok) {
+        setShowAlert(true); // Show alert after saving
+        setAlertMessage("Successfully saved."); // Set alert message
         setFormSubmitted(true);
+        handleReset();
       } else {
-        // Handle other response status codes or display error messages
+        setAlertMessage("Failed to save.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
   };
 
   return (
@@ -120,8 +134,15 @@ const SpaceMapping = () => {
               <Typography variant="h4" color="blue-gray">
                 Field Detail
               </Typography>
+              {showAlert && (
+                <div className="mt-4">
+                  <Alert color="green">{alertMessage}</Alert>
+                </div>
+              )}
+
               <form
                 onSubmit={handleSubmit}
+                ref={formRef}
                 className="mt-8 mb-2 w-full max-w-screen-md sm:w-96"
               >
                 <div className="mb-1 flex flex-col gap-6">
@@ -172,7 +193,11 @@ const SpaceMapping = () => {
                   </Alert>
                 </div>
                 <div className="flex justify-between mt-5">
-                  <Button className="flex-1 mr-2" ripple={false}>
+                  <Button
+                    className="flex-1 mr-2"
+                    onClick={handleReset}
+                    ripple={false}
+                  >
                     Reset
                   </Button>
                   <Button type="submit" className="flex-1 ml-2" ripple={false}>
