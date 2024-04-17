@@ -1,31 +1,37 @@
-import React, { useState, useEffect } from 'react'
-import { DashboardSidebar, DashboardNavbar } from '../components'
-import { RoughNotation } from 'react-rough-notation'
-import './MyGarden.scss'
-import { FaPlus } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
-import { plants } from '../constants/plants'
-import Select from 'react-select'
-import Box from '@mui/material/Box'
-import Slider from '@mui/material/Slider'
-import { Bars } from 'react-loading-icons'
+import React, { useState, useEffect } from 'react';
+import { DashboardSidebar, DashboardNavbar } from '../components';
+import { RoughNotation } from 'react-rough-notation';
+import './MyGarden.scss';
+import { FaPlus } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { plants } from '../constants/plants';
+import Select from 'react-select';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import { Bars } from 'react-loading-icons';
 
-import germination from '../assets/germination.png'
-import seedling from '../assets/seedling.png'
-import vegetative from '../assets/vegetative-growth.png'
-import buddev from '../assets/bud-development.png'
-import flowering from '../assets/flowering.png'
-import fruit from '../assets/fruit-formation.png'
-import ripening from '../assets/ripening.png'
-import tomato from '../assets/tomato.png'
+import germination from '../assets/germination.png';
+import seedling from '../assets/seedling.png';
+import vegetative from '../assets/vegetative-growth.png';
+import buddev from '../assets/bud-development.png';
+import flowering from '../assets/flowering.png';
+import fruit from '../assets/fruit-formation.png';
+import ripening from '../assets/ripening.png';
+import tomato from '../assets/tomato.png';
+
+const Groq = require("groq-sdk");
+const groq = new Groq({
+  dangerouslyAllowBrowser: true,
+  apiKey: "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"
+});
 
 const PlantButton = ({ label, imageSrc, onClick, selected }) => {
   return (
     <button className={selected ? 'clicked' : ''} onClick={onClick}>
       {label} <img src={imageSrc} alt="" />
     </button>
-  )
-}
+  );
+};
 
 const soil = [
   { label: 'Loamy Soil', value: 'Loamy Soil' },
@@ -38,7 +44,7 @@ const soil = [
   { label: 'Acidic Soil', value: 'Acidic Soil' },
   { label: 'Saline Soil', value: 'Saline Soil' },
   { label: 'Alkaline Soil', value: 'Alkaline Soil' },
-]
+];
 
 const fertilizer = [
   { label: 'All-purpose fertilizer', value: 'All-purpose fertilizer' },
@@ -54,7 +60,7 @@ const fertilizer = [
   { label: 'Seaweed fertilizer', value: 'Seaweed fertilizer' },
   { label: 'Manure-based fertilizer', value: 'Manure-based fertilizer' },
   { label: 'Liquid kelp fertilizer', value: 'Liquid kelp fertilizer' },
-]
+];
 
 const light = [
   { label: 'Sunlight', value: 'Sunlight' },
@@ -79,71 +85,74 @@ const light = [
     value: 'Ceramic metal halide (CMH) grow lights',
   },
   { label: 'Induction grow lights', value: 'Induction grow lights' },
-]
+];
 
 const MyGarden = () => {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [selection, setSelection] = useState('')
-  const navigate = useNavigate()
-  const [isClicked, setIsClicked] = useState(false)
-  const [resultData, setResultData] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [currentStep, setCurrentStep] = useState(0);
+  const [selection, setSelection] = useState('');
+  const navigate = useNavigate();
+  const [isClicked, setIsClicked] = useState(false);
+  const [resultData, setResultData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // get the selected value/adjustments of the plants
-  const [selectedPlant, setSelectedPlant] = useState(null)
-  const [selectedStage, setSelectedStage] = useState(null)
-  const [temperature, setTemperature] = useState(50)
-  const [watering, setWatering] = useState(50)
-  const [selectedSoil, setSelectedSoil] = useState(null)
-  const [selectedFertilizer, setSelectedFertilizer] = useState(null)
-  const [selectedLight, setSelectedLight] = useState(null)
-  const [page1Complete, setPage1Complete] = useState(false)
-  const [page2Complete, setPage2Complete] = useState(false)
+  const [selectedPlant, setSelectedPlant] = useState(null);
+  const [selectedStage, setSelectedStage] = useState(null);
+  const [temperature, setTemperature] = useState(50);
+  const [watering, setWatering] = useState(50);
+  const [selectedSoil, setSelectedSoil] = useState(null);
+  const [selectedFertilizer, setSelectedFertilizer] = useState(null);
+  const [selectedLight, setSelectedLight] = useState(null);
+  const [page1Complete, setPage1Complete] = useState(false);
+  const [page2Complete, setPage2Complete] = useState(false);
 
   // species of plant
   const handlePlantChange = (selectedOption) => {
-    setSelectedPlant(selectedOption)
-    setPage1Complete(true)
-  }
+    console.log("Selected Plant:", selectedOption);
+    setSelectedPlant(selectedOption);
+    setPage1Complete(true);
+  };
 
   // growing stage
   const handleStageChange = (selectedStage) => {
-    setSelectedStage(selectedStage)
-    setPage1Complete(true)
-  }
+    setSelectedStage(selectedStage);
+    setPage1Complete(true);
+  };
 
   // temperature
   const handleTemperatureChange = (event, newValue) => {
-    setTemperature(newValue)
-    setPage2Complete(true)
-  }
+    setTemperature(newValue);
+    setPage2Complete(true);
+  };
 
   // watering
   const handleWateringChange = (event, newValue) => {
-    setWatering(newValue)
-    setPage2Complete(true)
-  }
+    setWatering(newValue);
+    setPage2Complete(true);
+  };
 
   // soil
   const handleSoilChange = (selectedOption) => {
-    setSelectedSoil(selectedOption)
-    setPage2Complete(true)
-  }
+    console.log("Selected Soil:", selectedOption);
+    setSelectedSoil(selectedOption);
+    setPage2Complete(true);
+  };
 
   // fertilizer
   const handleFertilizerChange = (selectedOption) => {
-    setSelectedFertilizer(selectedOption)
-    setPage2Complete(true)
-  }
+    console.log("Selected Fertilizer:", selectedOption);
+    setSelectedFertilizer(selectedOption);
+    setPage2Complete(true);
+  };
 
   // light
   const handleLightChange = (selectedOption) => {
-    setSelectedLight(selectedOption)
-    setPage2Complete(true)
-  }
+    console.log("Selected Light:", selectedOption);
+    setSelectedLight(selectedOption);
+    setPage2Complete(true);
+  };
 
-  // send selected adjustment to backend and retrieve the result from there
-  const result = () => {
+  const result = async () => {
     const data = {
       plant: selectedPlant,
       stage: selectedStage,
@@ -152,40 +161,66 @@ const MyGarden = () => {
       soil: selectedSoil,
       fertilizer: selectedFertilizer,
       light: selectedLight,
+    };
+
+    // Construct the message content using the data object
+    let messageContent = `Take note that temperature is in Celsius and water measurement is in millilitres. The use of Fahrenheit is. Act as a horticultural expert and given the condition of a ${data.plant} plant/tree where its growth stage is ${data.stage} under growing conditions where temperature is ${data.temperature} Celsius, ${data.watering} ml watering daily, planted in ${data.soil}, using ${data.fertilizer} and under ${data.light}. Describe the good and bad effects that the growing condition of the ${data.plant} plant/tree bringing and provide guidance for mitigating the bad effects. Keep this simple and sweet as you are communicating with a person who is new to farming.`;
+
+    setLoading(true);
+    try {
+      // Call Groq function to get plant simulation result
+      const simulationResult = await getGroqPlantSimulation(messageContent, data);
+      // Check if simulationResult is not undefined or null
+      if (simulationResult) {
+        setResultData(simulationResult);
+      } else {
+        console.error('Invalid data received from Groq:', simulationResult);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error('Error retrieving data from Groq:', error);
+      setLoading(false);
     }
+  };
 
-    // console.log('Data to be sent to backend:', data)
+  const getGroqPlantSimulation = async (messageContent, data) => {
+    try {
+      console.log('Received data:', data);
+      // Replace the slots in messageContent with actual data values
+      messageContent = messageContent.replace(/\${(.*?)}/g, (match, property) => {
+        return data[property.trim()] || match;
+      });
 
-    setLoading(true)
+      // Call Groq SDK to get plant simulation
+      const response = await groq.chat.completions.create({
+        messages: [
+          {
+            role: "user",
+            content: messageContent // Pass the modified messageContent
+          }
+        ],
+        model: "mixtral-8x7b-32768"
+      });
 
-    fetch('http://localhost:5000/plant_simulation', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Response from backend:', data)
-        setResultData(data.result)
-        setLoading(false)
-      })
-      .catch((error) => {
-        console.error('Error sending data to backend:', error)
-        setLoading(false)
-      })
-  }
+      // Extract the content of the message
+      const simulationResult = response.choices[0]?.message?.content || "";
+
+      return simulationResult;
+    } catch (error) {
+      console.error('Error retrieving data from Groq:', error);
+      throw error; // Rethrow the error to handle it where the function is called
+    }
+  };
 
   // change to next step
   const handleNext = (selected) => {
-    setSelection(selected)
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 2)) // Max step 2
-  }
+    setSelection(selected);
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 2)); // Max step 2
+  };
 
   const handleCancel = () => {
-    navigate('/')
-  }
+    navigate('/');
+  };
 
   return (
     <div className="MyGarden">
@@ -391,7 +426,7 @@ const MyGarden = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MyGarden
+export default MyGarden;
