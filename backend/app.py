@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from crud import soil_monitoring_bp
+from ultralytics import YOLO
+import cv2
+import os
 # from flask_sqlalchemy import SQLAlchemy
 # from dotenv import load_dotenv
 # import os
@@ -19,6 +22,8 @@ from crud import soil_monitoring_bp
 
 app = Flask(__name__)
 CORS(app)
+
+model = YOLO("backend/AI models/disease-detection-yolov8n.pt")
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/letitgrow'
 # app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
@@ -111,6 +116,30 @@ def plant_simulation():
     result = plantsimulation(plant, stage, temperature, watering, soil, fertilizer, light)
 
     return jsonify({"result": str(result)})
+
+@app.route("/disease_detect_image", methods=["POST"])
+def disease_detect_image():
+    file = request.files['image']
+    
+    nparr = np.frombuffer(file.read(), np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    print("test 1")
+    
+    if os.path.exists('frontend/src/detection-result-img/predict'):
+        print("delete now")
+        os.remove('frontend/src/detection-result-img/predict/image0.jpg')
+        os.removedirs('frontend/src/detection-result-img/predict')
+    
+    print("test 2")
+        
+    results = model(img, save=True, show_conf=False, project='frontend/src/detection-result-img')
+    
+    result = results[0]
+    box = result.boxes[0]
+    class_id = result.names[box.cls[0].item()]
+    print("object:", class_id)
+    
+    return jsonify({"result": str(class_id)})
 
 @app.route("/growbot", methods=["POST"])
 def growbot():
