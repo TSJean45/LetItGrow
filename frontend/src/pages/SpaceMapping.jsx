@@ -1,11 +1,17 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   DashboardSidebar,
   DashboardNavbar,
   DashboardTitle,
 } from "../components";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, FeatureGroup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  FeatureGroup,
+  Tooltip,
+  Polygon,
+} from "react-leaflet";
 import "leaflet-draw/dist/leaflet.draw.css";
 import { EditControl } from "react-leaflet-draw";
 import {
@@ -43,6 +49,22 @@ const SpaceMapping = () => {
   const formRef = useRef(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [jsonData, setJsonData] = useState([]);
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      try {
+        const response = await fetch("/space-mapping/all"); // Assuming this endpoint returns all map data
+        const data = await response.json();
+        console.log("Map data:", data);
+        setJsonData(data);
+      } catch (error) {
+        console.error("Error fetching map data:", error);
+      }
+    };
+
+    fetchAll();
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -218,6 +240,19 @@ const SpaceMapping = () => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
+              {jsonData.map((item) => (
+                <Polygon
+                  key={item.id}
+                  pathOptions={{
+                    color: "green"// Change color if this is the selected polygon
+                  }}
+                  positions={item.polygons}
+                >
+                  <Tooltip opacity={1} permanent>
+                    {item.name}
+                  </Tooltip>
+                </Polygon>
+              ))}
             </MapContainer>
           </div>
         </div>
