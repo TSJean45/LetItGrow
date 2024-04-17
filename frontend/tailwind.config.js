@@ -12,7 +12,7 @@ module.exports = withMT({
         title: ["Baloo", "sans-serif"], //title font as Baloo
       },
       colors: {
-        ultLightGreen: '#D4DFD4',
+        ultLightGreen: "#D4DFD4",
         dullGreen: "#7F9F80",
         lightGreen: "#DFEFCD",
         mediumGreen: "#9ABD71",
@@ -22,7 +22,7 @@ module.exports = withMT({
         skyBlue: "#DAEEFB",
         navyBlue: "#174978",
         darkNavy: "#2F5F8A",
-        grayBorder: '#D4DFD4'
+        grayBorder: "#D4DFD4",
       },
       lineHeight: {
         "extra-loose": "25px",

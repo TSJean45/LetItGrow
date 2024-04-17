@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { mapContents } from "../constants";
 import {
   Alert,
@@ -17,6 +17,7 @@ import {
 } from "@material-tailwind/react";
 import { WeatherCard } from "../components";
 import CircularProgress from "@mui/joy/CircularProgress";
+import { Link } from "react-router-dom";
 
 function Icon({ type }) {
   const iconPaths = {
@@ -58,11 +59,36 @@ function Icon({ type }) {
 const MapDetails = ({ sectionId }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const [mapData, setMapData] = useState(null);
+  const [isIOTConnected, setIsIOTConnected] = useState(false);
   const section = mapContents.find((s) => s.id === sectionId);
 
-  if (!section) {
-    return <div>No section found with ID: {sectionId}</div>;
-  }
+  useEffect(() => {
+    const fetchMapData = async () => {
+      try {
+        const response = await fetch(`/soil-monitoring/${section.id}`);
+        const data = await response.json();
+        console.log("Map data:", data);
+
+        const iotConnected = data.moisture && data.ph;
+
+        console.log(iotConnected);
+
+        setIsIOTConnected(iotConnected);
+
+        if (!iotConnected) {
+          console.log("IOT is not connected");
+          return;
+        }
+
+        setMapData(data);
+      } catch (error) {
+        console.error("Error fetching map data:", error);
+      }
+    };
+
+    fetchMapData();
+  }, [sectionId, section.id]);
 
   return (
     <div>
@@ -80,34 +106,71 @@ const MapDetails = ({ sectionId }) => {
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-1 flex justify-center">
           <div className="w-3/4 space-y-2">
-            <WeatherCard
-              icon="weatherIcon-5.svg"
-              title="Soil Temperature"
-              value={section.temp}
-              constant="°C"
-            />
-            <WeatherCard
-              icon="weatherIcon-6.svg"
-              title="Soil Moisture"
-              value={section.moisture}
-              constant="%"
-            />
-            <WeatherCard
-              icon="weatherIcon-7.svg"
-              title="PH Value"
-              value={section.ph}
-              constant="pH"
-            />
-            <WeatherCard
-              icon="weatherIcon-8.svg"
-              title="Land Fertility"
-              value={section.fertility}
-            />
-            <WeatherCard
-              icon="weatherIcon-9.svg"
-              title="Light Intensity"
-              value={section.light}
-            />
+            {isIOTConnected ? (
+              <>
+                <WeatherCard
+                  icon="weatherIcon-5.svg"
+                  title="Soil Temperature"
+                  value={(mapData && mapData.temp) ?? "N/A"}
+                  constant="°C"
+                />
+                <WeatherCard
+                  icon="weatherIcon-6.svg"
+                  title="Soil Moisture"
+                  value={(mapData && mapData.moisture) ?? "N/A"}
+                  constant="%"
+                />
+                <WeatherCard
+                  icon="weatherIcon-7.svg"
+                  title="PH Value"
+                  value={(mapData && mapData.ph) ?? "N/A"}
+                  constant="pH"
+                />
+                <WeatherCard
+                  icon="weatherIcon-8.svg"
+                  title="Land Fertility"
+                  value={(mapData && mapData.fertility) ?? "N/A"}
+                />
+                <WeatherCard
+                  icon="weatherIcon-9.svg"
+                  title="Light Intensity"
+                  value={(mapData && mapData.light) ?? "N/A"}
+                />
+              </>
+            ) : (
+              <div className="h-full overflow-hidden flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center h-ful">
+                  {/* ! icon */}
+                  <div className="flex items-center justify-center h-20 w-20 bg-white rounded-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="h-20 w-20 text-gray-500"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 9v2m0 4v.01"
+                      />
+                    </svg>
+                  </div>
+                  <Typography className="text-lg text-center text-gray-500 font-bold mt-2">
+                    Haven’t paired with the soil monitoring device.{" "}
+                    <Link
+                      to={`/SoilMonitoring/${section.id}`}
+                      className="underline"
+                    >
+                      Click Here{" "}
+                    </Link>
+                    to start pairing.
+                  </Typography>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="col-span-2 flex items-start flex-col mt-5">

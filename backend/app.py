@@ -4,6 +4,7 @@ import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from crud import soil_monitoring_bp
 from ultralytics import YOLO
 import cv2
 import os
@@ -44,24 +45,45 @@ model = YOLO("backend/AI models/disease-detection-yolov8n.pt")
         
 # users_schema = UserSchema(many=True)
 
+app.register_blueprint(soil_monitoring_bp)
+
+crop_models = {
+    'banana': '../backend/AI models/Banana_random_forest_model.pkl',
+    'chilli': '../backend/AI models/Chilli_random_forest_model.pkl',
+    'corn': '../backend/AI models/corn_random_forest_model.pkl',
+    'peanut': '../backend/AI models/pnut_random_forest_model.pkl',
+    'potato': '../backend/AI models/potato_random_forest_model.pkl',
+    'rice': '../backend/AI models/rice_random_forest_model.pkl',
+    'sugarcane': '../backend/AI models/s_cane_random_forest_model.pkl',
+    'sweetpotato': '../backend/AI models/Sweet_p_random_forest_model.pkl',
+    'tapioca': '../backend/AI models/Tapioca_random_forest_model.pkl',
+    'wheat': '../backend/AI models/Wheat_random_forest_model.pkl',
+}
+
 @app.route("/yield_prediction", methods=['POST'])
 def yield_prediction():
     try:
-        model = joblib.load('../backend/AI models/Banana_random_forest_model.pkl')
-        # Parse the form data
         data = request.json
         print(data)
         
-        area = data.get('area')  # Use 'area' instead of 'Area' to match the key in JSON data
-        annual_rainfall = data.get('rain')  # Assuming 'rain' is the key for Annual_Rainfall
-        fertilizer = data.get('fertilizer')  # Assuming 'fertilizer' is the key for Fertilizer
-        pesticide = data.get('pesticide')  # Ass
+        crop = data.get('cropLabel')
+        model_path = crop_models.get(crop)
+        
+        if model_path is None:
+            return jsonify({"error": "Model not found for selected crop."})
+        
+        model = joblib.load(model_path)
+        print("Model loaded: ", model_path)
+        area = data.get('area')
+        annual_rainfall = data.get('rain')
+        fertilizer = data.get('fertilizer')
+        pesticide = data.get('pesticide') 
 
         feature_names = ['Area', 'Annual_Rainfall', 'Fertilizer', 'Pesticide']
         features = [[area, annual_rainfall, fertilizer, pesticide]]
         features_2d = np.array(features)
         df = pd.DataFrame(features_2d, columns=feature_names)
-        print("Input features:", df)  # Debugging: Print input features
+        print("Input features:", df)
 
         # Make predictions using the model
         prediction = model.predict(df)

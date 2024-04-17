@@ -18,7 +18,8 @@ import {
   SpaceMapping,
   ClassesEvents,
   Market,
-  Services
+  Services,
+  SoilMonitoring
 } from './pages'
 import { ThemeProvider } from '@material-tailwind/react'
 
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
   {
     path: '/Services',
     element: <Services />,
+  },
+  {
+    path: '/SoilMonitoring/:id',
+    element: <SoilMonitoring />,
   },
 ])
 
