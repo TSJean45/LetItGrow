@@ -2,6 +2,11 @@
     {
         "id": 1,
         "name": "Durian A",
+        "plantVariety": "Durian",
+        "growingArea": "",
+        "plantingDate": "4/12/2023",
+        "plantCounts": "20",
+        "note": "",
         "temp": null,
         "moisture": null,
         "ph": null,
