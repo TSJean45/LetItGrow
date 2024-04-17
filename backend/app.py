@@ -4,7 +4,7 @@ import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from crud import soil_monitoring_bp
+from crud import soil_monitoring_bp, space_mapping_bp
 from ultralytics import YOLO
 import cv2
 import os
@@ -46,6 +46,7 @@ model = YOLO("backend/AI models/disease-detection-yolov8n.pt")
 # users_schema = UserSchema(many=True)
 
 app.register_blueprint(soil_monitoring_bp)
+app.register_blueprint(space_mapping_bp)
 
 crop_models = {
     'banana': '../backend/AI models/Banana_random_forest_model.pkl',

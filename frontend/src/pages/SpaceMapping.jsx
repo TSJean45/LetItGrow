@@ -13,20 +13,35 @@ import {
   Card,
   Input,
   Button,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
+  Alert,
   Typography,
 } from "@material-tailwind/react";
+import L from "leaflet";
+import "leaflet-geometryutil";
+
+function Icon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      stroke="currentColor"
+      className="h-6 w-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+      />
+    </svg>
+  );
+}
 
 const SpaceMapping = () => {
-  const units = ["acre", "in", "cm"]; // Define the units for the dropdown
-  const [selectedUnit, setSelectedUnit] = useState(units[0]); // Set the initial selected unit
+  const [area, setArea] = useState("");
+  const [coordinates, setCoordinates] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const handleUnitChange = (unit) => {
-    setSelectedUnit(unit);
-  };
 
   const [formData, setFormData] = useState({
     fieldName: "",
@@ -48,23 +63,27 @@ const SpaceMapping = () => {
   };
 
   const onCreated = (e) => {
-    if (e.layerType === "circle") {
-      console.log(
-        "circle center, radius =",
-        e.layer.getLatLng(),
-        e.layer.getRadius()
-      );
-    } else {
-      console.log("polygon coordinates =", e.layer.getLatLngs());
-    } 
+    if (e.layerType === "polygon") {
+      const polygon = e.layer;
+      const latLngs = polygon.getLatLngs()[0];
+      console.log("Polygons coords: ", latLngs);
+      setCoordinates(coordinates);
+      const areaInSqMeters = L.GeometryUtil.geodesicArea(latLngs);
+      console.log("Area in square meters:", areaInSqMeters);
+      setArea(areaInSqMeters);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const dataToSend = { ...formData, coordinates: "add coordinates here" };
+    const dataToSend = {
+      ...formData,
+      coordinates: coordinates,
+      area: area,
+    };
 
     try {
-      const response = await fetch("/your-backend-endpoint", {
+      const response = await fetch("/space-mapping", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,6 +93,7 @@ const SpaceMapping = () => {
       if (response.ok) {
         setFormSubmitted(true);
       } else {
+        // Handle other response status codes or display error messages
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -174,6 +194,10 @@ const SpaceMapping = () => {
                     name="notes"
                     size="lg"
                   />
+                  <Alert icon={<Icon />}>
+                    Growing area of field will be calculated automatically based
+                    on mapping.
+                  </Alert>
                 </div>
                 <div className="flex justify-between mt-5">
                   <Button className="flex-1 mr-2" ripple={false}>
