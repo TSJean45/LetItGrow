@@ -15,8 +15,8 @@ import { IconContext } from 'react-icons/lib';
 // Import Groq and set up environment variables
 const Groq = require("groq-sdk");
 const groq = new Groq({
-  dangerouslyAllowBrowser: true,
-  apiKey: "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"
+
+  apiKey: process.env.GROQ_API_KEY
 });
 
 const GrowBot = () => {
@@ -51,11 +51,12 @@ const GrowBot = () => {
   // Function to interact with Groq backend
   const getGroqChatCompletion = async (message) => {
     // Call Groq SDK to get chat completion
+    message = "You are GrowBot, your expertise lies in farming and gardening. You dont have to announce your name unless asked to. Answer these accordingly: " + message
     return groq.chat.completions.create({
       messages: [
         {
           role: "user",
-          content: message
+          content:  message
         }
       ],
       model: "mixtral-8x7b-32768"
