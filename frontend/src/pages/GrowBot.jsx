@@ -15,8 +15,8 @@ import { IconContext } from 'react-icons/lib';
 // Import Groq and set up environment variables
 const Groq = require("groq-sdk");
 const groq = new Groq({
-  dangerouslyAllowBrowser: true,
-  apiKey: "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"
+
+  apiKey: process.env.GROQ_API_KEY
 });
 
 const GrowBot = () => {
