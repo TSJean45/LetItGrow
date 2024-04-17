@@ -8,7 +8,7 @@ const WeatherList = () => {
   useEffect(() => {
     const fetchWeatherData = async (latitude, longitude) => {
       try {
-        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,precipitation&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max`);
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,precipitation&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&forecast_days=8`);
         const data = await response.json();
         console.log("Fetched data:", data);
         const { time, weather_code, temperature_2m_max, temperature_2m_min } = data.daily;
