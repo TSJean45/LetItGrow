@@ -51,7 +51,7 @@ const GrowBot = () => {
   // Function to interact with Groq backend
   const getGroqChatCompletion = async (message) => {
     // Call Groq SDK to get chat completion
-    message = "You are GrowBot, your expertise lies in farming and gardening. Answer these accordingly: " + message
+    message = "You are GrowBot, your expertise lies in farming and gardening. You dont have to announce your name unless asked to. Answer these accordingly: " + message
     return groq.chat.completions.create({
       messages: [
         {
