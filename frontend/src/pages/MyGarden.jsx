@@ -18,6 +18,19 @@ import flowering from "../assets/flowering.png";
 import fruit from "../assets/fruit-formation.png";
 import ripening from "../assets/ripening.png";
 import tomato from "../assets/tomato.png";
+import {
+  Alert,
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
+import {
+  Square3Stack3DIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+} from "@heroicons/react/24/solid";
 
 const Groq = require("groq-sdk");
 const groq = new Groq({
@@ -29,7 +42,9 @@ const PlantButton = ({ label, imageSrc, onClick, selected }) => {
   return (
     <Button className={`${selected ? "clicked" : ""} mb-10`} onClick={onClick}>
       <div className="font-bold text-black text-lg mb-5">{label}</div>
-      <div className="object-fit flex justify-center"><img src={imageSrc} alt="" /></div>
+      <div className="object-fit flex justify-center">
+        <img src={imageSrc} alt="" />
+      </div>
     </Button>
   );
 };
@@ -138,39 +153,39 @@ const MyGarden = () => {
 
   // soil
   const handleSoilChange = (selectedOption) => {
-    console.log("Selected Soil:", selectedOption);
-    setSelectedSoil(selectedOption);
+    console.log("Selected Soil:", selectedOption.value);
+    setSelectedSoil(selectedOption.value);
     setPage2Complete(true);
   };
 
   // fertilizer
   const handleFertilizerChange = (selectedOption) => {
-    console.log("Selected Fertilizer:", selectedOption);
-    setSelectedFertilizer(selectedOption);
+    console.log("Selected Fertilizer:", selectedOption.value);
+    setSelectedFertilizer(selectedOption.value);
     setPage2Complete(true);
   };
 
   // light
   const handleLightChange = (selectedOption) => {
-    console.log("Selected Light:", selectedOption);
-    setSelectedLight(selectedOption);
+    console.log("Selected Light:", selectedOption.value);
+    setSelectedLight(selectedOption.value);
     setPage2Complete(true);
   };
 
   const handleNext = (selected) => {
     if (selected === "plus") {
       setSelection(selected);
-      setCurrentStep((prevStep) => Math.min(prevStep + 1, 2)); // Max step 2
+      setCurrentStep((prevStep) => Math.min(prevStep + 1, 3)); // Max step 2
     } else {
       setSelectedPlant(selected);
       setSelection(""); // Reset the selection state after setting the plant
-      setCurrentStep((prevStep) => Math.min(prevStep + 1, 2)); // Max step 2
+      setCurrentStep((prevStep) => Math.min(prevStep + 1, 3)); // Max step 2
     }
   };
 
   const passPlant = (selected) => {
     setSelectedPlant(selected);
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 2)); // Max step 2
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 3)); // Max step 2
   };
 
   const handleCancel = () => {
@@ -178,6 +193,7 @@ const MyGarden = () => {
   };
 
   const result = async () => {
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 3)); // Max step 2
     const data = {
       plant: selectedPlant,
       stage: selectedStage,
@@ -188,29 +204,103 @@ const MyGarden = () => {
       light: selectedLight,
     };
 
-    console.log("Dataaaa received: ", data);
-
-    // Construct the message content using the data object
-    let messageContent = `Take note that temperature is in Celsius and water measurement is in millilitres. The use of Fahrenheit is. Act as a horticultural expert and given the condition of a ${data.plant} plant/tree where its growth stage is ${data.stage} under growing conditions where temperature is ${data.temperature} Celsius, ${data.watering} ml watering daily, planted in ${data.soil}, using ${data.fertilizer} and under ${data.light}. Describe the good and bad effects that the growing condition of the ${data.plant} plant/tree bringing and provide guidance for mitigating the bad effects. Keep this simple and sweet as you are communicating with a person who is new to farming.`;
+    console.log("Data received: ", data);
 
     setLoading(true);
     try {
-      // Call Groq function to get plant simulation result
-      const simulationResult = await getGroqPlantSimulation(
-        messageContent,
-        data
-      );
-      // Check if simulationResult is not undefined or null
-      if (simulationResult) {
-        setResultData(simulationResult);
+      // Call Groq function to get plant simulation results for each message content
+      const [
+        survivalResult,
+        tempSummaryResult,
+        soilSummaryResult,
+        wateringSummaryResult,
+        fertilizerSummaryResult,
+        lightSummaryResult,
+      ] = await Promise.all([
+        getGroqPlantSimulation(createSurvivalMessageContent(data), data),
+        getGroqPlantSimulation(createTempSummaryMessageContent(data), data),
+        getGroqPlantSimulation(createSoilSummaryMessageContent(data), data),
+        getGroqPlantSimulation(createWateringSummaryMessageContent(data), data),
+        getGroqPlantSimulation(
+          createFertilizerSummaryMessageContent(data),
+          data
+        ),
+        getGroqPlantSimulation(createLightSummaryMessageContent(data), data),
+      ]);
+
+      // Check if simulation results are not undefined or null
+      if (
+        survivalResult &&
+        tempSummaryResult &&
+        soilSummaryResult &&
+        wateringSummaryResult &&
+        fertilizerSummaryResult &&
+        lightSummaryResult
+      ) {
+        setResultData({
+          survival: survivalResult,
+          tempSummary: tempSummaryResult,
+          soilSummary: soilSummaryResult,
+          wateringSummary: wateringSummaryResult,
+          fertilizerSummary: fertilizerSummaryResult,
+          lightSummary: lightSummaryResult,
+        });
       } else {
-        console.error("Invalid data received from Groq:", simulationResult);
+        console.error("Invalid data received from Groq.");
       }
       setLoading(false);
     } catch (error) {
       console.error("Error retrieving data from Groq:", error);
       setLoading(false);
     }
+  };
+
+  // Helper functions to create different message contents
+  const createSurvivalMessageContent = (data) => {
+    return `Take note that temperature is in Celsius and water measurement is in millilitres. 
+    Act as a horticultural expert and given the condition of a ${data.plant} plant/tree where its growth stage is ${data.stage} under growing conditions where temperature is ${data.temperature} Celsius, 
+    ${data.watering} ml watering daily, planted in ${data.soil}, using ${data.fertilizer} and under ${data.light}. 
+    Based on these conditions, reply only one sentence using this template, "Unfortunately, your plant did not survive!" or "Congratulations your plant survives!" Remove sentences after the first sentence.`;
+  };
+
+  const createTempSummaryMessageContent = (data) => {
+    return `Take note that temperature is in Celsius and water measurement is in millilitres. Please also take note that only replies information about temperature, temperature and only only temperature.
+    Act as a horticultural expert and given the condition of a ${data.plant} plant/tree where its growth stage is ${data.stage} under growing conditions where temperature is ${data.temperature} Celsius, 
+    ${data.watering} ml watering daily, planted in ${data.soil}, using ${data.fertilizer} and under ${data.light}. 
+    Talk about the temperature conditions and any suggestions for improvement only for temperature. For suggestions, make sure you use only the character * at the start of the sentence. Ignore other conditions and suggestions that are not related to temperature.
+    Remove any words that are not temperature.`;
+  };
+
+  const createSoilSummaryMessageContent = (data) => {
+    return `Take note that temperature is in Celsius and water measurement is in millilitres. Please also take note that only replies information about soil, soil and only only soil.
+    Act as a horticultural expert and given the condition of a ${data.plant} plant/tree where its growth stage is ${data.stage} under growing conditions where temperature is ${data.temperature} Celsius, 
+    ${data.watering} ml watering daily, planted in ${data.soil}, using ${data.fertilizer} and under ${data.light}. 
+    Talk about the soil conditions and any suggestions for improvement only for soil. For suggestions, make sure you use only the character * at the start of the sentence. Ignore other conditions and suggestions that are not related to soil.
+    Remove any words that are not soil.`;
+  };
+
+  const createWateringSummaryMessageContent = (data) => {
+    return `Take note that temperature is in Celsius and water measurement is in millilitres. Please also take note that only replies information about watering, watering and only only watering.
+    Act as a horticultural expert and given the condition of a ${data.plant} plant/tree where its growth stage is ${data.stage} under growing conditions where temperature is ${data.temperature} Celsius, 
+    ${data.watering} ml watering daily, planted in ${data.soil}, using ${data.fertilizer} and under ${data.light}. 
+    Talk about the watering choice and any suggestions for improvement only for watering. For suggestions, make sure you use only the character * at the start of the sentence. Ignore other conditions and suggestions that are not related to watering.
+    Remove any words that are not watering.`;
+  };
+
+  const createFertilizerSummaryMessageContent = (data) => {
+    return `Take note that temperature is in Celsius and water measurement is in millilitres. Please also take note that only replies information about fertilizer, fertilizer and only only fertilizer.
+    Act as a horticultural expert and given the condition of a ${data.plant} plant/tree where its growth stage is ${data.stage} under growing conditions where temperature is ${data.temperature} Celsius, 
+    ${data.watering} ml watering daily, planted in ${data.soil}, using ${data.fertilizer} and under ${data.light}. 
+    Talk about the fertilizer choice and any suggestions for improvement only for fertilizer. For suggestions, make sure you use only the character * at the start of the sentence. Ignore other conditions and suggestions that are not related to fertilizer.
+    Remove any words that are not fertilizer.`;
+  };
+
+  const createLightSummaryMessageContent = (data) => {
+    return `Take note that temperature is in Celsius and water measurement is in millilitres. Please also take note that only replies information about lighting, lighting and only only lighting.
+    Act as a horticultural expert and given the condition of a ${data.plant} plant/tree where its growth stage is ${data.stage} under growing conditions where temperature is ${data.temperature} Celsius, 
+    ${data.watering} ml watering daily, planted in ${data.soil}, using ${data.fertilizer} and under ${data.light}. 
+    Talk about the lighting choice and any suggestions for improvement only for lighting. For suggestions, make sure you use only the character * at the start of the sentence. Ignore other conditions and suggestions that are not related to lighting.
+    Remove any words that are not lighting.`;
   };
 
   const getGroqPlantSimulation = async (messageContent, data) => {
@@ -244,6 +334,39 @@ const MyGarden = () => {
       throw error; // Rethrow the error to handle it where the function is called
     }
   };
+
+  const data = [
+    {
+      label: "Temperature",
+      value: "temperature",
+      icon: Square3Stack3DIcon,
+      desc: resultData.tempSummary,
+    },
+    {
+      label: "Soil",
+      value: "soil",
+      icon: UserCircleIcon,
+      desc: resultData.soilSummary,
+    },
+    {
+      label: "Watering",
+      value: "watering",
+      icon: Cog6ToothIcon,
+      desc: resultData.wateringSummary,
+    },
+    {
+      label: "Fertilizer",
+      value: "fertilizer",
+      icon: Square3Stack3DIcon,
+      desc: resultData.fertilizerSummary,
+    },
+    {
+      label: "Lighting",
+      value: "lighting",
+      icon: UserCircleIcon,
+      desc: resultData.lightSummary,
+    },
+  ];
 
   return (
     <div className="MyGarden overflow-hidden">
@@ -363,42 +486,7 @@ const MyGarden = () => {
 
       {currentStep === 2 && (
         <div className="simulation">
-          <results>
-            <div style={{ textAlign: "center", marginBottom: "10px" }}>
-              <RoughNotation
-                type="highlight"
-                show={true}
-                color="#DFEFCD"
-                animationDelay="10"
-                animationDuration="2000"
-                padding="0"
-                strokeWidth="0"
-                style={{
-                  fontSize: "50px",
-                  fontFamily: "open sans",
-                  fontWeight: "700",
-                }}
-              >
-                Results
-              </RoughNotation>
-            </div>
-            {loading ? (
-              <div>
-                <Bars />
-              </div>
-            ) : resultData ? (
-              <content>
-                <p>{resultData}</p>
-                <img src={vegetative} alt="" />
-              </content>
-            ) : (
-              <content>
-                Adjust the parameter here to simulate the condition of your
-                plant
-              </content>
-            )}
-          </results>
-
+          <h4>Set Simulation Environment</h4>
           <adjustment>
             <temperature>
               <p>Temperature(°C)</p>
@@ -458,6 +546,64 @@ const MyGarden = () => {
               Confirm
             </button>
           </adjustment>
+        </div>
+      )}
+
+      {currentStep === 3 && (
+        <div className="simulation">
+          <results>
+            <div style={{ textAlign: "center", marginBottom: "10px" }}>
+              <RoughNotation
+                type="highlight"
+                show={true}
+                color="#DFEFCD"
+                animationDelay="10"
+                animationDuration="2000"
+                padding="0"
+                strokeWidth="0"
+                style={{
+                  fontSize: "50px",
+                  fontFamily: "open sans",
+                  fontWeight: "700",
+                }}
+              >
+                Results
+              </RoughNotation>
+            </div>
+            {loading && <p>Loading...</p>}
+
+            {resultData && (
+              <div>
+                <Alert>{resultData.survival}</Alert>
+
+                <div className="mt-10">
+                  <h4>For More Detailed Analysis</h4>
+
+                  <Tabs value="temperature">
+                    <TabsHeader>
+                      {data.map(({ label, value, icon }) => (
+                        <Tab key={value} value={value}>
+                          <div className="flex items-center gap-2">
+                            {React.createElement(icon, {
+                              className: "w-5 h-5",
+                            })}
+                            {label}
+                          </div>
+                        </Tab>
+                      ))}
+                    </TabsHeader>
+                    <TabsBody>
+                      {data.map(({ value, desc }) => (
+                        <TabPanel key={value} value={value}>
+                          {desc}
+                        </TabPanel>
+                      ))}
+                    </TabsBody>
+                  </Tabs>
+                </div>
+              </div>
+            )}
+          </results>
         </div>
       )}
     </div>
