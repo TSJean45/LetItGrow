@@ -18,19 +18,7 @@ import flowering from "../assets/flowering.png";
 import fruit from "../assets/fruit-formation.png";
 import ripening from "../assets/ripening.png";
 import tomato from "../assets/tomato.png";
-import {
-  Alert,
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  Tab,
-  TabPanel,
-} from "@material-tailwind/react";
-import {
-  Square3Stack3DIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-} from "@heroicons/react/24/solid";
+import { Alert} from "@material-tailwind/react";
 
 const Groq = require("groq-sdk");
 const groq = new Groq({
@@ -335,39 +323,6 @@ const MyGarden = () => {
     }
   };
 
-  const data = [
-    {
-      label: "Temperature",
-      value: "temperature",
-      icon: Square3Stack3DIcon,
-      desc: resultData.tempSummary,
-    },
-    {
-      label: "Soil",
-      value: "soil",
-      icon: UserCircleIcon,
-      desc: resultData.soilSummary,
-    },
-    {
-      label: "Watering",
-      value: "watering",
-      icon: Cog6ToothIcon,
-      desc: resultData.wateringSummary,
-    },
-    {
-      label: "Fertilizer",
-      value: "fertilizer",
-      icon: Square3Stack3DIcon,
-      desc: resultData.fertilizerSummary,
-    },
-    {
-      label: "Lighting",
-      value: "lighting",
-      icon: UserCircleIcon,
-      desc: resultData.lightSummary,
-    },
-  ];
-
   return (
     <div className="MyGarden overflow-hidden">
       <DashboardSidebar type="personal" />
@@ -579,27 +534,20 @@ const MyGarden = () => {
                 <div className="mt-10">
                   <h4>For More Detailed Analysis</h4>
 
-                  <Tabs value="temperature">
-                    <TabsHeader>
-                      {data.map(({ label, value, icon }) => (
-                        <Tab key={value} value={value}>
-                          <div className="flex items-center gap-2">
-                            {React.createElement(icon, {
-                              className: "w-5 h-5",
-                            })}
-                            {label}
-                          </div>
-                        </Tab>
-                      ))}
-                    </TabsHeader>
-                    <TabsBody>
-                      {data.map(({ value, desc }) => (
-                        <TabPanel key={value} value={value}>
-                          {desc}
-                        </TabPanel>
-                      ))}
-                    </TabsBody>
-                  </Tabs>
+                  <h3>Temperature Summary:</h3>
+                  <p>{resultData.tempSummary}</p>
+
+                  <h3>Soil Summary:</h3>
+                  <p>{resultData.soilSummary}</p>
+
+                  <h3>Watering Summary:</h3>
+                  <p>{resultData.wateringSummary}</p>
+
+                  <h3>Fertilizer Summary:</h3>
+                  <p>{resultData.fertilizerSummary}</p>
+
+                  <h3>Lighting Summary:</h3>
+                  <p>{resultData.lightSummary}</p>
                 </div>
               </div>
             )}
