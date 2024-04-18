@@ -12,7 +12,6 @@ import "./Test.scss";
 import { mapContents } from "../constants";
 
 const DashboardMap = () => {
-  const [mapData, setMapData] = useState(null);
   const [jsonData, setJsonData] = useState([]);
   const [selectedSectionId, setSelectedSectionId] = useState(1);
 
