@@ -6,109 +6,108 @@ import { FaPlus } from 'react-icons/fa'
 import loadingcircle from '../assets/loading-circle.svg'
 
 import leaftnc from '../assets/leaf-tnc.jpg'
-import resultleaf from '../detection-result-img/predict/image0.jpg'
+// import resultleaf from '../detection-result-img/predict/image0.jpg'
 
 const diseases = [
   {
     disease: 'leaf spot',
     intro:
       'Leaf spot is a common fungal disease that affects a wide range of plants, including trees, shrubs, vegetables, and ornamental plants. While it can be challenging to completely eradicate leaf spot once it has infected a plant',
-    solutions: `
-      - Remove and destroy infected leaves.
-      - Ensure good air circulation around plants.
-      - Apply fungicides according to label instructions.`,
+    solutions:
+      'You can remove and destroy infected leaves. Ensure good air circulation around plants. Apply fungicides according to label instructions.',
   },
   {
     disease: 'lack of calcium',
     intro:
       'Calcium deficiency in plants can manifest in various ways, such as stunted growth, distorted leaves, blossom end rot in fruits, and weakened stems. ',
-    solutions: `
-      - Amend soil with calcium-rich materials like gypsum or lime.
-      - Maintain proper soil pH.
-      - Provide consistent watering to ensure calcium uptake.`,
+    solutions:
+      ' Amend soil with calcium-rich materials like gypsum or lime. Maintain proper soil pH. Provide consistent watering to ensure calcium uptake.',
   },
   {
     disease: 'fungal leaf spot',
     intro:
       'Fungal leaf spot is a common plant disease caused by various fungal pathogens. The symptoms typically include small, round or irregularly shaped spots on leaves, which may vary in color from brown or black to yellow or reddish.',
-    solutions: `
-      - Remove and destroy infected plant parts.
-      - Apply fungicides labeled for fungal leaf spot control.
-      - Practice good sanitation to prevent spread.`,
+    solutions:
+      'Remove and destroy infected plant parts. Apply fungicides labeled for fungal leaf spot control. Practice good sanitation to prevent spread.',
   },
   {
     disease: 'bacterial leaf blight',
     intro:
       'Bacterial leaf blight is a plant disease caused by various species of bacteria, including Xanthomonas and Pseudomonas. It primarily affects leaves, causing water-soaked lesions that may turn brown or black as they enlarge. The disease can lead to defoliation and reduced plant vigor if left untreated. ',
-    solutions: `
-    - Remove and destroy infected plant parts.
-    - Apply copper-based fungicides early in the season.
-    - Practice crop rotation to reduce pathogen buildup.`,
+    solutions:
+      ' Remove and destroy infected plant parts. Apply copper-based fungicides early in the season. Practice crop rotation to reduce pathogen buildup.',
   },
   {
     disease: 'yellow vein mosaic virus',
     intro:
       'Yellow vein mosaic virus (YVMY) affects plants, particularly important crops like beans, cowpeas, and soybeans. Unfortunately, there is no specific treatment to cure viral infections in plants. ',
-    solutions:
-      '- Use virus-free seed or plant material.\n' +
-      '- Control aphid populations to prevent transmission.\n' +
-      '- Remove and destroy infected plants promptly.\n',
+    solutions: `You may use virus-free seed or plant material. Control aphid populations to prevent transmission. Remove and destroy infected plants promptly.`,
   },
   {
     disease: 'yellow leaf curl virus',
     intro:
       'Yellow leaf curl virus (YLCV) is a devastating viral disease that affects a wide range of plants, including tomatoes, peppers, and other solanaceous crops. Unfortunately, there is no cure for viral infections in plants. ',
-    solutions: `
-    - Plant resistant varieties when available.
-    - Control whitefly populations, which can spread the virus.
-    - Remove and destroy infected plants to prevent spread.`,
+    solutions:
+      'Plant resistant varieties when available. Control whitefly populations, which can spread the virus. Remove and destroy infected plants to prevent spread.',
   },
   {
     disease: 'healthy',
-    solutions: `
-  - Regularly inspect plants for signs of disease.
-  - Practice good cultural practices, including proper watering and fertilization.
-  - Monitor environmental conditions and address any issues promptly.`,
+    solutions:
+      'Regularly inspect plants for signs of disease. Practice good cultural practices, including proper watering and fertilization. Monitor environmental conditions and address any issues promptly.',
   },
 ]
 
 const DiseaseDetect = () => {
-  const [file, setFile] = useState(null)
-  const [showTips, setShowTips] = useState(true)
-  const [resultData, setResultData] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [file, setFile] = useState(null);
+  const [showTips, setShowTips] = useState(true);
+  const [resultData, setResultData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [resultImage, setResultImage] = useState(null);
+
+  useEffect(() => {
+    const fetchResultImage = async () => {
+      if (resultData) {
+        try {
+          const resultleaf = await import('../detection-result-img/predict/image0.jpg');
+          setResultImage(resultleaf.default);
+        } catch (error) {
+          console.error('Error importing result image:', error);
+        }
+      }
+    };
+
+    fetchResultImage();
+  }, [resultData]);
 
   const handleChange = async (e) => {
-    const selectedFile = e.target.files[0]
-    setFile(URL.createObjectURL(selectedFile))
-    setShowTips(false)
+    const selectedFile = e.target.files[0];
+    setFile(URL.createObjectURL(selectedFile));
+    setShowTips(false);
 
     // Send the image to the backend
-    const formData = new FormData()
-    formData.append('image', selectedFile)
+    const formData = new FormData();
+    formData.append('image', selectedFile);
 
     try {
-      setLoading(true)
-      const response = await fetch(
-        'http://localhost:5000/disease_detect_image',
-        {
-          method: 'POST',
-          body: formData,
-        }
-      )
+      setLoading(true);
+      const response = await fetch('http://localhost:5000/disease_detect_image', {
+        method: 'POST',
+        body: formData,
+      });
 
       if (response.ok) {
-        const data = await response.json()
-        setResultData(data.result)
+        const data = await response.json();
+        setResultData(data.result);
       } else {
-        console.error('Failed to receive response from backend')
+        console.error('Failed to receive response from backend');
       }
     } catch (error) {
-      console.error('Error uploading image: ', error)
+      console.error('Error uploading image: ', error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
+  // import resultleaf from '../detection-result-img/predict/image0.jpg'
 
   useEffect(() => {
     console.log('Result data:', resultData)
@@ -168,7 +167,7 @@ const DiseaseDetect = () => {
             {file && (
               <div className="image-container">
                 <img
-                  src={resultleaf}
+                  src={resultImage}
                   alt="Uploaded Image"
                   style={{ width: '500px', height: 'auto', marginTop: '50px' }}
                 />
@@ -181,12 +180,14 @@ const DiseaseDetect = () => {
                 <b>Disease</b>: {resultData}
               </p>
               <p>
-                <b>Introduction</b>:{' '}
+                <b>Introduction</b>: <br />
                 {diseases.find(({ disease }) => disease === resultData)
                   ?.intro || 'No solutions found.'}
               </p>
               <p>
-                <b>Solutions: <br /> </b>{' '}
+                <b>
+                  Solutions: <br />
+                </b>
                 {diseases.find(({ disease }) => disease === resultData)
                   ?.solutions || 'No solutions found.'}
               </p>

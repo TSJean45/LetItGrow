@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import joblib 
+import joblib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -8,13 +8,15 @@ from crud import soil_monitoring_bp, space_mapping_bp
 from ultralytics import YOLO
 import cv2
 import os
+import shutil
+
 # from flask_sqlalchemy import SQLAlchemy
 # from dotenv import load_dotenv
 # import os
 # from flask_marshmallow import Marshmallow
 # from flask_migrate import Migrate
 
-#import database bodels from models.py
+# import database bodels from models.py
 # from models import db, Users, Accounts, Farms
 
 # #for reading .env
@@ -34,53 +36,54 @@ model = YOLO("../backend/AI models/disease-detection-yolov8n.pt")
 
 # migrate = Migrate(app,db)
 # db.init_app(app)
-        
+
 # with app.app_context():
 #     db.create_all()
-    
+
 # ma=Marshmallow(app)
 # class UserSchema(ma.Schema):
 #     class Meta:
 #         fields = ("id", "firstName", "lastName", "userName", "email", "password")
-        
+
 # users_schema = UserSchema(many=True)
 
 app.register_blueprint(soil_monitoring_bp)
 app.register_blueprint(space_mapping_bp)
 
 crop_models = {
-    'banana': '../backend/AI models/Banana_random_forest_model.pkl',
-    'chilli': '../backend/AI models/Chilli_random_forest_model.pkl',
-    'corn': '../backend/AI models/corn_random_forest_model.pkl',
-    'peanut': '../backend/AI models/pnut_random_forest_model.pkl',
-    'potato': '../backend/AI models/potato_random_forest_model.pkl',
-    'rice': '../backend/AI models/rice_random_forest_model.pkl',
-    'sugarcane': '../backend/AI models/s_cane_random_forest_model.pkl',
-    'sweetpotato': '../backend/AI models/Sweet_p_random_forest_model.pkl',
-    'tapioca': '../backend/AI models/Tapioca_random_forest_model.pkl',
-    'wheat': '../backend/AI models/Wheat_random_forest_model.pkl',
+    "banana": "../backend/AI models/Banana_random_forest_model.pkl",
+    "chilli": "../backend/AI models/Chilli_random_forest_model.pkl",
+    "corn": "../backend/AI models/corn_random_forest_model.pkl",
+    "peanut": "../backend/AI models/pnut_random_forest_model.pkl",
+    "potato": "../backend/AI models/potato_random_forest_model.pkl",
+    "rice": "../backend/AI models/rice_random_forest_model.pkl",
+    "sugarcane": "../backend/AI models/s_cane_random_forest_model.pkl",
+    "sweetpotato": "../backend/AI models/Sweet_p_random_forest_model.pkl",
+    "tapioca": "../backend/AI models/Tapioca_random_forest_model.pkl",
+    "wheat": "../backend/AI models/Wheat_random_forest_model.pkl",
 }
 
-@app.route("/yield_prediction", methods=['POST'])
+
+@app.route("/yield_prediction", methods=["POST"])
 def yield_prediction():
     try:
         data = request.json
         print(data)
-        
-        crop = data.get('cropLabel')
+
+        crop = data.get("cropLabel")
         model_path = crop_models.get(crop)
-        
+
         if model_path is None:
             return jsonify({"error": "Model not found for selected crop."})
-        
+
         model = joblib.load(model_path)
         print("Model loaded: ", model_path)
-        area = data.get('area')
-        annual_rainfall = data.get('rain')
-        fertilizer = data.get('fertilizer')
-        pesticide = data.get('pesticide') 
+        area = data.get("area")
+        annual_rainfall = data.get("rain")
+        fertilizer = data.get("fertilizer")
+        pesticide = data.get("pesticide")
 
-        feature_names = ['Area', 'Annual_Rainfall', 'Fertilizer', 'Pesticide']
+        feature_names = ["Area", "Annual_Rainfall", "Fertilizer", "Pesticide"]
         features = [[area, annual_rainfall, fertilizer, pesticide]]
         features_2d = np.array(features)
         df = pd.DataFrame(features_2d, columns=feature_names)
@@ -111,66 +114,82 @@ def plant_simulation():
     # print(
     #     f"plant:{plant}, stage:{stage}, temperature:{temperature}, watering:{watering}, soil:{soil}, fertilizer:{fertilizer}, light:{light}"
     # )
-    
+
     from huggingchat import plantsimulation
-    
-    result = plantsimulation(plant, stage, temperature, watering, soil, fertilizer, light)
+
+    result = plantsimulation(
+        plant, stage, temperature, watering, soil, fertilizer, light
+    )
 
     return jsonify({"result": str(result)})
 
+
 @app.route("/disease_detect_image", methods=["POST"])
 def disease_detect_image():
-    file = request.files['image']
-    
+    file = request.files["image"]
+
     nparr = np.frombuffer(file.read(), np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     print("test 1")
+
+    # Delete previous results directory (optional)
+    if os.path.exists("frontend/src/detection-result-img/predict"):
+        try:
+            shutil.rmtree(
+                "frontend/src/detection-result-img/predict"
+            )  # Use shutil.rmtree for safer deletion
+            print("Deleted previous results directory.")
+        except OSError as e:
+            print(f"Error deleting directory: {e}")
+
+    results = model(img, save=True, show_conf=False, conf=0.5, project="frontend/src/detection-result-img")
+
+    try:
+        result = results[0]
+        print(result)
+        box = result.boxes[0]
+        class_id = result.names[box.cls[0].item()]
+        print("object:", class_id)
+
+        imageurl = "frontend/src/detection-result-img/predict/image0.jpg"
+        return jsonify({"result": str(class_id), "imageURL": imageurl})
     
-    if os.path.exists('frontend/src/detection-result-img/predict'):
-        print("delete now")
-        os.remove('frontend/src/detection-result-img/predict/image0.jpg')
-        os.removedirs('frontend/src/detection-result-img/predict')
-    
-    print("test 2")
-        
-    results = model(img, save=True, show_conf=False, project='frontend/src/detection-result-img')
-    
-    result = results[0]
-    box = result.boxes[0]
-    class_id = result.names[box.cls[0].item()]
-    print("object:", class_id)
-    
-    return jsonify({"result": str(class_id)})
+    except (IndexError, AttributeError):
+        print("Error: Could not access detection data.")
+        return jsonify(
+            {"result": "No disease detected", "imageURL": "", "num_objects": 0}
+        )
+
 
 @app.route("/growbot", methods=["POST"])
 def growbot():
     question = request.json
-    
+
     print(question)
-    
+
     from huggingchat import growbot
-    
+
     response = growbot(question)
-    
+
     return jsonify({"result": str(response)})
 
 
-#Registration
+# Registration
 # @app.route('/registerUser', methods=['POST'])
 # def registerUser():
 #     data = request.json
-    
+
 #     firstName = data['firstName']
 #     lastName = data['lastName']
 #     userName = data['userName']
 #     email = data['email']
 #     password = data['password']
-    
+
 #     newUser = Users(firstName=firstName, lastName=lastName, userName=userName, email=email, password=password)
-    
+
 #     db.session.add(newUser)
 #     db.session.commit()
-    
+
 #     try:
 #         db.session.commit()
 #         return jsonify({"message": "User registered successfully"})
