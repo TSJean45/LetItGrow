@@ -86,17 +86,32 @@
     }
   }
 
-    @media (min-width: 360px){
-    .login-card{
-      width: 93%;
+  @media (min-width: 360px) and (max-width: 768px) {
+    .login-card {
+      width: 90%;
       padding: 20px;
 
-      h1{
+      h1 {
+        font-size: 35px;
+      }
+
+      h4 {
+        font-size: 15px;
+      }
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .login-card {
+      width: 90%;
+      padding: 20px;
+
+      h1 {
         font-size: 48px;
       }
 
-      h4{
-        font-size: 17px;
+      h4 {
+        font-size: 18px;
       }
     }
   }
