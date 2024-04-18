@@ -27,6 +27,10 @@ module.exports = withMT({
       lineHeight: {
         "extra-loose": "25px",
       },
+      screens: {
+        'mobile': {'max': '640px'},
+        'tablet': {'max': '1024px'},
+      },
     },
   },
   plugins: [],

@@ -55,7 +55,7 @@ const DashboardSidebar = ({ type }) => {
   const data = type === "farmer" ? farmerSidebar : personalSidebar;
 
   return (
-    <div className="z-50 fixed top-0 left-0 h-screen w-15 bg-ultLightGreen">
+    <div className="z-50 fixed top-0 left-0 h-screen w-15 bg-ultLightGreen mobile:bg-transparent tablet:bg-transparent">
       <IconButton variant="text" size="lg" onClick={openDrawer}>
         {isDrawerOpen ? (
           <XMarkIcon className="h-8 w-8 stroke-2" />

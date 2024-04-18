@@ -158,13 +158,13 @@ const FarmerDashboard = () => {
   return (
     <div className="overflow-hidden bg-white">
       <DashboardSidebar type="farmer" />
-      <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8 max-h-full">
+      <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8 max-h-full mobile:ml-0 tablet:ml-0">
         <DashboardNavbar identity="farmer" name="Farm A" />
         <div className="flex justify-between items-center">
           <DashboardTitle>Dashboard</DashboardTitle>
           <div className="text-right">
             <div>
-              <span className="text-4xl">
+              <span className="text-xl sm:text-4xl">
                 {format(currentTime, "h:mm:ss ")}
               </span>
 
@@ -173,23 +173,23 @@ const FarmerDashboard = () => {
             <div>{format(currentDate, "EEEE, d MMMM, yyyy")}</div>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-4">
-          <div className="col-span-3 rounded border p-5 border-grayBorder">
+        <div className="grid grid-cols-4 gap-4 tablet:grid-cols-6 tablet:gap-2 mobile:flex flex-col">
+          <div className="col-span-3 rounded border p-5 border-grayBorder tablet:col-span-4">
             <Typography variant="h4" color="blue-gray" className="mb-2">
               Geofenced Area
             </Typography>
             <DashboardMap className="z-0" />
           </div>
-          <Card className="col-span-1 bg-skyBlue rounded p-5">
+          <Card className="col-span-1 bg-skyBlue rounded p-5 tablet:col-span-2 tablet:p-2">
             <Typography variant="h4" color="blue-gray" className="mb-2">
               Weather
             </Typography>
             <CardBody className="p-0">
               <div className="relative py-10">
-                <WeatherRect className="absolute" />
+                <WeatherRect className="absolute mobile:hidden" />
                 <div className="grid grid-cols-2">
                   <div className="z-10">
-                    <h1 className="text-5xl font-bold p-5 z-10 text-white">
+                    <h1 className="text-5xl font-bold p-5 pt-10 z-10 text-white mobile:text-black">
                       {Math.round(weatherData.currentTemp)}°C
                     </h1>
                   </div>
@@ -202,10 +202,10 @@ const FarmerDashboard = () => {
 
                 </div>
                 <div className="grid grid-cols-3">
-                  <p className="text-md px-5 col-span-2 text-white z-20">
+                  <p className="text-md px-5 col-span-2 text-white z-20 mobile:text-black">
                     {weatherData.location}
                   </p>
-                  <p className="text-md text-right font-semibold col-span-1 px-5 text-white z-20">
+                  <p className="text-md text-right font-semibold col-span-1 px-5 text-white z-20 mobile:text-black">
                     {weatherData.weatherCondition}
                   </p>
                 </div>

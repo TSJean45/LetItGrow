@@ -69,13 +69,13 @@ const PersonalDashboard = () => {
   return (
     <div className="overflow-hidden bg-white">
       <DashboardSidebar type="personal" />
-      <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8 max-h-full">
+      <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8 max-h-full mobile:ml-0 tablet:ml-0">
         <DashboardNavbar identity="personal" name="Personal" />
         <div className="flex justify-between items-center">
           <DashboardTitle>Dashboard</DashboardTitle>
           <div className="text-right">
             <div>
-              <span className="text-4xl">
+              <span className="text-xl sm:text-4xl">
                 {format(currentDate, "h:mm:ss ")}
               </span>
               <span>{format(currentDate, "a")}</span>
@@ -83,22 +83,9 @@ const PersonalDashboard = () => {
             <div>{format(currentDate, "EEEE, d MMMM, yyyy")}</div>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-4">
-          <div className="col-span-3 rounded border p-5 border-grayBorder">
+        <div className="grid grid-cols-4 gap-4 tablet:grid-cols-6 tablet:gap-2 mobile:flex flex-col">
+          <div className="col-span-3 rounded border p-5 border-grayBorder tablet:col-span-4">
             <div className="flex justify-between items-center">
-              <div className="w-48">
-                <Select
-                  label="Select Location"
-                  value={value}
-                  onChange={handleValueChange}
-                >
-                  {locationOptions.map(({ label, value }) => (
-                    <Option key={value} value={value}>
-                      <span className="font-bold">{label}</span>
-                    </Option>
-                  ))}
-                </Select>
-              </div>
               <Button
                 onClick={handleOpen}
                 className="flex items-center gap-3 bg-mediumGreen"
@@ -112,8 +99,8 @@ const PersonalDashboard = () => {
                   className="h-5 w-5"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                   />
                 </svg>
@@ -160,19 +147,18 @@ const PersonalDashboard = () => {
             </div>
             {activeCard && <ActivePlant activeCard={activeCard} />}
           </div>
-          <Card className="col-span-1 bg-skyBlue rounded p-5">
+          <Card className="col-span-1 bg-skyBlue rounded p-5 tablet:col-span-2 tablet:p-2">
             <Typography variant="h4" color="blue-gray" className="mb-2">
               Weather
             </Typography>
             <CardBody className="p-0">
               <div className="relative py-10">
-                <WeatherRect className="absolute" />
+                <WeatherRect className="absolute mobile:hidden" />
                 <div className="grid grid-cols-2">
                   <div className="z-10">
-                    <h1 className="text-5xl font-bold p-5 z-10 text-white">
+                    <h1 className="text-5xl font-bold p-5 z-10 text-white mobile:text-black">
                       30°C
                     </h1>
-                    <p className="text-sm px-5 text-white">H: 31°C L: 28°C</p>
                   </div>
                   <img
                     className="object-cover object-top z-10 mt-[-50px]"
@@ -182,10 +168,10 @@ const PersonalDashboard = () => {
                   />
                 </div>
                 <div className="grid grid-cols-3">
-                  <p className="text-md px-5 col-span-2 text-white z-20">
+                  <p className="text-md px-5 col-span-2 text-white z-20 mobile:text-black">
                     Ayer Keroh, Melaka
                   </p>
-                  <p className="text-md text-right font-semibold col-span-1 px-5 text-white z-20">
+                  <p className="text-md text-right font-semibold col-span-1 px-5 text-white z-20 mobile:text-black">
                     Sunny
                   </p>
                 </div>
