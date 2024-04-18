@@ -86,19 +86,6 @@ const PersonalDashboard = () => {
         <div className="grid grid-cols-4 gap-4 tablet:grid-cols-6 tablet:gap-2 mobile:flex flex-col">
           <div className="col-span-3 rounded border p-5 border-grayBorder tablet:col-span-4">
             <div className="flex justify-between items-center">
-              <div className="w-48">
-                <Select
-                  label="Select Location"
-                  value={value}
-                  onChange={handleValueChange}
-                >
-                  {locationOptions.map(({ label, value }) => (
-                    <Option key={value} value={value}>
-                      <span className="font-bold">{label}</span>
-                    </Option>
-                  ))}
-                </Select>
-              </div>
               <Button
                 onClick={handleOpen}
                 className="flex items-center gap-3 bg-mediumGreen"
@@ -112,8 +99,8 @@ const PersonalDashboard = () => {
                   className="h-5 w-5"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                   />
                 </svg>
