@@ -5,7 +5,6 @@ const DashboardNavbar = ({identity, name}) => {
       <div className="max-w-screen-2xl mb-5 mx-auto flex justify-end"> {/* Container for Navbar content */}
         <div className="flex items-center justify-between">
           <div className="flex gap-4">
-            <NavbarSelect type="location" />
             <div className="flex items-center"> {/* Center the SVG */}
               <NotificationBell />
             </div>
