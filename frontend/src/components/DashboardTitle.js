@@ -12,12 +12,12 @@ const DashboardTitle = ({ children }) => {
           padding="0"
           strokeWidth="0"
           style={{
-            fontSize: '50px',
+            fontSize: window.innerWidth <= 640 ? '30px' : '50px',
             fontFamily: 'baloo',
           }}
         >
           {children}
-        </RoughNotation>
+    </RoughNotation>
   );
 };
 
