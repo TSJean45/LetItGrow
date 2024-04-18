@@ -23,23 +23,24 @@ import {
 } from "@material-tailwind/react";
 import weather_logo from "../assets/weather-sun.png";
 import { ReactComponent as WeatherRect } from "../assets/weather_rectangle.svg";
-import { personalPlants } from "../constants";
-const currentDate = new Date();
 
 const PersonalDashboard = () => {
   const [value, setValue] = useState("melaka");
   const [activeCard, setActiveCard] = useState(null);
+  const [jsonData, setJsonData] = useState([]);
+  const currentDate = new Date();
 
   const handleValueChange = (val) => {
     setValue(val);
   };
 
   useEffect(() => {
-    setActiveCard(personalPlants[0]); // Assuming personalPlants is your array of cards
-  }, []);
+    setActiveCard(jsonData[0]); // Set active card when jsonData changes (after fetch)
+  }, [jsonData]);
 
   const handleActiveCardChange = (activeCardData) => {
     setActiveCard(activeCardData);
+    console.log(activeCard)
   };
   const locationOptions = [
     { label: "All", value: "all" },
@@ -50,9 +51,24 @@ const PersonalDashboard = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
+  useEffect(() => {
+    const fetchAll = async () => {
+      try {
+        const response = await fetch("/personal-plant/all"); // Assuming this endpoint returns all map data
+        const data = await response.json();
+        console.log("Personal plant data:", data);
+        setJsonData(data);
+      } catch (error) {
+        console.error("Error fetching map data:", error);
+      }
+    };
+
+    fetchAll();
+  }, []);
+
   return (
     <div className="overflow-hidden bg-white">
-      <DashboardSidebar type="personal"/>
+      <DashboardSidebar type="personal" />
       <div className="ml-20 px-2 sm:px-4 py-4 sm:py-8 max-h-full">
         <DashboardNavbar identity="personal" name="Personal" />
         <div className="flex justify-between items-center">
@@ -138,7 +154,7 @@ const PersonalDashboard = () => {
             </div>
             <div className="flex items-center justify-center mt-5">
               <PersonalCarousel
-                items={personalPlants}
+                items={jsonData}
                 setActiveCard={handleActiveCardChange}
               />
             </div>

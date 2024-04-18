@@ -19,7 +19,8 @@ import {
   ClassesEvents,
   Market,
   Services,
-  SoilMonitoring
+  SoilMonitoring,
+  RoomTemperature
 } from './pages'
 import { ThemeProvider } from '@material-tailwind/react'
 
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
   {
     path: '/SoilMonitoring/:id',
     element: <SoilMonitoring />,
+  },
+  {
+    path: '/RoomTemperature/:id',
+    element: <RoomTemperature />,
   },
 ])
 

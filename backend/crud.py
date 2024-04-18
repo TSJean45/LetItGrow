@@ -5,6 +5,63 @@ import logging
 
 soil_monitoring_bp = Blueprint('soil_monitoring', __name__)
 space_mapping_bp = Blueprint('space_mapping', __name__)
+personal_plant_bp = Blueprint('personal_plant', __name__)
+
+@personal_plant_bp.route('/personal-plant/<int:data_id>', methods=['GET'])
+def get_plant_data(data_id):
+    try:
+        with open("data/personal.json", 'r') as plant_file:
+            plant_data = json.load(plant_file)
+            for item in plant_data:
+                if item['id'] == data_id:
+                    return jsonify(item)
+            abort(404, description="Data not found for the provided ID")
+    except FileNotFoundError:
+        abort(500, description="Plant data file not found")
+    except Exception as e:
+        abort(500, description=str(e))
+
+@personal_plant_bp.route('/personal-plant/all', methods=['GET'])
+def get_all_plant():
+    try:
+        with open("data/personal.json", 'r') as plant_file:
+            plant_data = json.load(plant_file)
+            return jsonify(plant_data)
+    except FileNotFoundError:
+        abort(500, description="Map data file not found")
+    except Exception as e:
+        abort(500, description=str(e))
+
+    # In case of any other unexpected error
+    abort(500, description="Failed to fetch space mapping data")
+
+@personal_plant_bp.route('/personal-plant/<int:data_id>', methods=['PUT'])
+def update_room_temperature(data_id):
+    logging.basicConfig(level=logging.DEBUG) 
+    
+    with open('data/plantTemp.json', 'r') as file:
+        temp_data = json.load(file)
+        logging.debug(f'iot_temp_data: {temp_data}')
+    
+    random_index = random.randint(0, len(temp_data) - 1)
+    temp_object = temp_data[random_index]
+    logging.debug(f'temp_object: {temp_object}')
+
+    with open('data/personal.json', 'r') as map_file:
+        map_data = json.load(map_file)
+        logging.debug(f'map_data before update: {map_data}')
+
+    for item in map_data:
+        if item['id'] == data_id:
+            item['temperature'] = temp_object['temp']
+            break
+    logging.debug(f'map_data after update: {map_data}')
+
+    # Write updated map_data back to map.json
+    with open('data/personal.json', 'w') as map_file:
+        json.dump(map_data, map_file, indent=4)
+    
+    return jsonify({'message': 'Data updated successfully', 'updated_data': item})
 
 @soil_monitoring_bp.route('/soil-monitoring/<int:data_id>', methods=['GET'])
 def get_soil_monitoring_data(data_id):
@@ -54,14 +111,6 @@ def update_soil_monitoring_data(data_id):
         json.dump(map_data, map_file, indent=4)
     
     return jsonify({'message': 'Data updated successfully', 'updated_data': item})
-
-
-@soil_monitoring_bp.route('/soil-monitoring/<int:data_id>', methods=['DELETE'])
-def delete_soil_monitoring_data(data_id):
-    # Logic to delete a soil monitoring entry by ID
-    # Remove the data from your JSON file or database
-    # Return a JSON response indicating success or failure
-    pass
 
 @space_mapping_bp.route('/space-mapping', methods=['POST'])
 def add_space_mapping_data():

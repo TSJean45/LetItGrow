@@ -8,7 +8,6 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 
 const PersonalCarousel = ({ items, setActiveCard }) => {
-    
   const handleSlideChange = (swiper) => {
     const updatedItems = items.map((item, index) => ({
       ...item,
@@ -37,7 +36,22 @@ const PersonalCarousel = ({ items, setActiveCard }) => {
       >
         {items.map((item, index) => (
           <SwiperSlide key={index}>
-            <PersonalCarouselCard key={index} {...item} />
+            <div className="bg-gradient-to-b from-white via-white to-lightGreen border-t-0 mb-5 h-xl w-50 border-8 border-white rounded-[40px] p-5 shadow-lg">
+              {" "}
+              {/* Use shadow-md for a medium shadow */}
+              <div className="relative">
+                <img
+                  src={item && require(`../assets/${item.image}`)}
+                  alt={item.name}
+                  className="w-full h-64 object-contain rounded-t-lg"
+                />
+              </div>
+              <div className="mt-4">
+                <p className="text-gray-800">{item.category}</p>
+                <p className="text-black font-bold text-3xl">{item.name}</p>
+                <p className="text-black">{item.duration}</p>
+              </div>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

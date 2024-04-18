@@ -1,0 +1,75 @@
+[
+    {
+        "id": 1,
+        "image": "plantImage-1.png",
+        "category": "Outdoor",
+        "name": "Tomato",
+        "duration": "1 month 3 days",
+        "temperature": 23.5,
+        "alert": "You haven\u00e2\u20ac\u2122t watered this plant!",
+        "active": false,
+        "icon": "bell",
+        "button": true,
+        "temp": 23.8
+    },
+    {
+        "id": 2,
+        "image": "plantImage-2.png",
+        "category": "Outdoor",
+        "name": "Chili",
+        "duration": "2 months 23 days",
+        "temperature": null,
+        "alert": "You haven\u00e2\u20ac\u2122t watered this plant!",
+        "active": false,
+        "icon": "bell",
+        "button": true
+    },
+    {
+        "id": 3,
+        "image": "plantImage-2.png",
+        "category": "Outdoor",
+        "name": "Cherry",
+        "duration": "1 year 2 months 3 days",
+        "temperature": 20,
+        "alert": "You haven\u00e2\u20ac\u2122t watered this plant!",
+        "active": false,
+        "icon": "bell",
+        "button": true
+    },
+    {
+        "id": 4,
+        "image": "plantImage-2.png",
+        "category": "Outdoor",
+        "name": "Cherry",
+        "duration": "1 year 2 months 3 days",
+        "temperature": 20,
+        "alert": "You haven\u00e2\u20ac\u2122t watered this plant!",
+        "active": false,
+        "icon": "bell",
+        "button": true
+    },
+    {
+        "id": 5,
+        "image": "plantImage-2.png",
+        "category": "Outdoor",
+        "name": "Cherry",
+        "duration": "1 year 2 months 3 days",
+        "temperature": 20,
+        "alert": "You haven\u00e2\u20ac\u2122t watered this plant!",
+        "active": false,
+        "icon": "bell",
+        "button": true
+    },
+    {
+        "id": 6,
+        "image": "plantImage-2.png",
+        "category": "Outdoor",
+        "name": "Basil Leaves",
+        "duration": "1 year 2 months 3 days",
+        "temperature": 50,
+        "alert": "You have watered this field!",
+        "icon": "tick",
+        "active": false,
+        "button": false
+    }
+]

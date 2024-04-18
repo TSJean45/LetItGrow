@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Timeline,
@@ -22,6 +22,7 @@ import {
   buildStyles,
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { Link } from "react-router-dom";
 
 function Icon({ type }) {
   const iconPaths = {
@@ -44,6 +45,24 @@ function Icon({ type }) {
         />
       </>
     ),
+    exclamation: (
+      <>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          stroke="currentColor"
+          className="h-6 w-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+          />
+        </svg>
+      </>
+    ),
   };
 
   return (
@@ -61,19 +80,48 @@ function Icon({ type }) {
 }
 
 const ActivePlant = ({ activeCard }) => {
+  console.log("in active plant: ", activeCard);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const [isIOTConnected, setIsIOTConnected] = useState(false);
+
+  useEffect(() => {
+    const iotConnected = activeCard && activeCard.temperature !== null;
+    setIsIOTConnected(iotConnected);
+  }, [activeCard]);
+
   return (
     <div className="mt-5">
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-1 flex justify-center">
           <div className="w-3/4 space-y-2 h-96">
-            <WeatherCard
-              icon="weatherIcon-10.svg"
-              title="Room Temperature"
-              value={activeCard.temperature}
-              constant="°C"
-            />
+            {isIOTConnected ? (
+              <WeatherCard
+                icon="weatherIcon-10.svg"
+                title="Room Temperature"
+                value={activeCard.temperature}
+                constant="°C"
+              />
+            ) : (
+              <div className="overflow-hidden flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center h-ful">
+                  <Alert
+                    variant="outlined"
+                    style={{ marginRight: 0 }}
+                    className="text-left font-bold"
+                  >
+                    No paired thermometer.{" "}
+                    <Link
+                      to={`/RoomTemperature/${activeCard.id}`}
+                      className="underline"
+                    >
+                      Click Here{" "}
+                    </Link>
+                    to start pairing.
+                  </Alert>
+                </div>
+              </div>
+            )}
             <Card className="w-full">
               <CardBody className="p-3 flex items-center">
                 <CircularProgressbarWithChildren
@@ -95,7 +143,7 @@ const ActivePlant = ({ activeCard }) => {
             </Card>
           </div>
         </div>
-        <div className="col-span-2 flex items-start flex-col mt-5">
+        <div className="col-span-2 flex items-start flex-col">
           <div className="border w-full border-gray-300 h-96 overflow-y-auto p-5">
             <Alert variant="outlined" icon={<Icon type={activeCard.icon} />}>
               <div className="flex items-center justify-between">
