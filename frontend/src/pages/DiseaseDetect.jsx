@@ -115,7 +115,7 @@ const DiseaseDetect = () => {
   }, [resultData])
 
   return (
-    <div className="DiseaseDetect">
+    <div className="DiseaseDetect overflow-hidden bg-white">
       <DashboardSidebar type="farmer" />
       <div className="ml-20 w-full px-2 py-5 sm:px-4 max-h-full">
         <DashboardNavbar identity="farmer" name="Farm A" />

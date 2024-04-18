@@ -23,6 +23,21 @@ const farmerSidebar = [
         link: "/CropForecast",
         icon: "crop",
         name:"Crop Yielding Prediction",
+    },
+    {
+        link: "/Forum",
+        icon: "forum",
+        name:"Forum",
+    },
+    {
+        link: "/ClassesEvents",
+        icon: "class",
+        name:"Classes and Events",
+    },
+    {
+        link: "/Market",
+        icon: "market",
+        name:"Marketplace",
     }
   ];
 

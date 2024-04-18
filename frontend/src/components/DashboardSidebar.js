@@ -72,12 +72,6 @@ const DashboardSidebar = ({ type }) => {
           <div className="mb-2 flex items-center gap-4 p-4">
             <img src={logo} alt="brand" className="h-auto w-auto" />
           </div>
-          <div className="p-2">
-            <Input
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              label="Search"
-            />
-          </div>
           <List>
             {data.map((item, index) => {
               const IconComponent = iconMap[item.icon] || UserCircleIcon;
@@ -96,12 +90,6 @@ const DashboardSidebar = ({ type }) => {
                 <UserCircleIcon className="h-5 w-5" />
               </ListItemPrefix>
               <a href="/">Profile</a>
-            </ListItem>
-            <ListItem>
-              <ListItemPrefix>
-                <Cog6ToothIcon className="h-5 w-5" />
-              </ListItemPrefix>
-              <a href="/">Settings</a>
             </ListItem>
             <ListItem>
               <ListItemPrefix>

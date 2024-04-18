@@ -9,7 +9,7 @@ import Select from "react-select";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { Bars } from "react-loading-icons";
-
+import { Button } from "@material-tailwind/react";
 import germination from "../assets/germination.png";
 import seedling from "../assets/seedling.png";
 import vegetative from "../assets/vegetative-growth.png";
@@ -27,9 +27,10 @@ const groq = new Groq({
 
 const PlantButton = ({ label, imageSrc, onClick, selected }) => {
   return (
-    <button className={selected ? "clicked" : ""} onClick={onClick}>
-      {label} <img src={imageSrc} alt="" />
-    </button>
+    <Button className={`${selected ? "clicked" : ""} mb-10`} onClick={onClick}>
+      <div className="font-bold text-black text-lg mb-5">{label}</div>
+      <div className="object-fit flex justify-center"><img src={imageSrc} alt="" /></div>
+    </Button>
   );
 };
 
@@ -115,7 +116,6 @@ const MyGarden = () => {
     setCurrent(selected);
     setPage1Complete(true);
   };
-  
 
   // growing stage
   const handleStageChange = (selectedStage) => {
@@ -246,7 +246,7 @@ const MyGarden = () => {
   };
 
   return (
-    <div className="MyGarden">
+    <div className="MyGarden overflow-hidden">
       <DashboardSidebar type="personal" />
       <div className="ml-20 w-full px-2 py-5 sm:px-4 max-h-full">
         <DashboardNavbar identity="personal" name="Personal" />
@@ -293,7 +293,9 @@ const MyGarden = () => {
             <searchbar>
               <Select
                 options={plants}
-                onChange={(selectedOption) => handlePlantChange(selectedOption.value)}
+                onChange={(selectedOption) =>
+                  handlePlantChange(selectedOption.value)
+                }
                 value={current}
                 required
               />
@@ -350,11 +352,11 @@ const MyGarden = () => {
           </div>
 
           <button
-            className="proceed"
+            className="proceed font-bold p-3"
             onClick={() => handleNext("plus")}
             disabled={!page1Complete}
           >
-            proceed
+            Proceed to Simulation
           </button>
         </div>
       )}
