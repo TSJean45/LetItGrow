@@ -20,7 +20,8 @@ import {
   Market,
   Services,
   SoilMonitoring,
-  RoomTemperature
+  RoomTemperature,
+  AutomatedDisease
 } from './pages'
 import { ThemeProvider } from '@material-tailwind/react'
 
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
   {
     path: '/RoomTemperature/:id',
     element: <RoomTemperature />,
+  },
+  {
+    path: '/AutomatedDisease',
+    element: <AutomatedDisease />,
   },
 ])
 
