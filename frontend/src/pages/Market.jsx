@@ -25,6 +25,8 @@ const productData1 = [
     farm: 'Melaka',
     price: 'RM30',
     image: plant1,
+    style: { width: '20000px' }
+
   },
   {
     id: 2,
