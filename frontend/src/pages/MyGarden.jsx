@@ -564,7 +564,24 @@ const MyGarden = () => {
                 <Alert>{resultData.survival}</Alert>
 
                 <div className="detailed-result">
-                  <h3>For More Detailed Analysis</h3>
+                <RoughNotation
+                type="highlight"
+                show={true}
+                color="#DFEFCD"
+                animationDelay="10"
+                animationDuration="2000"
+                padding="0"
+                strokeWidth="0"
+                style={{
+                  fontSize: '30px',
+                  fontFamily: 'baloo',
+                  fontWeight: '500',
+                  marginBottom: '2rem',
+                  marginTop: '4rem'
+                }}
+              >
+                Detailed Analysis
+              </RoughNotation>
 
                   <div className="buttons">
                     <button onClick={() => handleResultClick('Temperature')}>

@@ -116,19 +116,34 @@
 
   .simulation {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     margin-top: 50px;
 
     h4{
-      width: 30%;
-      height: auto;
-      font-size: 90px;
+      font-size: 50px;
       font-family: 'baloo';
+      text-align: center;
     }
 
     .detailed-result{
-      margin-top: 10px;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+      button{
+        align-items: center;
+        width: 15%;
+        padding: 0.5%;
+        background-color: #9abd71;
+        border-radius: 15px;
+        margin-right: 10px;
+        &:hover{
+          background-color: #325608;
+          color: #dfefcd;
+        }
+      }
     }
 
     results {
@@ -154,7 +169,6 @@
     }
 
     adjustment {
-      width: 50%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -170,7 +184,7 @@
       fertilizer,
       light {
         text-align: center;
-        width: 70%;
+        width: 40%;
         margin-top: 30px;
 
         p {
