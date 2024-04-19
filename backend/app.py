@@ -313,16 +313,16 @@ def disease_detect_image():
     print("test 1")
 
     # Delete previous results directory (optional)
-    if os.path.exists("frontend/src/detection-result-img/predict"):
+    if os.path.exists("../frontend/src/detection-result-img/predict"):
         try:
             shutil.rmtree(
-                "frontend/src/detection-result-img/predict"
+                "../frontend/src/detection-result-img/predict"
             )  # Use shutil.rmtree for safer deletion
             print("Deleted previous results directory.")
         except OSError as e:
             print(f"Error deleting directory: {e}")
 
-    results = model(img, save=True, show_conf=False, conf=0.5, project="frontend/src/detection-result-img")
+    results = model(img, save=True, show_conf=False, conf=0.5, project="../frontend/src/detection-result-img")
 
     try:
         result = results[0]
@@ -331,7 +331,7 @@ def disease_detect_image():
         class_id = result.names[box.cls[0].item()]
         print("object:", class_id)
 
-        imageurl = "frontend/src/detection-result-img/predict/image0.jpg"
+        imageurl = "../frontend/src/detection-result-img/predict/image0.jpg"
         return jsonify({"result": str(class_id), "imageURL": imageurl})
     
     except (IndexError, AttributeError):
