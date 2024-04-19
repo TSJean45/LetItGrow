@@ -40,5 +40,5 @@ from ultralytics import YOLO
 
 
 model = YOLO("backend/AI models/disease-detection-yolov8n.pt")
-model.track("backend/sources/tomato2.mp4", persist=True, show=True, conf=0.3, tracker="bytetrack.yaml", save=True)
+model.track("backend/sources/tomato2.mp4", persist=True, show=True, conf=0.2, tracker="bytetrack.yaml", save=True)
         
