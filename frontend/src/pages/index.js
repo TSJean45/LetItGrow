@@ -14,3 +14,4 @@ export { default as Market } from './Market';
 export { default as Services } from './Services';
 export { default as SoilMonitoring } from './SoilMonitoring';
 export { default as RoomTemperature } from './RoomTemperature';
+export { default as AutomatedDisease } from './AutomatedDisease';

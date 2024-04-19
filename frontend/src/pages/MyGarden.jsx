@@ -463,8 +463,8 @@ const MyGarden = () => {
       )}
 
       {currentStep === 2 && (
-        <div className="simulation">
-          <h4>Set Simulation Environment</h4>
+        <div className='flex justify-center'>
+          <h4 className='font-bold text-2xl'>Set Simulation Environment</h4>
           <adjustment>
             <temperature>
               <p>Temperature(°C)</p>
