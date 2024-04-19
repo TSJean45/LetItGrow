@@ -19,6 +19,7 @@ import {
 } from "@heroicons/react/24/solid";
 import cucumberVideo from "../assets/cucumber.mp4";
 import tomatoVideo from "../assets/tomato.mp4";
+import tomato2Video from "../assets/tomato2.mp4";
 import ReactPlayer from "react-player";
 
 function Icon() {
@@ -64,8 +65,8 @@ const AutomatedDisease = () => {
       value: "dronec",
       field: "Tomato Farm",
       icon: Cog6ToothIcon,
-      videoUrl: tomatoVideo,
-      disease: "Disease detected in the video is yellow vein mosaic virus."
+      videoUrl: tomato2Video,
+      disease: "Disease detected in the video are fungal leaf spot, lack of calciums and yellow vein mosaic virus."
     },
   ];
 
