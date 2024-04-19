@@ -23,6 +23,13 @@ import {
 } from "@material-tailwind/react";
 import weather_logo from "../assets/weather-sun.png";
 import { ReactComponent as WeatherRect } from "../assets/weather_rectangle.svg";
+import weather_sun from "../assets/weather-sun.png";
+import weather_night from "../assets/Weather-Night.png";
+import weather_rain from "../assets/Weather-Rain.png";
+import weather_cloudy from "../assets/Weather-Sun-Cloud.png";
+import weather_sun_rain from "../assets/Weather-Sun-Rain.png";
+import weather_thunder from "../assets/Weather-Thunder.png";
+const currentDate = new Date();
 
 const PersonalDashboard = () => {
   const [value, setValue] = useState("melaka");
@@ -65,6 +72,143 @@ const PersonalDashboard = () => {
 
     fetchAll();
   }, []);
+  
+
+  const [weatherData, setWeatherData] = useState({
+    currentTemp: null,
+    high: null,
+    low: null,
+    wind: null,
+    humidity: null,
+    precipitation: null,
+    uvIndex: null,
+    location: null,
+    weatherCondition: null,
+  });
+
+  useEffect(() => {
+    const fetchWeatherData = async () => {
+      try {
+        // Fetch user's current location
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+
+            // Fetch location name (state and country) using reverse geocoding
+            const locationName = await fetchLocationName(latitude, longitude);
+
+            // Fetch weather data based on user's current location
+            const weatherData = await fetchWeather(latitude, longitude);
+
+            setWeatherData({ ...weatherData, location: locationName });
+          },
+          (error) => {
+            console.error("Error fetching location:", error);
+          }
+        );
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      }
+    };
+
+    fetchWeatherData();
+  }, []);
+
+  const fetchLocationName = async (latitude, longitude) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+      );
+      const data = await response.json();
+      return `${data.address.state}, ${data.address.country}`;
+    } catch (error) {
+      console.error("Error fetching location name:", error);
+      return "Unknown";
+    }
+  };
+
+  const fetchWeather = async (latitude, longitude) => {
+    try {
+      // Fetch weather data based on latitude and longitude
+      const response = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m`
+      );
+      const data = await response.json();
+      console.log("Fetched weather data:", data);
+
+      const currentWeather = data.current || {};
+
+      const currentTemp = currentWeather.temperature_2m || null;
+      const wind = currentWeather.wind_speed_10m || null;
+      const humidity = currentWeather.relative_humidity_2m || null;
+      const precipitation = currentWeather.precipitation || null;
+      const weatherCode = currentWeather.weather_code || null;
+      const weatherCondition = getWeatherCondition(weatherCode);
+
+      return {
+        currentTemp,
+        wind,
+        humidity,
+        precipitation,
+        weatherCondition,
+      };
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+      return {};
+    }
+  };
+
+  const getWeatherCondition = (weatherCode) => {
+    if (weatherCode === 3 || (weatherCode >= 30 && weatherCode <= 39)) {
+      return "Cloudy";
+    } else if (weatherCode >= 0 && weatherCode <= 19) {
+      return "Sunny";
+    } else if ((weatherCode >= 20 && weatherCode <= 29) || (weatherCode >= 40 && weatherCode <= 49)) {
+      return "Rainy";
+    } else if (weatherCode >= 50 && weatherCode <= 79) {
+      return "Thunderstorm";
+    } else if (weatherCode >= 80 && weatherCode <= 99) {
+      return "Rainy";
+    } else {
+      return "Partly Cloudy";
+    }
+  };
+  const isNightTime = () => {
+    const currentHour = new Date().getHours();
+    return currentHour >= 19 || currentHour < 6;
+  };
+  
+  const getWeatherLogo = (weatherCondition) => {
+    if (isNightTime() && weatherCondition !== "Rainy" && weatherCondition !== "Thunderstorm") {
+      return weather_night;
+    }
+  
+    switch (weatherCondition) {
+      case "Sunny":
+        return weather_sun;
+      case "Cloudy":
+        return weather_cloudy;
+      case "Rainy":
+        return weather_rain;
+      case "Thunderstorm":
+        return weather_thunder;
+      default:
+        return weather_sun;
+    }
+  };
+  useEffect(() => {
+
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+  
+
+    return () => clearInterval(interval);
+  }, []);
+  
+
+  const [currentTime, setCurrentTime] = useState(new Date());
+
 
   return (
     <div className="overflow-hidden bg-white">
