@@ -16,6 +16,10 @@ import mango from '../assets/mango.png'
 import durian from '../assets/durian.png'
 import tomato from '../assets/tomato.png'
 import cabbage from '../assets/cabbage.png'
+import organic from '../assets/Organic.png'
+import pesticide from '../assets/Pesticide.png'
+import npk from '../assets/Npk.png'
+import serai from '../assets/serai.png'
 
 const productData1 = [
   {
@@ -25,6 +29,8 @@ const productData1 = [
     farm: 'Melaka',
     price: 'RM30',
     image: plant1,
+    style: { width: '20000px' }
+
   },
   {
     id: 2,
@@ -65,7 +71,7 @@ const productData2 = [
     id: 2,
     seller: '@pakcikfarm',
     name: 'Tomato',
-    farm: 'Cameron Highland',
+    farm: 'Cameron Highlands',
     price: 'RM10/kg',
     image: tomato,
   },
@@ -81,10 +87,46 @@ const productData2 = [
     id: 4,
     seller: '@flowerfarm',
     name: 'Cabbages',
-    farm: 'Cameron Highland',
+    farm: 'Cameron Highlands',
     price: 'RM10/1kg',
     image: cabbage,
   },
+]
+
+const productData3 = [
+  {
+    id: 1,
+    seller: '@fahmi',
+    name: 'Organic Fertilizer (1KG)',
+    farm: 'Batu Pahat',
+    price: 'RM18',
+    image: organic,
+  },
+  {
+    id: 2,
+    seller: '@siti_plants',
+    name: 'Serai',
+    farm: 'Taiping',
+    price: 'RM10/1kg',
+    image: serai,
+  },
+  {
+    id: 3,
+    seller: '@fahmi',
+    name: 'Bacteriacide (1L)',
+    farm: 'Batu Pahat',
+    price: 'RM120',
+    image: pesticide,
+  },
+  {
+    id: 4,
+    seller: '@brucewayne',
+    name: 'NPK Fertilizer (1KG)',
+    farm: 'Alor Setar',
+    price: 'RM13',
+    image: npk,
+  },
+
 ]
 
 const Market = () => {
@@ -139,6 +181,22 @@ const Market = () => {
         </products>
         <products>
           {productData2.map((product) => (
+            <Col key={product.id}>
+              <Card className="product">
+                <Card.Text>{product.seller}</Card.Text>
+                <Card.Img variant="top" src={product.image} />
+                <Card.Body>
+                  <Card.Title className="title">{product.name}</Card.Title>
+                  <Card.Text>Farm: {product.farm}</Card.Text>
+                  <Card.Text>Price: {product.price}</Card.Text>
+                  <Button variant="primary">ADD TO CART</Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </products>
+        <products>
+          {productData3.map((product) => (
             <Col key={product.id}>
               <Card className="product">
                 <Card.Text>{product.seller}</Card.Text>
