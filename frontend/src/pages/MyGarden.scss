@@ -37,7 +37,7 @@
     }
   }
 
-  .plant-info {
+  .plant-info { 
     font-family: 'open sans';
     display: flex;
     justify-content: center;
@@ -116,9 +116,35 @@
 
   .simulation {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     margin-top: 50px;
+
+    h4{
+      font-size: 50px;
+      font-family: 'baloo';
+      text-align: center;
+    }
+
+    .detailed-result{
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+      button{
+        align-items: center;
+        width: 15%;
+        padding: 0.5%;
+        background-color: #9abd71;
+        border-radius: 15px;
+        margin-right: 10px;
+        &:hover{
+          background-color: #325608;
+          color: #dfefcd;
+        }
+      }
+    }
 
     results {
       width: 80%;
@@ -139,15 +165,14 @@
 
       img {
         width: 50%;
-        // background-color: transparent;
       }
     }
 
     adjustment {
-      width: 40%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-bottom: 100px;
 
       temperature,
       watering {
@@ -159,7 +184,7 @@
       fertilizer,
       light {
         text-align: center;
-        width: 70%;
+        width: 40%;
         margin-top: 30px;
 
         p {

@@ -98,6 +98,7 @@ const MyGarden = () => {
   const [isClicked, setIsClicked] = useState(false)
   const [resultData, setResultData] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [resultButton, setResultButton] = useState('Temperature')
 
   // get the selected value/adjustments of the plants
   const [selectedPlant, setSelectedPlant] = useState(null)
@@ -110,6 +111,10 @@ const MyGarden = () => {
   const [selectedLight, setSelectedLight] = useState(null)
   const [page1Complete, setPage1Complete] = useState(false)
   const [page2Complete, setPage2Complete] = useState(false)
+
+  const handleResultClick = (button) => {
+    setResultButton(button)
+  }
 
   // species of plant
   const handlePlantChange = (selected) => {
@@ -374,13 +379,9 @@ const MyGarden = () => {
           </div>
 
           <plants>
-            <button onClick={() => passPlant('tomato')}>
-              Tomato
-              <img src={tomato} alt="" />
-            </button>
-
             <button onClick={() => handleNext('plus')}>
               <FaPlus size={40} />
+              <p>add new plant</p>
             </button>
           </plants>
         </div>
@@ -497,9 +498,9 @@ const MyGarden = () => {
               <p>Soil Condition</p>
               <searchbar>
                 <Select
-                    options={soil}
-                    onChange={handleSoilChange}
-                    isSearchable={false}
+                  options={soil}
+                  onChange={handleSoilChange}
+                  isSearchable={false}
                 />
               </searchbar>
             </soil>
@@ -517,9 +518,9 @@ const MyGarden = () => {
               <p>Light</p>
               <searchbar>
                 <Select
-                    options={light}
-                    onChange={handleLightChange}
-                    isSearchable={false}
+                  options={light}
+                  onChange={handleLightChange}
+                  isSearchable={false}
                 />
               </searchbar>
             </light>
@@ -562,78 +563,145 @@ const MyGarden = () => {
               <div>
                 <Alert>{resultData.survival}</Alert>
 
-                <div className="mt-10">
-                  <h4>For More Detailed Analysis</h4>
+                <div className="detailed-result">
+                <RoughNotation
+                type="highlight"
+                show={true}
+                color="#DFEFCD"
+                animationDelay="10"
+                animationDuration="2000"
+                padding="0"
+                strokeWidth="0"
+                style={{
+                  fontSize: '30px',
+                  fontFamily: 'baloo',
+                  fontWeight: '500',
+                  marginBottom: '2rem',
+                  marginTop: '4rem'
+                }}
+              >
+                Detailed Analysis
+              </RoughNotation>
 
-                  <h3>Temperature Summary:</h3>
-                  <p>
-                    {resultData.tempSummary
-                      .split('<br/>')
-                      .map((line, index) => (
-                        <React.Fragment key={index}>
-                          {line.includes('*')
-                            ? line.replace(/\*/g, '❄️')
-                            : line}
-                          <br />
-                        </React.Fragment>
-                      ))}
-                  </p>
+                  <div className="buttons">
+                    <button onClick={() => handleResultClick('Temperature')}>
+                      Temperature
+                    </button>
+                    <button onClick={() => handleResultClick('Soil')}>
+                      Soil
+                    </button>
+                    <button onClick={() => handleResultClick('Watering')}>
+                      Watering
+                    </button>
+                    <button onClick={() => handleResultClick('Fertilizer')}>
+                      Fertilizer
+                    </button>
+                    <button onClick={() => handleResultClick('Lighting')}>
+                      Lighting
+                    </button>
+                  </div>
 
-                  <h3>Soil Summary:</h3>
-                  <p>
-                    {resultData.soilSummary
-                      .split('<br/>')
-                      .map((line, index) => (
-                        <React.Fragment key={index}>
-                          {line.includes('*')
-                            ? line.replace(/\*/g, '🌱')
-                            : line}
-                          <br />
-                        </React.Fragment>
-                      ))}
-                  </p>
+                  <div
+                    className={
+                      resultButton === 'Temperature' ? 'temp-content' : 'hidden'
+                    }
+                  >
+                    <h3>Temperature Summary:</h3>
+                    <p>
+                      {resultData.tempSummary
+                        .split('<br/>')
+                        .map((line, index) => (
+                          <React.Fragment key={index}>
+                            {line.includes('*')
+                              ? line.replace(/\*/g, '❄️')
+                              : line}
+                            <br />
+                          </React.Fragment>
+                        ))}
+                    </p>
+                  </div>
 
-                  <h3>Watering Summary:</h3>
-                  <p>
-                    {resultData.wateringSummary
-                      .split('<br/>')
-                      .map((line, index) => (
-                        <React.Fragment key={index}>
-                          {line.includes('*')
-                            ? line.replace(/\*/g, '💧')
-                            : line}
-                          <br />
-                        </React.Fragment>
-                      ))}
-                  </p>
+                  <div
+                    className={
+                      resultButton === 'Soil' ? 'soil-content' : 'hidden'
+                    }
+                  >
+                    <h3>Soil Summary:</h3>
+                    <p>
+                      {resultData.soilSummary
+                        .split('<br/>')
+                        .map((line, index) => (
+                          <React.Fragment key={index}>
+                            {line.includes('*')
+                              ? line.replace(/\*/g, '🌱')
+                              : line}
+                            <br />
+                          </React.Fragment>
+                        ))}
+                    </p>
+                  </div>
 
-                  <h3>Fertilizer Summary:</h3>
-                  <p>
-                    {resultData.fertilizerSummary
-                      .split('<br/>')
-                      .map((line, index) => (
-                        <React.Fragment key={index}>
-                          {line.includes('*')
-                            ? line.replace(/\*/g, '🍂')
-                            : line}
-                          <br />
-                        </React.Fragment>
-                      ))}
-                  </p>
+                  <div
+                    className={
+                      resultButton === 'Watering' ? 'water-content' : 'hidden'
+                    }
+                  >
+                    <h3>Watering Summary:</h3>
+                    <p>
+                      {resultData.wateringSummary
+                        .split('<br/>')
+                        .map((line, index) => (
+                          <React.Fragment key={index}>
+                            {line.includes('*')
+                              ? line.replace(/\*/g, '💧')
+                              : line}
+                            <br />
+                          </React.Fragment>
+                        ))}
+                    </p>
+                  </div>
 
-                  <h3>Lighting Summary:</h3>
-                  <p>
-                    {resultData.lightSummary
-                      .split('<br/>')
-                      .map((line, index) => (
-                        <React.Fragment key={index}>
-                          {line.includes('*')
-                            ? line.replace(/\*/g, '☀️')
-                            : line}
-                          <br />
-                        </React.Fragment>
-                      ))}
-                  </p>
+                  <div
+                    className={
+                      resultButton === 'Fertilizer'
+                        ? 'fertilizer-content'
+                        : 'hidden'
+                    }
+                  >
+                    <h3>Fertilizer Summary:</h3>
+                    <p>
+                      {resultData.fertilizerSummary
+                        .split('<br/>')
+                        .map((line, index) => (
+                          <React.Fragment key={index}>
+                            {line.includes('*')
+                              ? line.replace(/\*/g, '🍂')
+                              : line}
+                            <br />
+                          </React.Fragment>
+                        ))}
+                    </p>
+                  </div>
+
+                  <div
+                    className={
+                      resultButton === 'Lighting' ? 'light-content' : 'hidden'
+                    }
+                  >
+                    <h3>Lighting Summary:</h3>
+                    <p>
+                      {resultData.lightSummary
+                        .split('<br/>')
+                        .map((line, index) => (
+                          <React.Fragment key={index}>
+                            {line.includes('*')
+                              ? line.replace(/\*/g, '☀️')
+                              : line}
+                            <br />
+                          </React.Fragment>
+                        ))}
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
