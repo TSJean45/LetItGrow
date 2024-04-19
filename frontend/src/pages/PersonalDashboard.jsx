@@ -301,22 +301,22 @@ const PersonalDashboard = () => {
                 <div className="grid grid-cols-2">
                   <div className="z-10">
                     <h1 className="text-5xl font-bold p-5 z-10 text-white mobile:text-black">
-                      30°C
+                      {Math.round(weatherData.currentTemp)}°C
                     </h1>
                   </div>
                   <img
                     className="object-cover object-top z-10 mt-[-50px]"
                     width={400}
-                    src={weather_logo}
+                    src={getWeatherLogo(weatherData.weatherCondition)}
                     alt="weather"
                   />
                 </div>
                 <div className="grid grid-cols-3">
                   <p className="text-md px-5 col-span-2 text-white z-20 mobile:text-black">
-                    Ayer Keroh, Melaka
+                    {weatherData.location}
                   </p>
                   <p className="text-md text-right font-semibold col-span-1 px-5 text-white z-20 mobile:text-black">
-                    Sunny
+                    {weatherData.weatherCondition}
                   </p>
                 </div>
               </div>
@@ -324,19 +324,19 @@ const PersonalDashboard = () => {
                 <WeatherCard
                   icon="weatherIcon-1.svg"
                   title="Wind"
-                  value={12}
+                  value={weatherData.wind}
                   constant="km/h"
                 />
                 <WeatherCard
                   icon="weatherIcon-2.svg"
                   title="Humidity"
-                  value={50}
+                  value={weatherData.humidity}
                   constant="%"
                 />
                 <WeatherCard
                   icon="weatherIcon-3.svg"
                   title="Precipitation"
-                  value={10}
+                  value={weatherData.precipitation || 0}
                   constant="%"
                 />
                 <WeatherCard
