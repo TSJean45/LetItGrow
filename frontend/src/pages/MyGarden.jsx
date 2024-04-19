@@ -397,12 +397,12 @@ const MyGarden = () => {
                 onChange={(selectedOption) =>
                   handlePlantChange(selectedOption.value)
                 }
-                value={current}
                 required
+                isSearchable={false}
+                placeholder="Plant Species"
               />
             </searchbar>
           )}
-          <input type="name" required placeholder="Give a Name to Your Plant" />
           <div className="stages">
             <h4>Current Stages of Plants/Tree Growth</h4>
 
@@ -496,33 +496,30 @@ const MyGarden = () => {
 
             <soil>
               <p>Soil Condition</p>
-              <searchbar>
-                <Select
-                  options={soil}
-                  onChange={handleSoilChange}
-                  isSearchable={false}
-                />
-              </searchbar>
+
+              <Select
+                options={soil}
+                onChange={handleSoilChange}
+                isSearchable={false}
+              />
             </soil>
             <fertilizer>
               <p>Fertilizer</p>
-              <searchbar>
-                <Select
-                  options={fertilizer}
-                  onChange={handleFertilizerChange}
-                  isSearchable={false}
-                />
-              </searchbar>
+
+              <Select
+                options={fertilizer}
+                onChange={handleFertilizerChange}
+                isSearchable={false}
+              />
             </fertilizer>
             <light>
               <p>Light</p>
-              <searchbar>
-                <Select
-                  options={light}
-                  onChange={handleLightChange}
-                  isSearchable={false}
-                />
-              </searchbar>
+
+              <Select
+                options={light}
+                onChange={handleLightChange}
+                isSearchable={false}
+              />
             </light>
 
             <button
@@ -564,24 +561,24 @@ const MyGarden = () => {
                 <Alert>{resultData.survival}</Alert>
 
                 <div className="detailed-result">
-                <RoughNotation
-                type="highlight"
-                show={true}
-                color="#DFEFCD"
-                animationDelay="10"
-                animationDuration="2000"
-                padding="0"
-                strokeWidth="0"
-                style={{
-                  fontSize: '30px',
-                  fontFamily: 'baloo',
-                  fontWeight: '500',
-                  marginBottom: '2rem',
-                  marginTop: '4rem'
-                }}
-              >
-                Detailed Analysis
-              </RoughNotation>
+                  <RoughNotation
+                    type="highlight"
+                    show={true}
+                    color="#DFEFCD"
+                    animationDelay="10"
+                    animationDuration="2000"
+                    padding="0"
+                    strokeWidth="0"
+                    style={{
+                      fontSize: '30px',
+                      fontFamily: 'baloo',
+                      fontWeight: '500',
+                      marginBottom: '2rem',
+                      marginTop: '4rem',
+                    }}
+                  >
+                    Detailed Analysis
+                  </RoughNotation>
 
                   <div className="buttons">
                     <button onClick={() => handleResultClick('Temperature')}>
