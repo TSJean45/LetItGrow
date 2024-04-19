@@ -15,6 +15,11 @@ const farmerSidebar = [
         name:"Disease Detection",
     },
     {
+        link: "/AutomatedDisease",
+        icon: "disease",
+        name:"Automated Disease Detection",
+    },
+    {
         link: "/SpaceMapping",
         icon: "mapping",
         name:"Space Mapping",
@@ -38,7 +43,7 @@ const farmerSidebar = [
         link: "/Market",
         icon: "market",
         name:"Marketplace",
-    }
+    },
   ];
 
   export default farmerSidebar;
