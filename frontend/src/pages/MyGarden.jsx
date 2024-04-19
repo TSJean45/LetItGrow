@@ -348,7 +348,7 @@ const MyGarden = () => {
   return (
     <div className="MyGarden overflow-hidden">
       <DashboardSidebar type="personal" />
-      <div className="ml-20 w-full px-2 py-5 sm:px-4 max-h-full">
+      <div className="ml-20 w-full px-2 py-5 sm:px-4 max-h-full mobile:ml-0 tablet:ml-0">
         <DashboardNavbar identity="personal" name="Personal" />
       </div>
 
@@ -496,7 +496,11 @@ const MyGarden = () => {
             <soil>
               <p>Soil Condition</p>
               <searchbar>
-                <Select options={soil} onChange={handleSoilChange} />
+                <Select
+                    options={soil}
+                    onChange={handleSoilChange}
+                    isSearchable={false}
+                />
               </searchbar>
             </soil>
             <fertilizer>
@@ -505,13 +509,18 @@ const MyGarden = () => {
                 <Select
                   options={fertilizer}
                   onChange={handleFertilizerChange}
+                  isSearchable={false}
                 />
               </searchbar>
             </fertilizer>
             <light>
               <p>Light</p>
               <searchbar>
-                <Select options={light} onChange={handleLightChange} />
+                <Select
+                    options={light}
+                    onChange={handleLightChange}
+                    isSearchable={false}
+                />
               </searchbar>
             </light>
 

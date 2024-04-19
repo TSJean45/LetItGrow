@@ -19,7 +19,7 @@ const PlantSimulation = () => {
   return (
     <div className="overflow-hidden plant-simulation">
       <DashboardSidebar type="personal" />
-      <div className="ml-20 w-full px-2 py-2 sm:px-4 max-h-full">
+      <div className="ml-20 w-full px-2 py-2 sm:px-4 max-h-full mobile:ml-0 tablet:ml-0">
         <DashboardNavbar identity="personal" name="Personal" />
         <div className="flex items-center justify-center">
           <DashboardTitle>Plant Condition Simulation</DashboardTitle>
