@@ -128,19 +128,6 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      
-      button{
-        align-items: center;
-        width: 15%;
-        padding: 0.5%;
-        background-color: #9abd71;
-        border-radius: 15px;
-        margin-right: 10px;
-        &:hover{
-          background-color: #325608;
-          color: #dfefcd;
-        }
-      }
     }
 
     results {
