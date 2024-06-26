@@ -94,7 +94,7 @@ const AutomatedDisease = () => {
             {data.map(({ value, videoUrl, field, disease }) => (
               <TabPanel key={value} value={value}>
                 <Alert className="font-bold mt-5 rounded-none" color="green">{field}</Alert>
-                <ReactPlayer url={videoUrl} width="640" height="100" controls />
+                <ReactPlayer url={videoUrl} playing={true} width="640" height="100" controls />
                 <Alert className="mt-5" icon={<Icon />}>{disease}</Alert>
               </TabPanel>
             ))}
