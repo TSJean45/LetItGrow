@@ -24,7 +24,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 const Groq = require("groq-sdk");
 const groq = new Groq({
   dangerouslyAllowBrowser: true,
-  apiKey: "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",
+  apiKey: "NONE",
 });
 
 const PlantButton = ({ label, imageSrc, onClick, selected }) => {
